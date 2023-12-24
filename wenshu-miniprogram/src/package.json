@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "wxmp-rsa": "^2.1.0"
+    "jsencrypt": "^2.3.1"
   }
 }
