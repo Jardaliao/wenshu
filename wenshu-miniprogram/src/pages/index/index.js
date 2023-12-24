@@ -1,6 +1,5 @@
 import { LOGIN_URL, encrypt } from '../../utils/login'
 import { request } from '../../utils/request'
-import jsEncrypt from '../../utils/jsencrypt.min'
 
 Page({
   async onLoad() {
@@ -17,6 +16,7 @@ Page({
     //     appDomain: "wenshu.court.gov.cn"
     //   }
     // })
-    console.log(encrypt("Lj@4536251"))
+    // console.log(resp)
+    console.log(encrypt(`12312312312`))
   }
 })
