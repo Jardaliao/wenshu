@@ -1,1 +1,0 @@
-export const LOGIN_URL = "https://account.court.gov.cn/api/login"

@@ -1,20 +1,22 @@
-import { LOGIN_URL } from '../../utils/constant'
+import { LOGIN_URL, encrypt } from '../../utils/login'
 import { request } from '../../utils/request'
+import jsEncrypt from '../../utils/jsencrypt.min'
 
 Page({
   async onLoad() {
-    const resp = await request({
-      url: LOGIN_URL,
-      method: "POST",
-      header: {
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
-      },
-      data: {
-        username: "17674663799",
-        password: "j0khubk9dhIOu6ToNrIEpmZJnv11Gwd8ZKFR%2FhFpJKjUQ08Rob6oEPBzBgQf3lZ3o7frz1trG3Uf%2FiaUebbbAhOYLIK5qQf5tFUVbwOoXZOEuv1pxBBzTLkvOZ3Y8UqO7%2FBhbvoYn%2BD52MS%2BODGr3ds3g6FLa3hPI0pKV8qaB32%2Bn0GjgRH%2BPuFRlssqu%2B0r%2BJaxYCg94SDKhsiCa7%2BAto%2FdtQ0Pf0n3yJvnch%2BRO03BpzChi8%2FS3gbM%2FXtjWL1TvlEIA3io3SymfJtpl4wteA6mfxaMXtRPwT%2BJpcdGbX6cmX086xuMX7a%2FzIzxgM4NPq4MlhFjA5cv95J23K%2F2AA%3D%3D",
-        appDomain: "wenshu.court.gov.cn"
-      }
-    })
-    console.log(resp)
+    // const resp = await request({
+    //   url: LOGIN_URL,
+    //   method: "POST",
+    //   header: {
+    //     "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
+    //   },
+    //   data: {
+    //     username: "17674663791",
+    //     password: encrypt("Lj@4536251"),
+    //     // password: "S4xs0Pi%2Bjjm%2Fl0K%2FS1ZYdj0av8LK9PYrZyVRPLvc74d2Cgt4GK5mv82AieavX2eYH596CWM14GzaNlCxE71W87hStwbXnpApEvVHryW9%2B%2FK0R0F5PrdqcjwxaWDCuWNXmHVbIds9EBqfabIs7QBiAev0BE2KnLZ%2FzD33rE0jHW7dS1%2FLWmJTbuk7hEkqLCkzN48upemlNRSoDzDLHTuIDPks3CVUZMxRQiJyTpXePVkAhMmqiTO648Jv5NWkEhGQe3ejFMJmdZe74xZl0tD1lcqqjvfQ%2BLQSTZzmBDctkR2hlGfJfahj254Y%2FRAeoS2rIrOtxkd04tnbX0lhTRyhLA%3D%3D",
+    //     appDomain: "wenshu.court.gov.cn"
+    //   }
+    // })
+    console.log(encrypt("Lj@4536251"))
   }
 })
