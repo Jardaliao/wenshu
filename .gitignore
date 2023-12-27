@@ -3,3 +3,4 @@ project.private.config.json
 node_modules
 miniprogram_npm
 .idea
+**logs/
