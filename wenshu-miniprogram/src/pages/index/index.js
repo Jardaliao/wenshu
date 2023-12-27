@@ -1,22 +1,43 @@
-import { LOGIN_URL, encrypt } from '../../utils/login'
+import { encrypt } from '../../utils/login'
 import { request } from '../../utils/request'
+import config from '../../utils/config'
+import { wsCountSearch } from '../../utils/bussiness'
 
 Page({
   async onLoad() {
-    // const resp = await request({
-    //   url: LOGIN_URL,
-    //   method: "POST",
-    //   header: {
-    //     "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
-    //   },
-    //   data: {
-    //     username: "17674663791",
-    //     password: encodeURIComponent(encrypt("Lj@4536251")),
-    //     // password: "S4xs0Pi%2Bjjm%2Fl0K%2FS1ZYdj0av8LK9PYrZyVRPLvc74d2Cgt4GK5mv82AieavX2eYH596CWM14GzaNlCxE71W87hStwbXnpApEvVHryW9%2B%2FK0R0F5PrdqcjwxaWDCuWNXmHVbIds9EBqfabIs7QBiAev0BE2KnLZ%2FzD33rE0jHW7dS1%2FLWmJTbuk7hEkqLCkzN48upemlNRSoDzDLHTuIDPks3CVUZMxRQiJyTpXePVkAhMmqiTO648Jv5NWkEhGQe3ejFMJmdZe74xZl0tD1lcqqjvfQ%2BLQSTZzmBDctkR2hlGfJfahj254Y%2FRAeoS2rIrOtxkd04tnbX0lhTRyhLA%3D%3D",
-    //     appDomain: "wenshu.court.gov.cn"
-    //   }
-    // })
-    // console.log(resp)
-    // console.log(encrypt(`12312312312`))
+    await this.checkLogin()
+    console.log(await wsCountSearch())
+  },
+  async checkLogin() {
+    let [wzws_sessionid, HOLDONKEY] = wx.batchGetStorageSync(["wzws_sessionid", "HOLDONKEY"])
+    if (wzws_sessionid && HOLDONKEY) {
+      return
+    }
+    // 登录凭证没了，重新登录
+    const resp = await request({
+      url: config.loginUrl,
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
+      },
+      data: {
+        username: "17674663791",
+        password: encodeURIComponent(encrypt("Lj@4536251")),
+        appDomain: "wenshu.court.gov.cn"
+      }
+    })
+    if (resp?.data?.success) {
+      let setCookie = resp.header["Set-Cookie"]
+      try {
+        wzws_sessionid = setCookie.match(/wzws_sessionid=([^;]*)/)[1]
+        HOLDONKEY = setCookie.match(/HOLDONKEY=([^;]*)/)[1]
+      } catch (err) { }
+    } else {
+      console.error("登录失败", JSON.stringify(resp))
+    }
+    if (wzws_sessionid && HOLDONKEY) {
+      console.log(`登录成功，更新凭证：wzws_sessionid=${wzws_sessionid}, HOLDONKEY=${HOLDONKEY}`)
+      wx.batchSetStorageSync([{ key: "wzws_sessionid", value: wzws_sessionid }, { key: "HOLDONKEY", value: HOLDONKEY }])
+    }
   }
 })
