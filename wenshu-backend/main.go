@@ -48,6 +48,7 @@ func main() {
 	http.HandleFunc("/api/login", AccountProxy.ServeHTTP)                                 // 登录接口
 	http.HandleFunc("/website/wenshu/181029CR4M5A62CH/index.html", WenshuProxy.ServeHTTP) // 主页html接口，需要访问主页获取一些加密盐
 	http.HandleFunc("/website/parse/rest.q4w", WenshuProxy.ServeHTTP)                     // 获取页面数据接口
+	http.HandleFunc("/waf_text_verify.html", WenshuProxy.ServeHTTP)                       // 验证码校验Ï
 
 	// 启动服务器，监听端口8080
 	log.Println("代理服务器已启动，监听端口9020...")

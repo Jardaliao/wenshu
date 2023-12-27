@@ -1,0 +1,6 @@
+<!--pages/search.wxml-->
+<navigation-bar title="搜索" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <input type="text" value="{{input}}" bindinput="inputChange" placeholder="输入案由、关键词、法院、当事人、律师"/>
+  <button bindtap="search">搜索</button>
+</scroll-view>

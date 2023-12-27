@@ -3,6 +3,7 @@
  * @returns Promise
  */
 export function request({ url, method, data, header }) {
+  if (!header) header = {}
   if (!url.includes("login")) { // 非登录接口加上用户凭证
     let [wzws_sessionid, HOLDONKEY] = wx.batchGetStorageSync(["wzws_sessionid", "HOLDONKEY"])
     header['Cookie'] = `wzws_sessionid=${wzws_sessionid}; HOLDONKEY=${HOLDONKEY}`
