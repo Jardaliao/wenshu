@@ -52,6 +52,26 @@ export function uuid(size = 32) {
 }
 
 /**
+ * 文书网ciphertext生成算法
+ * @returns 
+ */
+function cipher() {
+	var date = new Date();
+	var timestamp = date.getTime().toString();
+	var salt = $.WebSite.random(24);
+	var year = date.getFullYear().toString();
+	var month = (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date
+			.getMonth()).toString();
+	var day = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
+			.toString();
+	var iv = year + month + day;
+	var enc = DES3.encrypt(timestamp, salt, iv).toString();
+	var str = salt + iv + enc;
+	var ciphertext = strTobinary(str);
+	return ciphertext;
+}
+
+/**
  * 查询文档接口 搜索接口
  * @param {*} param0 
  * @param {Object} 需要附加到请求里的参数
@@ -69,9 +89,9 @@ export function queryDoc({ pageId, sortFields, ciphertext, pageNum, queryConditi
       pageId,
       sortFields,
       ciphertext, // TODO
-      pageNum: pageNum ? pageNum : 1,
+      pageNum: pageNum || 1,
       queryCondition,
-      "__RequestVerificationToken": requestToken ? requestToken : random(24),
+      "__RequestVerificationToken": requestToken || random(24),
       wh: 778,
       ww: 1507,
       cs: 0,
