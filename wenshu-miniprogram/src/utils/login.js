@@ -1,4 +1,4 @@
-import jsencrypt from '../utils/custom_jsencrypt';
+import jsencrypt from './custom_jsencrypt';
 import config from './config'
 import { request } from './request'
 

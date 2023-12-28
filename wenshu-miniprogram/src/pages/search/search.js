@@ -1,4 +1,5 @@
-import { uuid, random, queryDoc } from "../../utils/bussiness"
+import { queryDoc } from "../../utils/bussiness"
+import { uuid, random } from "../../utils/wenshu_raw"
 
 Page({
   data: {

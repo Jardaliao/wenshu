@@ -1,6 +1,6 @@
-import { request } from './request.js'
-import config from './config.js'
-import { random, cipher } from './wenshu_raw.js';
+import { request } from './request'
+import config from './config'
+import { random, cipher } from './wenshu_raw';
 
 // console.log(cipher());
 
