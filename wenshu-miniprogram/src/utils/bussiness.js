@@ -1,18 +1,8 @@
-import { request } from './request'
-import config from './config'
+import { request } from './request.js'
+import config from './config.js'
+import { random, cipher } from './wenshu_raw.js';
 
-/**
- * 从网站扒下来的随机算法
- * @param {int} size 
- */
-export function random(size = 24) {
-  let str = "",
-    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  for (var i = 0; i < size; i++) {
-    str += arr[Math.round(Math.random() * (arr.length - 1))];
-  }
-  return str;
-}
+// console.log(cipher());
 
 /**
  * 获取首页的数据统计
@@ -38,46 +28,12 @@ export function wsCountSearch() {
 }
 
 /**
- * 文书网上的页面pageId生成算法
- * @param {*} size 
- * @returns 
- */
-export function uuid(size = 32) {
-  let guid = "";
-  for (let i = 1; i <= size; i++) {
-    let n = Math.floor(Math.random() * 16.0).toString(16);
-    guid += n;
-  }
-  return guid;
-}
-
-/**
- * 文书网ciphertext生成算法
- * @returns 
- */
-function cipher() {
-	var date = new Date();
-	var timestamp = date.getTime().toString();
-	var salt = $.WebSite.random(24);
-	var year = date.getFullYear().toString();
-	var month = (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date
-			.getMonth()).toString();
-	var day = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
-			.toString();
-	var iv = year + month + day;
-	var enc = DES3.encrypt(timestamp, salt, iv).toString();
-	var str = salt + iv + enc;
-	var ciphertext = strTobinary(str);
-	return ciphertext;
-}
-
-/**
  * 查询文档接口 搜索接口
  * @param {*} param0 
  * @param {Object} 需要附加到请求里的参数
  * @returns 
  */
-export function queryDoc({ pageId, sortFields, ciphertext, pageNum, queryCondition, requestToken }, extra = {}) {
+export function queryDoc({ pageId, sortFields, pageNum, queryCondition, requestToken }, extra = {}) {
   return request({
     url: config.restQ4w,
     method: "POST",
@@ -88,7 +44,7 @@ export function queryDoc({ pageId, sortFields, ciphertext, pageNum, queryConditi
       cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc",
       pageId,
       sortFields,
-      ciphertext, // TODO
+      ciphertext: cipher(),
       pageNum: pageNum || 1,
       queryCondition,
       "__RequestVerificationToken": requestToken || random(24),
