@@ -5,7 +5,7 @@ export const DES3 = {
   iv: function () {
     return formatDate(new Date(), "yyyyMMdd")
   },
-  encrypt: function (b, c, a) {
+  encrypt: function (b, c, a) { // a是iv
     if (c) {
       return CryptoJS.TripleDES.encrypt(b, CryptoJS.enc.Utf8.parse(c), {
         iv: CryptoJS.enc.Utf8.parse(a || DES3.iv()),
@@ -15,7 +15,7 @@ export const DES3 = {
     }
     return ""
   },
-  decrypt: function (b, c, a) {
+  decrypt: function (b, c, a) { // a是iv
     if (c) {
       return CryptoJS.enc.Utf8.stringify(
         CryptoJS.TripleDES.decrypt(b, CryptoJS.enc.Utf8.parse(c),

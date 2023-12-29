@@ -1,3 +1,5 @@
+import { DES3 } from "./wenshu_raw";
+
 const cookies = new Map([
   ["wzws_sessionid", /wzws_sessionid=([^;]*)/],
   ["wzws_cid", /wzws_cid=([^;]*)/]
@@ -23,18 +25,18 @@ export function request({ url, method, data, header }) {
   return new Promise((resolve, reject) => {
     wx.request({
       method, url, data, header,
-      success: function (data) {
-        if (data?.data?.code === "NOT_LOGIN") {
+      success: function (body) {
+        if (body?.data?.code === "NOT_LOGIN") {
           console.log(`清除所有Storage`)
           wx.removeStorageSync("cookie")
-          reject(data)
+          reject(body)
           return
         }
-        if (!data?.data?.success) {
-          reject(data)
+        if (!body?.data?.success) {
+          reject(body)
           return
         }
-        const setCookie = resp.header["Set-Cookie"]
+        const setCookie = body.header["Set-Cookie"]
         if (setCookie) { // Set-Cookie
           const newCookie = {};
           for (let [key, value] of cookies) {
@@ -48,7 +50,12 @@ export function request({ url, method, data, header }) {
             console.log(`设置Cookie: ${JSON.stringify(newCookie)}`)
           }
         }
-        resolve(data)
+        if (body.data.secretKey) { // 返回了secretKey，说明返回的内容是需要解密的
+          let decryptedResult = DES3.decrypt(resp.data.result, resp.data.secretKey)
+          try { decryptedResult = JSON.parse(decryptedResult) } catch (e) { } // 尝试解析为JSON对象
+          body.data.result = decryptedResult
+        }
+        resolve(body)
       },
       fail: function (err) {
         reject(err)
