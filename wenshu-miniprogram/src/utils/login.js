@@ -30,16 +30,8 @@ export async function checkLogin() {
     }
   })
   if (resp?.data?.success) {
-    let setCookie = resp.header["Set-Cookie"]
-    try {
-      wzws_sessionid = setCookie.match(/wzws_sessionid=([^;]*)/)[1]
-      HOLDONKEY = setCookie.match(/HOLDONKEY=([^;]*)/)[1]
-    } catch (err) { }
+    console.log("登录成功")
   } else {
     console.error("登录失败", JSON.stringify(resp))
-  }
-  if (wzws_sessionid && HOLDONKEY) {
-    console.log(`登录成功，更新凭证：wzws_sessionid=${wzws_sessionid}, HOLDONKEY=${HOLDONKEY}`)
-    wx.batchSetStorageSync([{ key: "wzws_sessionid", value: wzws_sessionid }, { key: "HOLDONKEY", value: HOLDONKEY }])
   }
 }

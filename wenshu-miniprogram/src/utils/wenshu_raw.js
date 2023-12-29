@@ -108,7 +108,7 @@ function strTobinary(str) {
   let list = str.split("");
   for (let i = 0; i < list.length; i++) {
     if (i != 0) {
-      result.push(" ");
+      result.push(" "); // 实际发送请求的时候，空格会被替换为+号
     }
     let item = list[i];
     let binaryStr = item.charCodeAt().toString(2);
@@ -116,3 +116,6 @@ function strTobinary(str) {
   };
   return result.join("");
 }
+
+
+// console.log(cipher())
