@@ -3,12 +3,36 @@ import config from './config'
 import { random, cipher } from './wenshu_raw';
 import jsencrypt from './custom_jsencrypt';
 
-// console.log(cipher());
+/**
+ * 猜测这个接口是用于激活wzws_sessionid和SESSION这两个cookie的
+ * 调这个接口在后端激活后，才可以用他们做接下来的查询工作
+ * 只有这个接口鉴别为正常用户 而非匿名用户才可激活
+ * 
+ * 怎么鉴别为正常用户？
+ */
+export function currentUser({ pageId, requestToken, extra }) {
+  return request({
+    url: config.restQ4w,
+    method: "POST",
+    header: {
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    },
+    data: {
+      pageId,
+      cfg: "com.lawyee.wbsttools.web.parse.dto.AppUserDTO@currentUser",
+      "__RequestVerificationToken": requestToken,
+      wh: 778,
+      ww: 1507,
+      cs: 0,
+      ...extra
+    }
+  })
+}
 
 /**
  * 获取首页的数据统计
  */
-export function wsCountSearch() {
+export function wsCountSearch({ requestToken }) {
   return request({
     url: config.restQ4w,
     method: "POST",
@@ -20,7 +44,7 @@ export function wsCountSearch() {
       // var cs =navigator.cookieEnabled?0:1;
       // var wh = $(window).height(); 
       // var ww = $(window).width(); 
-      "__RequestVerificationToken": random(24),
+      "__RequestVerificationToken": requestToken,
       wh: 778,
       ww: 1507,
       cs: 0,
@@ -34,12 +58,13 @@ export function wsCountSearch() {
  * @param {Object} 需要附加到请求里的参数
  * @returns 
  */
-export function queryDoc({ pageId, sortFields, pageNum, queryCondition, requestToken }, extra = {}) {
+export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition, requestToken }, extra = {}) {
   return request({
     url: config.restQ4w,
     method: "POST",
     header: {
-      "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "origin": "https://wenshu.court.gov.cn"
     },
     data: {
       cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc",
@@ -47,6 +72,7 @@ export function queryDoc({ pageId, sortFields, pageNum, queryCondition, requestT
       sortFields,
       ciphertext: cipher(),
       pageNum: pageNum || 1,
+      pageSize: pageSize || 5,
       queryCondition,
       "__RequestVerificationToken": requestToken || random(24),
       wh: 778,
@@ -62,11 +88,20 @@ const encryptor = new jsencrypt.JSEncrypt()
 encryptor.setPublicKey(PUBKEY)
 
 export async function checkLogin() {
-  let [wzws_sessionid, HOLDONKEY] = wx.batchGetStorageSync(["wzws_sessionid", "HOLDONKEY"])
-  if (wzws_sessionid && HOLDONKEY) {
+  const { wzws_sessionid, SESSION } = wx.getStorageSync("cookie")
+  if (wzws_sessionid && SESSION) {
     return
   }
   // 登录凭证没了，重新登录
+  // 1 请求统一登录接口获取SESSION
+  const { data: redirectUrl } = await request({
+    url: config.tongyiLoginUrl,
+    method: "POST",
+    header: {
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
+    },
+  })
+  // 2 调登录接口获取 HOLDON KEY
   const resp = await request({
     url: config.loginUrl,
     method: "POST",
@@ -79,9 +114,17 @@ export async function checkLogin() {
       appDomain: "wenshu.court.gov.cn"
     }
   })
-  if (resp?.data?.success) {
-    console.log("登录成功")
-  } else {
-    console.error("登录失败", JSON.stringify(resp))
+  if (!resp?.data?.success) {
+    console.log("登录失败")
+    return
   }
+  // 3 调用第一步响应的重定向URL提权 会响应新的session_id
+  const rUrl = redirectUrl.replace("https://wenshu.court.gov.cn", "http://wenshu.liaoxiaojie.cn:9020")
+    .replace("https://account.court.gov.cn", "http://wenshu.liaoxiaojie.cn:9020")
+  const r2 = await request({
+    url: rUrl,
+    header: {
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8" // 标准协议中应该是Content-Type，但是小程序只认content-type
+    },
+  })
 }

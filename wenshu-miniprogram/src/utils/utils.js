@@ -1,5 +1,5 @@
-export function setDataSync(data) {
+export function setDataSync(that, data) {
     return new Promise(function(resolve, reject) {
-        this.setData(data, resolve)
+        that.setData(data, resolve)
     });
 }

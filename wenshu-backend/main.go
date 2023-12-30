@@ -45,7 +45,10 @@ func init() {
 
 func main() {
 	// 设置代理请求的处理函数
-	http.HandleFunc("/api/login", AccountProxy.ServeHTTP)                                 // 登录接口
+
+	http.HandleFunc("/tongyiLogin/authorize", WenshuProxy.ServeHTTP)                      // 登录的初始接口，用于获取SESSION
+	http.HandleFunc("/oauth/authorize", AccountProxy.ServeHTTP)                           // 上一个接口响应的重定向地址，用于提权SESSION
+	http.HandleFunc("/api/login", AccountProxy.ServeHTTP)                                 // 登录接口，获取HOLDON KEY
 	http.HandleFunc("/website/wenshu/181029CR4M5A62CH/index.html", WenshuProxy.ServeHTTP) // 主页html接口，需要访问主页获取一些加密盐
 	http.HandleFunc("/website/parse/rest.q4w", WenshuProxy.ServeHTTP)                     // 获取页面数据接口
 	http.HandleFunc("/waf_text_verify.html", WenshuProxy.ServeHTTP)                       // 验证码校验Ï
@@ -76,12 +79,25 @@ func makePreRequest(u *url.URL) func(*http.Request) {
 			r.Header.Del("cookie")
 			r.Header.Set("Cookie", cHeader)
 		}
+		originHeader := r.Header.Get("origin")
+		if originHeader != "" {
+			r.Header.Del("origin")
+			r.Header.Set("Origin", originHeader)
+		}
+		refererHeader := r.Header.Get("referer")
+		if refererHeader != "" {
+			r.Header.Del("referer")
+			r.Header.Set("Referer", refererHeader)
+		}
+		// 对端接口会检查User-Agent，这里固定用浏览器抓取到的Agent 固定UA
+		r.Header.Del("user-agent")
+		r.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 	}
 }
 
 func postRequest(resp *http.Response) error {
-	response, _ := httputil.DumpResponse(resp, true)
-	log.Printf("响应请求 %s", response)
+	//response, _ := httputil.DumpResponse(resp, true)
+	//log.Printf("响应请求 %s", response)
 	return nil
 }
 

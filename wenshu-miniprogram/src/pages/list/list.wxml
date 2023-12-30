@@ -1,1 +1,1 @@
-<navigation-bar title="搜索" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="搜索结果" back="{{false}}" color="black" background="#FFF"></navigation-bar>

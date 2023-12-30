@@ -1,11 +1,11 @@
 import { DES3 } from "./wenshu_raw";
 
-const cookies = new Map([
-  ["wzws_sessionid", /wzws_sessionid=([^;]*)/],
-  ["wzws_cid", /wzws_cid=([^;]*)/]
-  ["HOLDONKEY", /HOLDONKEY=([^;]*)/],
-  ["SESSION", /SESSION=([^;]*)/],
-]);
+const cookies = {
+  "wzws_sessionid": /wzws_sessionid=([^;]*)/,
+  "wzws_cid": /wzws_cid=([^;]*)/,
+  "HOLDONKEY": /HOLDONKEY=([^;]*)/,
+  "SESSION": /SESSION=([^;]*)/
+}
 
 /**
  * @returns Promise
@@ -16,7 +16,7 @@ export function request({ url, method, data, header }) {
     const localCookie = wx.getStorageSync("cookie")
     if (localCookie) {
       const attach = [];
-      for (let [key, value] of cookies) {
+      for (let key in cookies) {
         if (key in localCookie) attach.push(`${key}=${localCookie[key]}`)
       }
       header['Cookie'] = attach.join("; ")
@@ -32,15 +32,15 @@ export function request({ url, method, data, header }) {
           reject(body)
           return
         }
-        if (!body?.data?.success) {
+        if (!body?.data?.success && !url.includes("authorize")) {
           reject(body)
           return
         }
         const setCookie = body.header["Set-Cookie"]
         if (setCookie) { // Set-Cookie
           const newCookie = {};
-          for (let [key, value] of cookies) {
-            const match = setCookie.match(value)
+          for (let key in cookies) {
+            const match = setCookie.match(cookies[key])
             if (match) newCookie[key] = match[1]
           }
           if (newCookie) {
@@ -51,7 +51,7 @@ export function request({ url, method, data, header }) {
           }
         }
         if (body.data.secretKey) { // 返回了secretKey，说明返回的内容是需要解密的
-          let decryptedResult = DES3.decrypt(resp.data.result, resp.data.secretKey)
+          let decryptedResult = DES3.decrypt(body.data.result, body.data.secretKey)
           try { decryptedResult = JSON.parse(decryptedResult) } catch (e) { } // 尝试解析为JSON对象
           body.data.result = decryptedResult
         }
