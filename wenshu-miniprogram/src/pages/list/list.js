@@ -3,10 +3,11 @@ import { setDataSync } from "../../utils/utils";
 
 Page({
     data: {
+        theme: "light",
         pageId: "", // 维持在整个查询周期
         pageNum: 1,
         pageSize: 5,
-        query: {}, // 整个查找对象
+        query: {input: "罗翔"}, // 整个查找对象
         result: {
             "queryParams": {
               "collection": "ZGCPWSW2",
