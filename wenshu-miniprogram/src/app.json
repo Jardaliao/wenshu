@@ -2,7 +2,8 @@
   "pages": [
     "pages/list/list",
     "pages/index/index",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/doc/doc"
   ],
   "window": {
     "navigationBarTextStyle": "black",
