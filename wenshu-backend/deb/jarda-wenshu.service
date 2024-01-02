@@ -22,8 +22,8 @@ LimitFSIZE=infinity
 WorkingDirectory=__SERVER_DIR__
 
 # 服务运行的用户和组
-User=coolkit
-Group=coolkit
+User=jarda
+Group=jarda
 
 # 启动脚本
 ExecStart=__SERVER_DIR__/start.sh
@@ -45,11 +45,6 @@ KillMode=process
 # 当JVM收到SIGTERM信号并正常退出后，退出代码为143
 # 这里设置143也视为正常的退出代码
 SuccessExitStatus=143
-
-# 非正常关闭时自动重启应用
-Restart=on-failure
-# 延时一分钟重启
-RestartSec=60
 
 [Install]
 WantedBy=multi-user.target

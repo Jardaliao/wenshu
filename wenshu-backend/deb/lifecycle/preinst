@@ -17,18 +17,12 @@ fi
 # 如果没有日志目录就创建
 if [ ! -d __SERVER_LOG_DIR__ ]; then
     mkdir -p __SERVER_LOG_DIR__
-    chown jarda:jarda __SERVER_LOG_DIR__
+    chown -R jarda:jarda __SERVER_LOG_DIR__
 fi
 
 # 如果没有配置文件的目录就创建
 if [ ! -d __CONFIG_DIR__ ]; then
     mkdir -p __CONFIG_DIR__
-fi
-if [ ! -d __CONFIG_DIR__/aws-config-cache ]; then
-    mkdir -p __CONFIG_DIR__/aws-config-cache
-fi
-if [ ! -d __CONFIG_DIR__/keystore ]; then
-    mkdir -p __CONFIG_DIR__/keystore
 fi
 chown -R jarda:jarda __CONFIG_DIR__
 

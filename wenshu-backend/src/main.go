@@ -22,7 +22,7 @@ var (
 )
 
 func init() {
-	log.SetOutput(io.MultiWriter(os.Stdout, newFileOutput("logs", "server", "2006-01-02-15")))
+	log.SetOutput(io.MultiWriter(newFileOutput("/data/logs/jarda/wenshu", "server", "2006-01-02-15")))
 
 	var err error
 	// 初始化代理对象
