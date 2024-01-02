@@ -1,6 +1,6 @@
 import { DES3 } from "./wenshu_raw";
 
-const cookies = {
+const COOKIES = {
   "wzws_sessionid": /wzws_sessionid=([^;]*)/,
   "wzws_cid": /wzws_cid=([^;]*)/,
   "HOLDONKEY": /HOLDONKEY=([^;]*)/,
@@ -16,7 +16,7 @@ export function request({ url, method, data, header }) {
     const localCookie = wx.getStorageSync("cookie")
     if (localCookie) {
       const attach = [];
-      for (let key in cookies) {
+      for (let key in COOKIES) {
         if (key in localCookie) attach.push(`${key}=${localCookie[key]}`)
       }
       header['Cookie'] = attach.join("; ")
@@ -39,8 +39,8 @@ export function request({ url, method, data, header }) {
         const setCookie = body.header["Set-Cookie"]
         if (setCookie) { // Set-Cookie
           const newCookie = {};
-          for (let key in cookies) {
-            const match = setCookie.match(cookies[key])
+          for (let key in COOKIES) {
+            const match = setCookie.match(COOKIES[key])
             if (match) newCookie[key] = match[1]
           }
           if (newCookie) {

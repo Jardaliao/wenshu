@@ -4,10 +4,37 @@ import { random, cipher } from './wenshu_raw';
 import jsencrypt from './custom_jsencrypt';
 
 /**
+ * 获取文档信息接口
+ * @param {*} param0 
+ * @param {Object} 需要附加到请求里的参数
+ * @returns 
+ */
+export function docDetail({ docId, requestToken }, extra = {}) {
+  return request({
+    url: config.restQ4w,
+    method: "POST",
+    header: {
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "origin": "https://wenshu.court.gov.cn"
+    },
+    data: {
+      cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@docInfoSearch",
+      docId,
+      ciphertext: cipher(),
+      "__RequestVerificationToken": requestToken || random(24),
+      wh: 778,
+      ww: 1507,
+      cs: 0,
+      ...extra
+    }
+  })
+}
+
+/**
  * 猜测这个接口是用于激活wzws_sessionid和SESSION这两个cookie的
  * 调这个接口在后端激活后，才可以用他们做接下来的查询工作
  * 只有这个接口鉴别为正常用户 而非匿名用户才可激活
- * 
+ *  
  * 怎么鉴别为正常用户？
  */
 export function currentUser({ pageId, requestToken, extra }) {
