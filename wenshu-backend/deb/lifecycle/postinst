@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# 安装完deb包后执行的脚本
+
+# 重新加载systemd的配置
+systemctl daemon-reload
+
+# 设置主机重启后服务自启动
+systemctl enable jarda-wenshu.service

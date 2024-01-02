@@ -4,3 +4,4 @@ node_modules
 miniprogram_npm
 .idea
 **logs/
+**build/
