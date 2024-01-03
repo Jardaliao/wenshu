@@ -63,4 +63,8 @@ Page({
       this.setData({ scrollHeight: windowHeight - top - height })
     })
   },
+  detail(e) {
+    const {rowkey} = e.currentTarget.dataset.item
+    wx.navigateTo({ url: `/pages/doc/doc?data=${JSON.stringify({ rowkey })}` })
+  }
 });

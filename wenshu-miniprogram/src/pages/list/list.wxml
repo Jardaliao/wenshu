@@ -6,7 +6,7 @@
         style='height: {{(scrollHeight ? scrollHeight : 600) + "px"}}'
         bindscrolltolower="reachLower">
             <view class="page__bd">
-                <view class="weui-panel" wx:for="{{list}}" wx:key="rowkey">
+                <view class="weui-panel" wx:for="{{list}}" wx:key="rowkey" data-item="{{item}}" bind:tap="detail">
                     <!-- <view class="weui-panel__hd">"{{query.input}}"的搜索结果</view> -->
                     <view class="weui-panel__bd">
                         <view class="weui-media-box weui-media-box_text">
