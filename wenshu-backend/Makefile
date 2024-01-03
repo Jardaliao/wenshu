@@ -51,7 +51,8 @@ deploy: package
 install: deploy
 	@echo Installing...
 	@ssh $(Host) 'sudo dpkg -i $(DebName)'
-
+	@echo Restarting $(Package).service...
+	@ssh $(Host) 'sudo systemctl restart $(Package).service'
 
 
 # 默认的替换格式是sed 's/pattern/replacement/g' file1 > file2

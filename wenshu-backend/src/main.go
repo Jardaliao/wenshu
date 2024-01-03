@@ -22,7 +22,7 @@ var (
 )
 
 func init() {
-	log.SetOutput(io.MultiWriter(newFileOutput("/data/logs/jarda/wenshu", "server", "2006-01-02-15")))
+	log.SetOutput(io.MultiWriter(os.Stdout, newFileOutput("/data/logs/jarda/wenshu", "server", "2006-01-02-15")))
 
 	var err error
 	// 初始化代理对象
@@ -55,6 +55,13 @@ func main() {
 
 	// 启动服务器，监听端口8080
 	log.Println("代理服务器已启动，监听端口9020...")
+	//if err := http.ListenAndServeTLS(
+	//	":9020",
+	//	"/opt/app-config/jarda/wenshu/keystore/wenshu.liaoxiaojie.cn.pem",
+	//	"/opt/app-config/jarda/wenshu/keystore/wenshu.liaoxiaojie.cn.key",
+	//	nil); err != nil {
+	//	log.Fatal(err)
+	//}
 	if err := http.ListenAndServe(":9020", nil); err != nil {
 		log.Fatal(err)
 	}
