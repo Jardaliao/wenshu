@@ -5,6 +5,10 @@ ServerDir = /usr/lib/jarda/wenshu
 ServerLogDir = /data/logs/jarda/wenshu
 ServerConfigDir = /opt/app-config/data/wenshu
 
+Host=aliyun
+WorkDir=$(Host):/home/admin/
+DebName=$(Package)_$(Version)_all.deb
+
 
 all: package
 
@@ -42,7 +46,12 @@ package: prepackage
 
 deploy: package
 	@echo Deploying...
-	@scp build/*.deb aliyun:/home/admin/
+	@scp build/$(DebName) $(WorkDir)
+
+install: deploy
+	@echo Installing...
+	@ssh $(Host) 'sudo dpkg -i $(DebName)'
+
 
 
 # 默认的替换格式是sed 's/pattern/replacement/g' file1 > file2
