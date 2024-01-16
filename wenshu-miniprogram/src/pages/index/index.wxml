@@ -1,8 +1,11 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <navigation-bar title="易文书" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<mp-tabs tabs="{{tabs}}" activeTab="{{activeTab}}" swiperClass="weui-tabs-swiper" bindtabclick="onTabCLick" bindchange="onChange" activeClass="tab-bar-title__selected">
+  <block wx:for="{{tabs}}" wx:key="title">
+    <view class="tab-content" slot="tab-content-{{index}}">{{item.title}}</view>
+  </block>
+</mp-tabs>
 <scroll-view class="scrollarea" scroll-y type="list">
-  <input type="text" placeholder="输入案由、关键词、法院、当事人、律师" bindtap="search"/>
-  <view class="container">
-    今日新增：{{statistic.WS_T_taj}}
-  </view>
+  <!-- <input type="text" placeholder="输入案由、关键词、法院、当事人、律师" bindtap="search"/> -->
+  <view class="container">今日新增：{{statistic.WS_T_taj}}</view>
 </scroll-view>

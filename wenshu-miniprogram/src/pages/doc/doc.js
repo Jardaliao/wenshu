@@ -1,4 +1,5 @@
 import { setDataSync } from "../../utils/utils"
+import { docDetail } from "../../utils/bussiness"
 
 Page({
     data: {
@@ -57,12 +58,17 @@ Page({
         }
     },
     async onLoad(e) {
-        const that = this
         this.computeScrollViewHeight()
         if (e.data) {
             const initData = JSON.parse(e.data)
             delete initData["__webviewId__"] // 不知道干啥用的 删掉它
             await setDataSync(this, { ...this.data, ...initData })
+            if (this.data.rowkey) { // 加载文书
+                const resp = await docDetail({docId: this.data.rowkey})
+                // console.log(resp) 
+                await this.update(resp.data.result)
+                return
+            }
         }
         await this.update(this.data.result1)
     },

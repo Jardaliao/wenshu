@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crypto-js": "^4.2.0"
+    "@miniprogram-component-plus/tabs": "^1.0.0",
+    "crypto-js": "^4.2.0",
+    "weui-miniprogram": "^1.3.1"
   }
 }
