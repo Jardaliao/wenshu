@@ -1,6 +1,21 @@
-<!--pages/search.wxml-->
-<navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <input type="text" value="{{query.input}}" bindinput="inputChange" placeholder="输入案由、关键词、法院、当事人、律师"/>
-  <button bindtap="search">搜索</button>
-</scroll-view>
+<!-- pages/search.wxml -->
+<navigation-bar title="裁判文书" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
+<mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
+  <mp-cells title="全文检索">
+    <mp-cell ext-class="weui-cell_select weui-cell_select-before">
+      <view slot="title" style="width: 105px">
+        <picker aria-role="listbox" bindchange="bindCountryCodeChange" value="{{dataSample.countryCodeIndex}}" range="{{dataSample.countryCodes}}">
+          <view class="weui-select">{{dataSample.countryCodes[dataSample.countryCodeIndex]}}</view>
+        </picker>
+      </view>
+      <input class="weui-input" placeholder="" />
+    </mp-cell>
+    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+      <view slot="title" class="weui-label">案由</view>
+      <picker bindchange="bindCountryChange" value="{{dataSample.countryIndex}}" range="{{dataSample.countries}}">
+        <view class="weui-select">{{dataSample.countries[dataSample.countryIndex]}}</view>
+      </picker>
+    </mp-cell>
+  </mp-cells>
+</mp-form>
