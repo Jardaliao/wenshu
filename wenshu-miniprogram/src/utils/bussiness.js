@@ -3,6 +3,17 @@ import config from './config'
 import { random, cipher } from './wenshu_raw';
 import jsencrypt from './custom_jsencrypt';
 
+export const quanwenjiansuo = [
+  { key: "s21", text: "全文" },
+  { key: "s22", text: "首部" },
+  { key: "s53", text: "当事人段" },
+  { key: "s23", text: "诉讼记录" },
+  { key: "s25", text: "事实" },
+  { key: "s26", text: "理由" },
+  { key: "s27", text: "判决结果" },
+  { key: "s28", text: "尾部" },
+  { key: "s54", text: "其他" }];
+
 /**
  * 获取文档信息接口
  * @param {*} param0 
