@@ -3,6 +3,8 @@ import config from './config'
 import { random, cipher } from './wenshu_raw';
 import jsencrypt from './custom_jsencrypt';
 
+
+// 全文检索类型
 export const quanwenjiansuo = [
   { key: "s21", text: "全文" },
   { key: "s22", text: "首部" },
@@ -13,6 +15,19 @@ export const quanwenjiansuo = [
   { key: "s27", text: "判决结果" },
   { key: "s28", text: "尾部" },
   { key: "s54", text: "其他" }];
+// 法院层级
+export const fayuancengji = ["全部", "最高法院", "高级法院", "中级法院", "基层法院"];
+// 案件类型
+export const anjianleixing = [];
+// 审判程序
+export const shenpanchengxu = [];
+// 文书类型
+export const wenshuleixing = [];
+// 案例等级
+export const anlidengji = [];
+// 公开类型 
+export const gongkaileixing = [];
+
 
 /**
  * 获取文档信息接口

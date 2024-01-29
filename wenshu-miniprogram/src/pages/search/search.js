@@ -1,19 +1,18 @@
 import { uuid, random } from "../../utils/wenshu_raw"
 import { setDataSync } from "../../utils/utils"
-import { currentUser, quanwenjiansuo } from "../../utils/bussiness"
+import { currentUser, quanwenjiansuo, fayuancengji } from "../../utils/bussiness"
 
 Page({
   data: {
     pageId: "",
     requestToken: "",
-
     query: {
       input: "",
       quanwenjiansuo,
       quanwenjiansuoIndex: 0,
       anyou: [],
       anyouIndex: 0,
-      fayuancengji: ["全部", "最高法院", "高级法院", "中级法院", "基层法院"],
+      fayuancengji,
       fayuancengjiIndex: 0,
       anjianleixing: ["全部", "管辖案件"],
       anjianleixingIndex: 0,
@@ -92,7 +91,7 @@ Page({
 
     wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify(this.data)}` })
   },
-  bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.detail.value }) },
-  bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.detail.value }) },
-  bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.detail.value }) }
+  bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index}) },
+  bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.currentTarget.dataset.index }) },
+  bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) }
 })

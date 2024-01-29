@@ -4,7 +4,43 @@ page {
   display: flex;
   flex-direction: column;
 }
+
 .scrollarea {
   flex: 1;
   overflow-y: hidden;
+}
+
+.op-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.op-title>.op-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.op-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.op-body>.op-body-item {
+  box-sizing: border-box;
+  margin: 4px;
+  padding: 2px 4px;
+  font-size: 0.9rem;
+  color: #A6A6A6;
+  border: 1px solid #A6A6A6;
+  border-radius: 4px;
+}
+
+.op-body>.op-body-item.active {
+  background-color: #9DD12C;
+  color: white;
+  border: 1px solid #9DD12C;
 }
