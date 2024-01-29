@@ -6,7 +6,9 @@ Page({
   data: {
     statistic: {
       WS_T_taj: "", // 今日新增
-    }
+    },
+    tabs: [],
+    activeTab: 0,
   },
   async onLoad() {
     const pageId = uuid() // 生成pageId，需要传给后面的列表页面用
@@ -19,6 +21,20 @@ Page({
 
     await currentUser({ pageId, requestToken, extra: {} }) // 保持Session？
 
+    const titles = ['全国判决书查询']
+    const tabs = titles.map(item => ({ title: item }))
+    this.setData({ tabs })
+
   },
-  search() { wx.navigateTo({ url: '/pages/search/search' }) }
+  search() { wx.navigateTo({ url: '/pages/search/search' }) },
+
+  onTabCLick(e) {
+    const index = e.detail.index
+    this.setData({ activeTab: index })
+  },
+
+  onChange(e) {
+    const index = e.detail.index
+    this.setData({ activeTab: index })
+  }
 })

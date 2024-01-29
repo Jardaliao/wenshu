@@ -1,6 +1,52 @@
-<!--pages/search.wxml-->
-<navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <input type="text" value="{{query.input}}" bindinput="inputChange" placeholder="输入案由、关键词、法院、当事人、律师"/>
-  <button bindtap="search">搜索</button>
-</scroll-view>
+<!-- pages/search.wxml -->
+<navigation-bar title="裁判文书" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
+<mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
+  <mp-cells>
+    <!-- 1 全文检索 -->
+    <mp-cell ext-class="weui-cell_select weui-cell_select-before">
+      <view slot="title" style="width: 105px">
+        <picker aria-role="listbox" bindchange="bindQuanwenjiansuoChange" value="{{query.quanwenjiansuoIndex}}" range="{{query.quanwenjiansuo}}" range-key="text">
+          <view class="weui-select">{{query.quanwenjiansuo[query.quanwenjiansuoIndex].text}}</view>
+        </picker>
+      </view>
+      <input class="weui-input" placeholder="全文检索" />
+    </mp-cell>
+    <!-- 2 案由 -->
+    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+      <view slot="title" class="weui-label">案由</view>
+      <picker bindchange="bindCountryChange" value="{{dataSample.countryIndex}}" range="{{dataSample.countries}}">
+        <view class="weui-select">{{dataSample.countries[dataSample.countryIndex]}}</view>
+      </picker>
+    </mp-cell>
+    <!-- 3 案件名称 -->
+    <mp-cell ext-class="">
+      <view slot="title" class="weui-label">案件名称</view>
+      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+    </mp-cell>
+    <!-- 4 案号 -->
+    <mp-cell ext-class="">
+      <view slot="title" class="weui-label">案号</view>
+      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+    </mp-cell>
+    <!-- 5 法院名称 -->
+    <mp-cell ext-class="">
+      <view slot="title" class="weui-label">法院名称</view>
+      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+    </mp-cell>
+    <!-- 6 法院层级 -->
+    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+      <view slot="title" class="weui-label">法院层级</view>
+      <picker aria-role="listbox" bindchange="bindFayuancengjiChange" value="{{query.fayuancengjiIndex}}" range="{{query.fayuancengji}}">
+        <view class="weui-select">{{query.fayuancengji[query.fayuancengjiIndex]}}</view>
+      </picker>
+    </mp-cell>
+    <!-- 7 案件类型 -->
+    <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+      <view slot="title" class="weui-label">案件类型</view>
+      <picker aria-role="listbox" bindchange="bindAnjianleixingChange" value="{{query.anjianleixingIndex}}" range="{{query.anjianleixing}}">
+        <view class="weui-select">{{query.anjianleixing[query.anjianleixingIndex]}}</view>
+      </picker>
+    </mp-cell>
+  </mp-cells>
+</mp-form>

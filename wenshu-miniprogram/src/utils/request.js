@@ -27,7 +27,7 @@ export function request({ url, method, data, header }) {
       method, url, data, header,
       success: function (body) {
         if (body?.data?.code === "NOT_LOGIN") {
-          console.log(`清除所有Storage`)
+          console.log(`清除所有Cookie`)
           wx.removeStorageSync("cookie")
           reject(body)
           return

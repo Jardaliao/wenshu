@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/search/search",
     "pages/index/index",
     "pages/list/list",
-    "pages/search/search",
     "pages/doc/doc"
   ],
   "window": {
@@ -21,8 +21,5 @@
   },
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
-  "useExtendedLib": {
-    "weui": true
-  }
+  "lazyCodeLoading": "requiredComponents"
 }
