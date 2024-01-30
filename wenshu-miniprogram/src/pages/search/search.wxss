@@ -1,13 +1,12 @@
 /* pages/search.wxss */
-page {
+.page {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .scrollarea {
-  flex: 1;
-  overflow-y: hidden;
+  height: 600px;
 }
 
 .op-title {
@@ -43,4 +42,9 @@ page {
   background-color: #9DD12C;
   color: white;
   border: 1px solid #9DD12C;
+}
+
+.cprq {
+  display: flex;
+  flex-direction: row;
 }

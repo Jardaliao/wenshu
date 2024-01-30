@@ -1,23 +1,25 @@
 <!-- pages/search.wxml -->
-<navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
-<mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
-  <mp-cells>
-    <!-- 1 全文检索 -->
-    <mp-cell>
-      <view class="op-title">
-        <view>全文检索</view>
-        <view class="op-actions">
-          <!-- <span>展开</span> -->
-        </view>
-      </view>
-      <view class="op-body">
-        <view wx:for="{{query.quanwenjiansuo}}" wx:key="key" class="op-body-item {{index === query.quanwenjiansuoIndex? 'active':''}}" bindtap="bindQuanwenjiansuoChange" data-index="{{index}}">
-          {{item.text}}
-        </view>
-      </view>
-    </mp-cell>
-    <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-before">
+<view class="page">
+  <navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  <mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
+  <scroll-view class="scrollarea" type="list" scroll-y>
+    <mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
+      <mp-cells>
+        <!-- 1 全文检索 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>全文检索</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.qw}}" wx:key="key" class="op-body-item {{index === query.quanwenjiansuoIndex? 'active':''}}" bindtap="bindQuanwenjiansuoChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-before">
       <view slot="title" style="width: 105px">
         <picker aria-role="listbox" bindchange="bindQuanwenjiansuoChange" value="{{query.quanwenjiansuoIndex}}" range="{{query.quanwenjiansuo}}" range-key="text">
           <view class="weui-select">{{query.quanwenjiansuo[query.quanwenjiansuoIndex].text}}</view>
@@ -25,67 +27,151 @@
       </view>
       <input class="weui-input" placeholder="全文检索" />
     </mp-cell> -->
-    <!-- 2 案由 -->
-    <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-after">
-      <view slot="title" class="weui-label">案由</view>
-      <picker bindchange="bindCountryChange" value="{{dataSample.countryIndex}}" range="{{dataSample.countries}}">
-        <view class="weui-select">{{dataSample.countries[dataSample.countryIndex]}}</view>
-      </picker>
-    </mp-cell> -->
-    <!-- 3 案件名称 -->
-    <mp-cell ext-class="">
-      <view slot="title" class="weui-label">案件名称</view>
-      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
-    </mp-cell>
-    <!-- 4 案号 -->
-    <mp-cell ext-class="">
-      <view slot="title" class="weui-label">案号</view>
-      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
-    </mp-cell>
-    <!-- 5 法院名称 -->
-    <mp-cell ext-class="">
-      <view slot="title" class="weui-label">法院名称</view>
-      <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
-    </mp-cell>
-    <!-- 6 法院层级 -->
-    <mp-cell>
-      <view class="op-title">
-        <view>法院层级</view>
-        <view class="op-actions">
-          <!-- <span>展开</span> -->
-        </view>
-      </view>
-      <view class="op-body">
-        <view wx:for="{{query.fayuancengji}}" wx:key="key" class="op-body-item {{index === query.fayuancengjiIndex? 'active':''}}" bindtap="bindFayuancengjiChange" data-index="{{index}}">
-          {{item}}
-        </view>
-      </view>
-    </mp-cell>
-    <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+        <!-- 2 案由 -->
+        <mp-cell ext-class="weui-cell_select weui-cell_select-after">
+          <view slot="title" class="weui-label">案由</view>
+          <picker bindchange="bindCountryChange" value="{{dataSample.countryIndex}}" range="{{dataSample.countries}}">
+            <view class="weui-select">{{dataSample.countries[dataSample.countryIndex]}}</view>
+          </picker>
+        </mp-cell>
+        <!-- 3 案件名称 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">案件名称</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 4 案号 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">案号</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 5 法院名称 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">法院名称</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 6 法院层级 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>法院层级</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.fycj}}" wx:key="key" class="op-body-item {{index === query.fayuancengjiIndex? 'active':''}}" bindtap="bindFayuancengjiChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-after">
       <view slot="title" class="weui-label">法院层级</view>
       <picker aria-role="listbox" bindchange="bindFayuancengjiChange" value="{{query.fayuancengjiIndex}}" range="{{query.fayuancengji}}">
         <view class="weui-select">{{query.fayuancengji[query.fayuancengjiIndex]}}</view>
       </picker>
     </mp-cell> -->
-    <!-- 7 案件类型 -->
-    <mp-cell>
-      <view class="op-title">
-        <view>案件类型</view>
-        <view class="op-actions">
-          <!-- <span>展开</span> -->
-        </view>
-      </view>
-      <view class="op-body">
-        <view wx:for="{{query.anjianleixing}}" wx:key="key" class="op-body-item {{index === query.anjianleixingIndex? 'active':''}}" bindtap="bindAnjianleixingChange" data-index="{{index}}">
-          {{item}}
-        </view>
-      </view>
-    </mp-cell>
-    <!-- <mp-cell ext-class="weui-cell_select weui-cell_select-after">
-      <view slot="title" class="weui-label">案件类型</view>
-      <picker aria-role="listbox" bindchange="bindAnjianleixingChange" value="{{query.anjianleixingIndex}}" range="{{query.anjianleixing}}">
-        <view class="weui-select">{{query.anjianleixing[query.anjianleixingIndex]}}</view>
-      </picker>
-    </mp-cell> -->
-  </mp-cells>
-</mp-form>
+        <!-- 7 案件类型 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>案件类型</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.ajlx}}" wx:key="key" class="op-body-item {{index === query.anjianleixingIndex? 'active':''}}" bindtap="bindAnjianleixingChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- 8 审判程序 -->
+        <!-- 9 文书类型 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>文书类型</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.wslx}}" wx:key="key" class="op-body-item {{index === query.wenshuleixingIndex? 'active':''}}" bindtap="bindWenshuleixingChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- 10 裁判日期 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">裁判日期</view>
+          <view class="cprq">
+            <picker mode="date" value="{{query.cprqStart}}" bindchange="bindCprqStartChange">
+              <input class="weui-input" value="{{query.cprqStart}}" type="text" placeholder="开始日期" />
+            </picker>
+            <!-- <view>至</view> -->
+            <picker mode="date" value="{{query.cprqEnd}}" bindchange="bindCprqEndChange">
+              <input class="weui-input" value="{{query.cprqEnd}}" type="text" placeholder="结束日期" />
+            </picker>
+          </view>
+        </mp-cell>
+        <!-- 11 案例等级 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>案例等级</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.aldj}}" wx:key="key" class="op-body-item {{index === query.anlidengjiIndex? 'active':''}}" bindtap="bindAnlidengjiChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- 12 公开类型 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>公开类型</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <view wx:for="{{dic.gklx}}" wx:key="key" class="op-body-item {{index === query.gongkaileixingIndex? 'active':''}}" bindtap="bindGongkaileixingChange" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </view>
+        </mp-cell>
+        <!-- 13 审判人员 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">审判人员</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 14 当事人 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">当事人</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 15 律所 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">律所</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 16 律师 -->
+        <mp-cell ext-class="">
+          <view slot="title" class="weui-label">律师</view>
+          <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="" />
+        </mp-cell>
+        <!-- 17 法律依据 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>法律依据</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <textarea value="" placeholder="例如：请输入《中华人民共和国民事诉讼法》第一百七十条" />
+          </view>
+        </mp-cell>
+      </mp-cells>
+    </mp-form>
+  </scroll-view>
+</view>

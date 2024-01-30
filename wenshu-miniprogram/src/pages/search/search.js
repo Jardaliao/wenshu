@@ -1,40 +1,36 @@
 import { uuid, random } from "../../utils/wenshu_raw"
 import { setDataSync } from "../../utils/utils"
 import { currentUser, quanwenjiansuo, fayuancengji } from "../../utils/bussiness"
+import { dic } from "../../utils/wenshu_dict"
 
 Page({
   data: {
     pageId: "",
     requestToken: "",
+    dic,
     query: {
       input: "",
-      quanwenjiansuo,
       quanwenjiansuoIndex: 0,
-      anyou: [],
-      anyouIndex: 0,
-      fayuancengji,
       fayuancengjiIndex: 0,
-      anjianleixing: ["全部", "管辖案件"],
-      anjianleixingIndex: 0,
+      anjianleixingIndex: -1,
+      wenshuleixingIndex: 0,
+      cprqStart: '',
+      cprqEnd: '',
+      anlidengjiIndex: -1,
+      gongkaileixingIndex: -1,
     },
     dataSample: {
       showTopTips: false,
-      radioItems: [
-        { name: 'cell standard', value: '0', checked: true },
-        { name: 'cell standard', value: '1' }
-      ],
-      checkboxItems: [
-        { name: 'standard is dealt for u.', value: '0', checked: true },
-        { name: 'standard is dealicient for u.', value: '1' }
-      ],
-      items: [
-        { name: 'USA', value: '美国' },
-        { name: 'CHN', value: '中国', checked: 'true' },
-        { name: 'BRA', value: '巴西' },
-        { name: 'JPN', value: '日本' },
-        { name: 'ENG', value: '英国' },
-        { name: 'TUR', value: '法国' },
-      ],
+      radioItems: [{ name: 'cell standard', value: '0', checked: true }, { name: 'cell standard', value: '1' }],
+      checkboxItems: [{
+        name: 'standard is dealt for u.',
+        value: '0',
+        checked: true
+      }, { name: 'standard is dealicient for u.', value: '1' }],
+      items: [{ name: 'USA', value: '美国' }, { name: 'CHN', value: '中国', checked: 'true' }, {
+        name: 'BRA',
+        value: '巴西'
+      }, { name: 'JPN', value: '日本' }, { name: 'ENG', value: '英国' }, { name: 'TUR', value: '法国' },],
 
       date: "2016-09-01",
       time: "12:01",
@@ -49,30 +45,22 @@ Page({
       accountIndex: 0,
 
       isAgree: false,
-      formData: {
-
-      },
+      formData: {},
       rules: [{
-        name: 'radio',
-        rules: { required: false, message: '单选列表是必选项' },
+        name: 'radio', rules: { required: false, message: '单选列表是必选项' },
       }, {
-        name: 'checkbox',
-        rules: { required: true, message: '多选列表是必选项' },
+        name: 'checkbox', rules: { required: true, message: '多选列表是必选项' },
       }, {
-        name: 'name',
-        rules: { required: true, message: '请输入姓名' },
+        name: 'name', rules: { required: true, message: '请输入姓名' },
       }, {
-        name: 'qq',
-        rules: { required: true, message: 'qq必填' },
+        name: 'qq', rules: { required: true, message: 'qq必填' },
       }, {
         name: 'mobile',
         rules: [{ required: true, message: 'mobile必填' }, { mobile: true, message: 'mobile格式不对' }],
       }, {
-        name: 'vcode',
-        rules: { required: true, message: '验证码必填' },
+        name: 'vcode', rules: { required: true, message: '验证码必填' },
       }, {
-        name: 'idcard',
-        rules: {
+        name: 'idcard', rules: {
           validator: function (rule, value, param, modeels) {
             if (!value || value.length !== 18) {
               return 'idcard格式不正确'
@@ -91,7 +79,11 @@ Page({
 
     wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify(this.data)}` })
   },
-  bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index}) },
+  bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index }) },
   bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.currentTarget.dataset.index }) },
-  bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) }
+  bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) },
+  bindAnlidengjiChange(e) { this.setData({ ['query.anlidengjiIndex']: e.currentTarget.dataset.index }) },
+  bindGongkaileixingChange(e) { this.setData({ ['query.gongkaileixingIndex']: e.currentTarget.dataset.index }) },
+  bindCprqStartChange(e) { this.setData({ ['query.cprqStart']: e.detail.value }) },
+  bindCprqEndChange(e) { this.setData({ ['query.cprqEnd']: e.detail.value }) },
 })
