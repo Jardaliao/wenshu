@@ -2,6 +2,7 @@
 <view class="page">
   <navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
   <mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
+  <tree dataTree="{{dataTree}}" bind:select="handleClick"></tree>
   <scroll-view class="scrollarea" type="list" scroll-y>
     <mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
       <mp-cells>

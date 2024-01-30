@@ -1,0 +1,18 @@
+<view wx:for="{{tree}}" wx:key="id" class="tree_container">
+  <!-- 一级菜单 -->
+  <view style="margin-left: {{treeListIndex*40}}rpx" class="tree-item">
+    <view class="tree-item-onOff" wx:if="{{item.children && item.children.length > 0}}" bindtap="isOpen" data-index="{{index}}">
+      <image src="../../assets/images/u1490.svg" class="{{item.open ? 'expand' : 'collapse'}}" />
+    </view>
+    <view class="tree-item-onOff" wx:else>
+    </view>
+    <view class="tree-item-name" bindtap="select" data-item="{{item}}" data-index="{{index}}">
+      <image wx:if="{{item.checked === 1}}" src="../../assets/images/choice.png" class="check-box"></image>
+      <image wx:if="{{item.checked === 0}}" src="../../assets/images/unchoice.png" class="check-box"></image>
+      <image wx:if="{{item.checked === -1}}" src="../../assets/images/unfullChoice.png" class="check-box"></image>
+      <text class="tree-item-title {{item.checked === 1 ? 'tree-item-name-select' : '' }}">{{item.name}}</text>
+    </view>
+  </view>
+  <!-- 二级菜单 -->
+  <tree wx:if="{{item.children && item.children.length > 0 && item.open }}" data-parent="{{item}}" dataTree='{{ item.children }}' isOpenAll="{{isOpenAll}}" treeListIndex="{{treeListIndex+1}}" catch:select="handleSelect" />
+</view>
