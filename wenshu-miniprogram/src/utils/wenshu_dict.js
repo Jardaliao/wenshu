@@ -9758,16 +9758,36 @@ for (let item of dic.ay) {
   }
   dic.ayChildMap[item["parent"]].push(item);
 }
-// 审判程序
-export const spcxMap = {};
-var spcxArr = dic.spcx;
-for (var key in spcxArr) {
-  var values = dic.spcx[key];
-  if (typeof values !== "string") {
-    for (var i = 0; i < values.length; i++) {
-      spcxMap[values[i]["id"]] = values[i]["text"];
+dic.ayTree = arr2Tree(dic.ay.slice(1));
+// 审判程序是根据案件类型来的
+dic.spcxTrees = {};
+for (let { code, name } of dic.ajlx) {
+  dic.spcxTrees[code] = arr2Tree(dic.spcx[code]);
+}
+
+/**
+ * 数组转树
+ * @param {*} arr 
+ * @param {function(Object)} filter 过滤每行
+ */
+function arr2Tree(arr, filter) {
+  const id2Obj = {}, tree = [];
+  for (let { id, parent, text } of arr) {
+    if (filter && filter({ id, parent, text })) continue;
+    if (!(id in id2Obj)) { // 没有则新建
+      id2Obj[id] = { id, name: text, children: [] };
+      if (parent === '#') {
+        tree.push(id2Obj[id]); // parent是#的也是父节点
+      } else {
+        if (parent in id2Obj) {
+          id2Obj[parent].children.push(id2Obj[id]); // 找到父节点则添加到父节点
+        } else {
+          tree.push(id2Obj[id]) // 没有父节点说明是根节点
+        }
+      }
     }
   }
+  return tree;
 }
 
 // {"fy":[{"code":"121","name":"北京市东城区人民法院","id":"13","parentid":"12"},{"code":"124","name":"北京市丰台区人民法院","id":"16","parentid":"12"},{"code":"12A","name":"北京市西城区人民法院","id":"3","parentid":"12"},{"code":"12B","name":"北京市房山区人民法院","id":"8","parentid":"12"},{"code":"12C","name":"北京市大兴区人民法院","id":"10","parentid":"12"}],"provinceCode":"12"}

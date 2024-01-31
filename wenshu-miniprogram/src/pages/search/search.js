@@ -69,81 +69,6 @@ Page({
         },
       }]
     },
-    dataTree: [
-      {
-        id: 11,
-        name: '一级A',
-        children: [
-          {
-            id: 13,
-            name: '二级A-a',
-            children: [
-              {
-                id: 16,
-                name: '三级A-a-1'
-              }
-            ]
-          },
-          {
-            id: 14,
-            name: '二级A-b',
-          }
-        ]
-      },
-      {
-        id: 12,
-        name: '一级B',
-        children: [
-          {
-            id: 15,
-            name: '二级B-a',
-          }
-        ]
-      },
-      {
-        id: 0,
-        name: '一级C',
-        children: [
-          {
-            id: 1,
-            name: '二级C-a',
-            children: [{
-              id: 4,
-              name: '三级C-a-1',
-              children: [{
-                id: 9,
-                name: '四级C-a-1-1'
-              }, {
-                id: 10,
-                name: '四级C-a-1-2'
-              }]
-            }]
-          },
-          {
-            id: 2,
-            name: '二级C-b',
-            children: [{
-              id: 5,
-              name: '三级C-b-1'
-            }, {
-              id: 6,
-              name: '三级C-b-2'
-            }]
-          },
-          {
-            id: 3,
-            name: '二级C-c',
-            children: [{
-              id: 7,
-              name: '三级C-c-1'
-            }, {
-              id: 8,
-              name: '三级C-c-2'
-            }]
-          }
-        ]
-      }
-    ]
   },
   inputChange(e) { this.setData({ 'query.input': e.detail.value }) },
   async search() {
@@ -155,6 +80,14 @@ Page({
     wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify(this.data)}` })
   },
   bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index }) },
+  async bindAnyouChange(e) {
+    console.log(e.detail);
+    if (e.detail.idList.length > 1) {
+      await wx.hideToast();
+      await wx.showToast({ title: '请选择单个案由', icon: 'error', mask: true, duration: 2000 });
+      return;
+    }
+  },
   bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.currentTarget.dataset.index }) },
   bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) },
   bindAnlidengjiChange(e) { this.setData({ ['query.anlidengjiIndex']: e.currentTarget.dataset.index }) },

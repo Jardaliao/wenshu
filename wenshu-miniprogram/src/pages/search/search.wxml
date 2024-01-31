@@ -2,7 +2,6 @@
 <view class="page">
   <navigation-bar title="搜索" back="{{true}}" color="black" background="#FFF"></navigation-bar>
   <mp-searchbar class="searchbar" value="{{query.input}}" placeholder="输入案由、关键词、法院、当事人、律师"></mp-searchbar>
-  <tree dataTree="{{dataTree}}" bind:select="handleClick"></tree>
   <scroll-view class="scrollarea" type="list" scroll-y>
     <mp-form id="form" rules="{{dataSample.rules}}" models="{{dataSample.formData}}">
       <mp-cells>
@@ -11,7 +10,7 @@
           <view class="op-title">
             <view>全文检索</view>
             <view class="op-actions">
-              <!-- <span>展开</span> -->
+              <span>{{dic.qw[query.quanwenjiansuoIndex].name}}</span>
             </view>
           </view>
           <view class="op-body">
@@ -29,11 +28,16 @@
       <input class="weui-input" placeholder="全文检索" />
     </mp-cell> -->
         <!-- 2 案由 -->
-        <mp-cell ext-class="weui-cell_select weui-cell_select-after">
-          <view slot="title" class="weui-label">案由</view>
-          <picker bindchange="bindCountryChange" value="{{dataSample.countryIndex}}" range="{{dataSample.countries}}">
-            <view class="weui-select">{{dataSample.countries[dataSample.countryIndex]}}</view>
-          </picker>
+        <mp-cell>
+          <view class="op-title">
+            <view>案由</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <tree dataTree="{{dic.ayTree}}" bind:select="bindAnyouChange"></tree>
+          </view>
         </mp-cell>
         <!-- 3 案件名称 -->
         <mp-cell ext-class="">
@@ -85,6 +89,17 @@
           </view>
         </mp-cell>
         <!-- 8 审判程序 -->
+        <mp-cell>
+          <view class="op-title">
+            <view>审判程序</view>
+            <view class="op-actions">
+              <!-- <span>展开</span> -->
+            </view>
+          </view>
+          <view class="op-body">
+            <tree dataTree="{{dic.spcxTrees[dic.ajlx[query.anjianleixingIndex].code]}}" bind:select="handleClick"></tree>
+          </view>
+        </mp-cell>
         <!-- 9 文书类型 -->
         <mp-cell>
           <view class="op-title">
@@ -169,7 +184,7 @@
             </view>
           </view>
           <view class="op-body">
-            <textarea value="" placeholder="例如：请输入《中华人民共和国民事诉讼法》第一百七十条" />
+            <textarea value="" style="width: 100%;" placeholder="例如：请输入《中华人民共和国民事诉讼法》第一百七十条" />
           </view>
         </mp-cell>
       </mp-cells>
