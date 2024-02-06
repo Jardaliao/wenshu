@@ -54,7 +54,11 @@ Component({
     // 选择
     async select(e) {
       let item = e.currentTarget.dataset.item
-      if (this.properties.invalidSelect && await this.properties.invalidSelect(item)) {
+      let allChoice = this.getAllChoiceId(this.data.tree)
+      if (this.properties.invalidSelect
+        && await this.properties.invalidSelect({
+          node: { ...item, checked: item.checked == 1 ? 0 : 1 }, allChoice
+        })) {
         return;
       }
       item = this._handleClickItem(item)

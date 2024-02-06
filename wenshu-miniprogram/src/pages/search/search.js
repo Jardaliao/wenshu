@@ -11,8 +11,10 @@ Page({
     query: {
       input: "",
       quanwenjiansuoIndex: 0,
+      anyouId: "",
       fayuancengjiIndex: 0,
       anjianleixingIndex: -1,
+      shenpanchengxuId: "",
       wenshuleixingIndex: 0,
       cprqStart: '',
       cprqEnd: '',
@@ -69,15 +71,28 @@ Page({
         },
       }]
     },
-    multipleSelect: async (item) => {
-      if (item.children && item.children.length) {
-        await wx.hideToast();
+    scrollStart: 200,
+    multipleSelect: async (e) => {
+      // console.log(e);
+      const { node: { id, children, checked }, allChoice } = e;
+      if (checked && (allChoice?.length || children?.length)) {
         await wx.showToast({ title: '不支持选择多个', icon: 'error', mask: true, duration: 2000 });
         return true
       }
       return false;
     },
 
+  },
+  async onLoad(e) {
+    const that = this;
+    let query = wx.createSelectorQuery();
+    query.select('.searchbar').boundingClientRect(rect => {
+      if (rect) {
+        that.setData({['scrollStart']: rect.bottom})
+      } else {
+        console.error('未找到元素');
+      }
+    }).exec();
   },
   inputChange(e) { this.setData({ 'query.input': e.detail.value }) },
   async search() {
@@ -90,17 +105,26 @@ Page({
   },
   bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index }) },
   async bindAnyouChange(e) {
-    console.log(e.detail);
-    if (e.detail.idList.length > 1) {
-      await wx.hideToast();
-      await wx.showToast({ title: '请选择单个案由', icon: 'error', mask: true, duration: 2000 });
+    // console.log(e.detail);
+    if (e?.detail?.idList?.length) {
+      setDataSync(this, { ['query.anyouId']: e.detail.idList[0] })
+      return
+    }
+    setDataSync(this, { ['query.anyouId']: "" })
+  },
+  async bindShenpanchengxuChange(e) {
+    // console.log(e.detail);
+    if (e?.detail?.idList?.length) {
+      setDataSync(this, { ['query.shenpanchengxuId']: e.detail.idList[0] });
       return;
     }
+    setDataSync(this, { ['query.shenpanchengxuId']: "" })
   },
   bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.currentTarget.dataset.index }) },
   bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) },
   bindAnlidengjiChange(e) { this.setData({ ['query.anlidengjiIndex']: e.currentTarget.dataset.index }) },
   bindGongkaileixingChange(e) { this.setData({ ['query.gongkaileixingIndex']: e.currentTarget.dataset.index }) },
+  bindWenshuleixingChange(e) { this.setData({ ['query.wenshuleixingIndex']: e.currentTarget.dataset.index }) },
   bindCprqStartChange(e) { this.setData({ ['query.cprqStart']: e.detail.value }) },
   bindCprqEndChange(e) { this.setData({ ['query.cprqEnd']: e.detail.value }) },
 })

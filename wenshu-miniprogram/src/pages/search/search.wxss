@@ -6,7 +6,7 @@
 }
 
 .scrollarea {
-  height: 600px;
+  height: 300px;
 }
 
 .op-title {
