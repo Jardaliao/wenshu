@@ -14,6 +14,9 @@ Component({
     isOpenAll: { // 是否展开全部节点
       type: Boolean,
       value: false
+    },
+    invalidSelect: { // 是否是非法的选择
+      type: Function
     }
   },
   observers: {
@@ -49,8 +52,11 @@ Component({
       return nodes
     },
     // 选择
-    select(e) {
+    async select(e) {
       let item = e.currentTarget.dataset.item
+      if (this.properties.invalidSelect && await this.properties.invalidSelect(item)) {
+        return;
+      }
       item = this._handleClickItem(item)
       // console.log('当前节点:', item)
       this.data.tree = this._updateTree(this.data.tree, item)

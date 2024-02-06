@@ -14,5 +14,5 @@
     </view>
   </view>
   <!-- 二级菜单 -->
-  <tree wx:if="{{item.children && item.children.length > 0 && item.open }}" data-parent="{{item}}" dataTree='{{ item.children }}' isOpenAll="{{isOpenAll}}" treeListIndex="{{treeListIndex+1}}" catch:select="handleSelect" />
+  <tree wx:if="{{item.children && item.children.length > 0 && item.open }}" invalidSelect="{{invalidSelect}}" data-parent="{{item}}" dataTree='{{ item.children }}' isOpenAll="{{isOpenAll}}" treeListIndex="{{treeListIndex+1}}" catch:select="handleSelect" />
 </view>

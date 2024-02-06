@@ -69,6 +69,15 @@ Page({
         },
       }]
     },
+    multipleSelect: async (item) => {
+      if (item.children && item.children.length) {
+        await wx.hideToast();
+        await wx.showToast({ title: '不支持选择多个', icon: 'error', mask: true, duration: 2000 });
+        return true
+      }
+      return false;
+    },
+
   },
   inputChange(e) { this.setData({ 'query.input': e.detail.value }) },
   async search() {

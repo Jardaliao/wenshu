@@ -36,7 +36,7 @@
             </view>
           </view>
           <view class="op-body">
-            <tree dataTree="{{dic.ayTree}}" bind:select="bindAnyouChange"></tree>
+            <tree dataTree="{{dic.ayTree}}" invalidSelect="{{multipleSelect}}" bind:select="bindAnyouChange"></tree>
           </view>
         </mp-cell>
         <!-- 3 案件名称 -->
