@@ -48,3 +48,20 @@
   display: flex;
   flex-direction: row;
 }
+
+.footer {
+  display: flex;
+  flex-direction: row;
+
+  border-top: 1px solid #eee;
+}
+
+.footer>view {
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px 0;
+}
