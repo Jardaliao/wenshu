@@ -5,9 +5,9 @@ import { dic } from "../../utils/wenshu_dict"
 
 Page({
   data: {
+    dic,
     pageId: "",
     requestToken: "",
-    dic,
     query: {
       quanwenjiansuo: "",
       quanwenjiansuoIndex: 0,
@@ -112,10 +112,16 @@ Page({
   async search() {
     const pageId = uuid() // 生成pageId，需要传给后面的列表页面用
     const requestToken = random() // 生成requestToken，需要传给后面的列表页面用
-    await currentUser({ pageId, requestToken, extra: { s21: this.data.query.input } })
-    setDataSync(this, { pageId, requestToken })
+    await currentUser({
+      pageId, requestToken,
+      // extra: { s21: this.data.query.input }
+    })
+    setDataSync(this, {
+      ['pageId']: pageId,
+      ['requestToken']: requestToken
+    })
 
-    wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify(this.data)}` })
+    wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify({ query: this.data.query, pageId, requestToken })}` })
   },
   bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index }) },
   async bindAnyouChange(e) {

@@ -1,5 +1,6 @@
 import { queryDoc } from "../../utils/bussiness";
 import { setDataSync } from "../../utils/utils";
+import { dic } from "../../utils/wenshu_dict"
 
 Page({
   data: {
@@ -7,19 +8,19 @@ Page({
     pageId: "", // 维持在整个查询周期
     pageNum: 1,
     pageSize: 5,
-    query: { input: "罗翔" }, // 整个查找对象
+    query: {}, // 整个查找对象
     list: [], // 页面展示列表
     result: {}
   },
   //options(Object)
   async onLoad(options) {
     this.computeScrollViewHeight()
-    await this.nextPage()
     if (options.data) {
       const initData = JSON.parse(options.data)
       delete initData["__webviewId__"] // 不知道干啥用的 删掉它
       await setDataSync(this, { ...this.data, ...initData })
     }
+    await this.nextPage()
   },
   async reachLower() {
     const { count, pageNum, pageSize } = this.data
@@ -35,9 +36,9 @@ Page({
       queryDoc({
         pageId, requestToken,
         sortFields: "s50:desc",
-        queryCondition: JSON.stringify([{ key: "s21", value: query.input }]), // 暂定s21
+        queryCondition: JSON.stringify(this.query2Request(query)), // 暂定s21
       }, {
-        s21: query.input
+        // s21: query.input
       }).then(async resp => {
         console.log(resp)
         await setDataSync(that, { result: resp.data.result, pageNum: that.data.pageNum + 1, count: resp.data.result.queryResult.resultCount })
@@ -45,6 +46,31 @@ Page({
         resolve()
       }).catch(err => reject(err))
     })
+  },
+  /**
+   * 将查询表单对象转化为实际的查询条件
+   * 总共 17 个，一个个来
+   * @param {Object} query 查询表单对象
+   */
+  query2Request(query) {
+    const queryCondition = [];
+    // 1 全文检索
+    if (query.quanwenjiansuo) {
+      queryCondition.push({
+        key: dic.qw[query.quanwenjiansuoIndex].key,
+        value: query.quanwenjiansuo
+      })
+    }
+    // 2 案由
+    if (query.anyouId) {
+      queryCondition.push({
+        key: "s13",
+        value: query.anyouId
+      })
+    }
+
+    console.log(queryCondition)
+    return queryCondition
   },
   result2List(result) {
     const list = result.queryResult.resultList
@@ -64,7 +90,7 @@ Page({
     })
   },
   detail(e) {
-    const {rowkey} = e.currentTarget.dataset.item
+    const { rowkey } = e.currentTarget.dataset.item
     wx.navigateTo({ url: `/pages/doc/doc?data=${JSON.stringify({ rowkey })}` })
   }
 });

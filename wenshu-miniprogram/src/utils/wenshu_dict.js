@@ -195,31 +195,40 @@ export const area = [{
 export const dic = {
   "qw": [{
     "code": "1",
-    "name": "全文"
+    "name": "全文",
+    "key": "s21",
   }, {
     "code": "2",
-    "name": "首部"
+    "name": "首部",
+    "key": "s22",
   }, {
     "code": "3",
-    "name": "当事人段"
+    "name": "当事人段",
+    "key": "s53",
   }, {
     "code": "4",
-    "name": "诉讼记录"
+    "name": "诉讼记录",
+    "key": "s23",
   }, {
     "code": "5",
-    "name": "事实"
+    "name": "事实",
+    "key": "s25",
   }, {
     "code": "6",
-    "name": "理由"
+    "name": "理由",
+    "key": "s26",
   }, {
     "code": "7",
-    "name": "判决结果"
+    "name": "判决结果",
+    "key": "s27",
   }, {
     "code": "8",
-    "name": "尾部"
+    "name": "尾部",
+    "key": "s28",
   }, {
     "code": "255",
-    "name": "其他"
+    "name": "其他",
+    "key": "s54",
   }],
   "fycj": [{
     "code": "0",
