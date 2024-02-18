@@ -15,7 +15,7 @@ Page({
       anjianmingcheng: "",
       anhao: "",
       fayuanmingcheng: "",
-      fayuancengjiIndex: 0,
+      fayuancengjiIndex: -1,
       anjianleixingIndex: -1,
       shenpanchengxuId: "",
       wenshuleixingIndex: 0,
@@ -141,7 +141,12 @@ Page({
     setDataSync(this, { ['query.shenpanchengxuId']: "" })
   },
   bindFayuancengjiChange(e) { this.setData({ ['query.fayuancengjiIndex']: e.currentTarget.dataset.index }) },
-  bindAnjianleixingChange(e) { this.setData({ ['query.anjianleixingIndex']: e.currentTarget.dataset.index }) },
+  bindAnjianleixingChange(e) {
+    this.setData({
+      ['query.anjianleixingIndex']: e.currentTarget.dataset.index,
+      ['query.shenpanchengxuId']: "",
+    })
+  },
   bindAnlidengjiChange(e) { this.setData({ ['query.anlidengjiIndex']: e.currentTarget.dataset.index }) },
   bindGongkaileixingChange(e) { this.setData({ ['query.gongkaileixingIndex']: e.currentTarget.dataset.index }) },
   bindWenshuleixingChange(e) { this.setData({ ['query.wenshuleixingIndex']: e.currentTarget.dataset.index }) },

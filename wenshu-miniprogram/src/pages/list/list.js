@@ -68,6 +68,43 @@ Page({
         value: query.anyouId
       })
     }
+    // 3 案件名称
+    if (query.anjianmingcheng) {
+       queryCondition.push({
+         key: "s1",
+         value: query.anjianmingcheng
+       })
+    }
+    // 4 案号
+    if (query.anhao) {
+      queryCondition.push({
+        key: "s7",
+        value: query.anhao
+      })
+    }
+    // 5 法院名称
+    if (query.fayuanmingcheng) {
+      queryCondition.push({
+        key: "s2",
+        value: query.fayuanmingcheng
+      })
+    }
+    // 6 法院层级
+    if (query.fayuancengjiIndex >= 0) {
+      queryCondition.push({
+        key: "s4",
+        value: dic.fycj[query.fayuancengjiIndex].code
+      })
+    }
+    // 7 案件类型
+    if (query.anjianleixingIndex >= 0) {
+      queryCondition.push({
+        key: "s8",
+        value: dic.ajlx[query.anjianleixingIndex].code
+      })
+    }
+    // 8 审判程序
+    
 
     console.log(queryCondition)
     return queryCondition
