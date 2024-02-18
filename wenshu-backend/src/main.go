@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"log"
@@ -10,6 +11,8 @@ import (
 	"os"
 	"sync"
 	"time"
+
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 var (
@@ -22,6 +25,8 @@ var (
 )
 
 func init() {
+	l := glog.New()
+	l.Info(context.TODO(), "123")
 	log.SetOutput(io.MultiWriter(os.Stdout, newFileOutput("/data/logs/jarda/wenshu", "server", "2006-01-02-15")))
 
 	var err error
