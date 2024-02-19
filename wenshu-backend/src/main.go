@@ -3,16 +3,19 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/gogf/gf/v2/os/glog"
 	"io"
-	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"os"
 	"sync"
 	"time"
+)
 
-	"github.com/gogf/gf/v2/os/glog"
+import (
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcfg"
 )
 
 var (
@@ -21,13 +24,21 @@ var (
 	WenshuUrl    *url.URL
 	WenshuProxy  *httputil.ReverseProxy
 
-	Now = func() string { return time.Now().Format("2006-01-02 15:04:05.000 ") }
+	Now       = func() string { return time.Now().Format("2006-01-02 15:04:05.000 ") }
+	profile   string
+	ApLog     *glog.Logger
+	ServerLog *glog.Logger
 )
 
 func init() {
-	l := glog.New()
-	l.Info(context.TODO(), "123")
-	log.SetOutput(io.MultiWriter(os.Stdout, newFileOutput("/data/logs/jarda/wenshu", "server", "2006-01-02-15")))
+	profile = os.Getenv("wenshu_profile")
+	if "" != profile {
+		g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName(fmt.Sprintf("config.%s.yaml", profile))
+	}
+	ApLog = g.Log("apLog")
+	ServerLog = g.Log("serverLog")
+
+	ApLog.Infof(context.TODO(), "程序启动，profile=%s", profile)
 
 	var err error
 	// 初始化代理对象
@@ -59,7 +70,7 @@ func main() {
 	http.HandleFunc("/waf_text_verify.html", WenshuProxy.ServeHTTP)                       // 验证码校验Ï
 
 	// 启动服务器，监听端口8080
-	log.Println("代理服务器已启动，监听端口9020...")
+	ApLog.Print(context.TODO(), "代理服务器已启动，监听端口9020...")
 	//if err := http.ListenAndServeTLS(
 	//	":9020",
 	//	"/opt/app-config/jarda/wenshu/keystore/wenshu.liaoxiaojie.cn.pem",
@@ -68,14 +79,14 @@ func main() {
 	//	log.Fatal(err)
 	//}
 	if err := http.ListenAndServe(":9020", nil); err != nil {
-		log.Fatal(err)
+		ApLog.Fatal(context.TODO(), err)
 	}
 }
 
 // makePreRequest 创建请求前置操作
 func makePreRequest(u *url.URL) func(*http.Request) {
 	return func(r *http.Request) {
-		log.Printf("收到请求 %s %s address=%s", r.Method, r.Host, r.RemoteAddr)
+		ServerLog.Infof(context.TODO(), "收到请求 %s %s address=%s", r.Method, r.Host, r.RemoteAddr)
 		r.URL.Scheme = u.Scheme
 		r.URL.Host = u.Host
 		r.Host = u.Host // 更改请求主机头以匹配目标服务器的主机
