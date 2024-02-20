@@ -8,6 +8,7 @@ Page({
     pageId: "", // 维持在整个查询周期
     pageNum: 1,
     pageSize: 5,
+    sortFields: 's50:desc',
     query: {}, // 整个查找对象
     list: [], // 页面展示列表
     result: {}
@@ -35,7 +36,7 @@ Page({
     return new Promise((resolve, reject) => {
       queryDoc({
         pageId, requestToken,
-        sortFields: "s50:desc",
+        sortFields: that.sortFields,
         queryCondition: JSON.stringify(this.query2Request(query)), // 暂定s21
       }, {
         // s21: query.input
@@ -70,10 +71,10 @@ Page({
     }
     // 3 案件名称
     if (query.anjianmingcheng) {
-       queryCondition.push({
-         key: "s1",
-         value: query.anjianmingcheng
-       })
+      queryCondition.push({
+        key: "s1",
+        value: query.anjianmingcheng
+      })
     }
     // 4 案号
     if (query.anhao) {
@@ -104,7 +105,75 @@ Page({
       })
     }
     // 8 审判程序
-    
+    if (query.shenpanchengxuId) {
+      queryCondition.push({
+        key: "s10",
+        value: query.shenpanchengxuId
+      })
+    }
+    // 9 文书类型
+    if (query.wenshuleixingIndex >= 0) {
+      queryCondition.push({
+        key: "s6",
+        value: dic.wslx[query.wenshuleixingIndex].code
+      })
+    }
+    // 10 裁判日期开始 & 结束时间
+    const cprqStart = query.cprqStart ? query.cprqStart : '1900-01-01',
+      cprqEnd = query.cprqEnd ? query.cprqEnd : '2099-01-01';
+    queryCondition.push({
+      key: "cprq",
+      value: `${cprqStart} TO ${cprqEnd}`
+    })
+    // 11 案例等级
+    if (query.anlidengjiIndex >= 0) {
+      queryCondition.push({
+        key: "s44",
+        value: dic.aldj[query.anlidengjiIndex].code
+      })
+    }
+    // 12 公开类型
+    if (query.gongkaileixingIndex >= 0) {
+      queryCondition.push({
+        key: "s43",
+        value: dic.gklx[query.gongkaileixingIndex].code
+      })
+    }
+    // 13 审判人员
+    if (query.shenpanrenyuan) {
+      queryCondition.push({
+        key: "s18",
+        value: query.shenpanrenyuan
+      })
+    }
+    // 14 当事人
+    if (query.dangshiren) {
+      queryCondition.push({
+        key: "s17",
+        value: query.dangshiren
+      })
+    }
+    // 15 律所
+    if (query.lvsuo) {
+      queryCondition.push({
+        key: "s20",
+        value: query.lvsuo
+      })
+    }
+    // 16 律师
+    if (query.lvshi) {
+      queryCondition.push({
+        key: "s19",
+        value: query.lvshi
+      })
+    }
+    // 17 法律依据
+    if (query.falvyiju) {
+      queryCondition.push({
+        key: "s29",
+        value: query.falvyiju
+      })
+    }
 
     console.log(queryCondition)
     return queryCondition

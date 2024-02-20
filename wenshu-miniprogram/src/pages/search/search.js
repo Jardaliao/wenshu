@@ -18,7 +18,7 @@ Page({
       fayuancengjiIndex: -1,
       anjianleixingIndex: -1,
       shenpanchengxuId: "",
-      wenshuleixingIndex: 0,
+      wenshuleixingIndex: -1,
       cprqStart: '',
       cprqEnd: '',
       anlidengjiIndex: -1,
