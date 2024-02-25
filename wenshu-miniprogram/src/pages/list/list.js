@@ -9,6 +9,15 @@ Page({
     pageNum: 1,
     pageSize: 5,
     sortFields: 's50:desc',
+    sortOps: [{
+      name: "法院层级",
+      key: 's50',
+      
+    }, {
+      name: "裁判日期"
+    }, {
+      name: "审判程序"
+    }],
     query: {}, // 整个查找对象
     list: [], // 页面展示列表
     result: {}
@@ -28,15 +37,16 @@ Page({
     if (count && pageNum * pageSize > count) {
       return
     }
+    console.log(pageNum)
     await this.nextPage()
   },
   nextPage() {
     const that = this
-    const { pageId, requestToken, query } = this.data
+    const { pageId, pageNum, requestToken, query } = this.data
     return new Promise((resolve, reject) => {
       queryDoc({
-        pageId, requestToken,
-        sortFields: that.sortFields,
+        pageId, pageNum, requestToken,
+        sortFields: that.data.sortFields,
         queryCondition: JSON.stringify(this.query2Request(query)), // 暂定s21
       }, {
         // s21: query.input
@@ -187,7 +197,7 @@ Page({
   },
   computeScrollViewHeight() {
     let query = wx.createSelectorQuery().in(this)
-    query.select('.searchbar').boundingClientRect()
+    query.select('.sort-area').boundingClientRect()
     query.exec(res => {
       // console.log(res) 
       const { top, height } = res[0]
