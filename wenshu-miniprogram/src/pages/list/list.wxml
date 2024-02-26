@@ -1,32 +1,30 @@
 <view class="wenshu-container">
-    <navigation-bar class="navigation" title="搜索结果" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-    <view class="sort-area">
-      <view></view>
-    </view>
-    <view class="page" data-weui-theme="{{theme}}">
-        <scroll-view type="list" scroll-y class="page-scroll-view" 
-        style='height: {{(scrollHeight ? scrollHeight : 600) + "px"}}'
-        bindscrolltolower="reachLower">
-            <view class="page__bd">
-                <view class="weui-panel" wx:for="{{list}}" wx:key="rowkey" data-item="{{item}}" bind:tap="detail">
-                    <!-- <view class="weui-panel__hd">"{{query.input}}"的搜索结果</view> -->
-                    <view class="weui-panel__bd">
-                        <view class="weui-media-box weui-media-box_text">
-                            <view class="weui-media-box__title weui-media-box__title_in-text title">
-                                {{item["1"]}}
-                            </view>
-                            <view class="weui-media-box__desc">{{item["26"]}}</view>
-                            <view class="weui-media-box__info">
-                                <view class="weui-media-box__info__meta">{{item["2"]}}</view>
-                                <view class="weui-media-box__info__meta">{{item["31"]}}</view>
-                                <!-- <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+  <navigation-bar class="navigation" title="搜索结果" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  <view class="sort-area">
+    <view class="{{index == sortFields ? 'active' : ''}}" wx:for="{{sortOps}}" bind:tap="sortChange" data-index="{{index}}">{{item['name']}}  {{item['asc'] ? '▲':'▼'}}</view>
+  </view>
+  <view class="page" data-weui-theme="{{theme}}">
+    <scroll-view type="list" scroll-y class="page-scroll-view" style='height: {{(scrollHeight ? scrollHeight : 600) + "px"}}' bindscrolltolower="reachLower">
+      <view class="page__bd">
+        <view class="weui-panel" wx:for="{{list}}" wx:key="rowkey" data-item="{{item}}" bind:tap="detail">
+          <!-- <view class="weui-panel__hd">"{{query.input}}"的搜索结果</view> -->
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text title">
+                {{item["1"]}}
+              </view>
+              <view class="weui-media-box__desc">{{item["26"]}}</view>
+              <view class="weui-media-box__info">
+                <view class="weui-media-box__info__meta">{{item["2"]}}</view>
+                <view class="weui-media-box__info__meta">{{item["31"]}}</view>
+                <!-- <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">
                                     {{item["7"]}}
                                 </view> -->
-                            </view>
-                        </view>
-                    </view>
-                </view>
+              </view>
             </view>
-        </scroll-view>
-    </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
 </view>

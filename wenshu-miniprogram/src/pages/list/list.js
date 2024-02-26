@@ -7,20 +7,37 @@ Page({
     theme: "light",
     pageId: "", // 维持在整个查询周期
     pageNum: 1,
-    pageSize: 5,
-    sortFields: 's50:desc',
+    pageSize: 10,
+    sortFields: 0,
     sortOps: [{
       name: "法院层级",
-      key: 's50',
-      
+      key: "s50",
+      asc: false, // 默认降序
     }, {
-      name: "裁判日期"
+      name: "裁判日期",
+      key: "s51",
+      asc: false,
     }, {
-      name: "审判程序"
+      name: "审判程序",
+      key: "s52",
+      asc: false,
     }],
     query: {}, // 整个查找对象
     list: [], // 页面展示列表
     result: {}
+  },
+  async sortChange(e) {
+    wx.showLoading({ title: '加载中', mask: true })
+    const { sortFields, sortOps } = this.data;
+    if (sortFields === e.currentTarget.dataset.index) { // 调整升降序
+      const { asc } = sortOps[sortFields];
+      await setDataSync(this, { [`sortOps[${sortFields}].asc`]: !asc })
+    } else { // 切换排序字段
+      await setDataSync(this, { ['sortFields']: e.currentTarget.dataset.index })
+    }
+    await setDataSync(this, { pageNum: 1, list: [], result: [] })
+    await this.nextPage()
+    wx.hideLoading()
   },
   //options(Object)
   async onLoad(options) {
@@ -37,7 +54,7 @@ Page({
     if (count && pageNum * pageSize > count) {
       return
     }
-    console.log(pageNum)
+    // console.log(pageNum)
     await this.nextPage()
   },
   nextPage() {
@@ -46,7 +63,7 @@ Page({
     return new Promise((resolve, reject) => {
       queryDoc({
         pageId, pageNum, requestToken,
-        sortFields: that.data.sortFields,
+        sortFields: `${that.data.sortOps[that.data.sortFields].key}:${that.data.sortOps[that.data.sortFields].asc ? "asc" : "desc"}`,
         queryCondition: JSON.stringify(this.query2Request(query)), // 暂定s21
       }, {
         // s21: query.input
