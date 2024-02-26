@@ -37,6 +37,8 @@ prepackage: build
 	done
 	@# 替换nfpm配置文件准备打包
 	@$(call replace, "nfpm.yaml", "build/nfpm.yaml")
+	@# 拷贝配置文件
+	@mkdir -p build/config && cp config* build/config/
 
 package: prepackage
 	@echo Packaging...
@@ -46,13 +48,13 @@ package: prepackage
 
 deploy: package
 	@echo Deploying...
-	@scp build/$(DebName) $(WorkDir)
+	@scp -o StrictHostKeyChecking=no build/$(DebName) $(WorkDir)
 
 install: deploy
 	@echo Installing...
-	@ssh $(Host) 'sudo dpkg -i $(DebName)'
+	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo dpkg -i $(DebName)'
 	@echo Restarting $(Package).service...
-	@ssh $(Host) 'sudo systemctl restart $(Package).service'
+	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo systemctl restart $(Package).service'
 
 
 # 默认的替换格式是sed 's/pattern/replacement/g' file1 > file2

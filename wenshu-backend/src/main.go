@@ -31,6 +31,7 @@ var (
 )
 
 func init() {
+	// 1 初始化环境变量，读取配置文件
 	profile = os.Getenv("wenshu_profile")
 	if "" != profile {
 		g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName(fmt.Sprintf("config.%s.yaml", profile))
@@ -40,6 +41,7 @@ func init() {
 
 	ApLog.Infof(context.TODO(), "程序启动，profile=%s", profile)
 
+	// 2 必要的代理设置
 	var err error
 	// 初始化代理对象
 	AccountUrl, err = url.Parse("https://account.court.gov.cn")
@@ -60,8 +62,21 @@ func init() {
 }
 
 func main() {
+	server := http.NewServeMux()
+	server.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		writer.Write([]byte("Hello World!"))
+	})
+	go func() {
+		if err := http.ListenAndServe(":80", server); err != nil {
+			ApLog.Errorf(context.TODO(), "%+v", err)
+		}
+	}()
+	go func() {
+		if err := http.ListenAndServe(":443", server); err != nil {
+			ApLog.Errorf(context.TODO(), "%+v", err)
+		}
+	}()
 	// 设置代理请求的处理函数
-
 	http.HandleFunc("/tongyiLogin/authorize", WenshuProxy.ServeHTTP)                      // 登录的初始接口，用于获取SESSION
 	http.HandleFunc("/oauth/authorize", AccountProxy.ServeHTTP)                           // 上一个接口响应的重定向地址，用于提权SESSION
 	http.HandleFunc("/api/login", AccountProxy.ServeHTTP)                                 // 登录接口，获取HOLDON KEY
@@ -70,7 +85,7 @@ func main() {
 	http.HandleFunc("/waf_text_verify.html", WenshuProxy.ServeHTTP)                       // 验证码校验Ï
 
 	// 启动服务器，监听端口8080
-	ApLog.Print(context.TODO(), "代理服务器已启动，监听端口9020...")
+	ApLog.Infof(context.TODO(), "代理服务器已启动，监听端口9020...")
 	//if err := http.ListenAndServeTLS(
 	//	":9020",
 	//	"/opt/app-config/jarda/wenshu/keystore/wenshu.liaoxiaojie.cn.pem",

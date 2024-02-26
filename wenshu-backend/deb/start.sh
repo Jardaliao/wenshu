@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export wenshu_profile=prod
+
 # 启动服务
 exec ./wenshu.bin &
 

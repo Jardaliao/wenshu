@@ -18,6 +18,8 @@ contents:
   dst: __SERVER_DIR__/wenshu.bin
   file_info:
     mode: 0755
+- src: config/
+  dst: __SERVER_DIR__/config
 overrides:
   deb:
     scripts:
