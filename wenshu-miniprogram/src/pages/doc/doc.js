@@ -73,11 +73,11 @@ Page({
         await this.update(this.data.result1)
     },
     async update(result) { // 将查询的结果 setData
-        const {qwContent} = result
         // 1 qwContent 是原始 html，需要把头和尾摘掉，这样 rich-text 才能识别
-        result.qwContent = qwContent.replace(/.*?<BODY>/, "").replace(/<\/BODY>.*/, "")
-            .replace(/.*?<body>/, "").replace(/<\/body>.*/, "")
-            // .replace(result.s7, result.s7 + "<br>")
+        result.qwContent = result.qwContent.replace(/.*?<body.*?>/sig, "")
+        console.log(result.qwContent)
+        result.qwContent = result.qwContent.replace(/<\/body>.*/sig, "")
+        console.log(result.qwContent)
         await setDataSync(this, { result })
     },
     computeScrollViewHeight() {
