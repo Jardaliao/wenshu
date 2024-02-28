@@ -1,4 +1,8 @@
 /* pages/search.wxss */
+page {
+  --main-bg-color: #9DD12C;
+}
+
 .page {
   height: 100vh;
   display: flex;
@@ -39,9 +43,9 @@
 }
 
 .op-body>.op-body-item.active {
-  background-color: #9DD12C;
+  background-color: var(--main-bg-color);
   color: white;
-  border: 1px solid #9DD12C;
+  border: 1px solid var(--main-bg-color);
 }
 
 .cprq {
@@ -57,11 +61,26 @@
 }
 
 .footer>view {
-  box-sizing: border-box;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 
   padding: 10px 0;
+}
+
+.footer>view>view {
+  padding: 5px 25%;
+  border-radius: 4px;
+  border: 1px solid var(--main-bg-color);
+
+}
+
+.footer>.reset>view {
+  color: var(--main-bg-color);
+}
+
+.footer>.search>view {
+  color: white;
+  background-color: var(--main-bg-color);
 }

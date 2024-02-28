@@ -191,7 +191,7 @@
     </mp-form>
   </scroll-view>
   <view class="footer">
-    <view>重置</view>
-    <view bindtap="search">搜索</view>
+    <view class="reset" bindtap="reset"><view>重置</view></view>
+    <view class="search" bindtap="search"><view>搜索</view></view>
   </view>
 </view>

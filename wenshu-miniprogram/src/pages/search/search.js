@@ -30,54 +30,25 @@ Page({
       falvyiju: "",
     },
     dataSample: {
-      showTopTips: false,
-      radioItems: [{ name: 'cell standard', value: '0', checked: true }, { name: 'cell standard', value: '1' }],
-      checkboxItems: [{
-        name: 'standard is dealt for u.',
-        value: '0',
-        checked: true
-      }, { name: 'standard is dealicient for u.', value: '1' }],
-      items: [{ name: 'USA', value: '美国' }, { name: 'CHN', value: '中国', checked: 'true' }, {
-        name: 'BRA',
-        value: '巴西'
-      }, { name: 'JPN', value: '日本' }, { name: 'ENG', value: '英国' }, { name: 'TUR', value: '法国' },],
-
-      date: "2016-09-01",
-      time: "12:01",
-
-      countryCodes: ["全文", "首部", "当事人段", "诉讼记录", "事实", "理由", "判决结果", "尾部", "其他"],
-      countryCodeIndex: 0,
-
-      countries: ["中国", "美国", "英国"],
-      countryIndex: 0,
-
-      accounts: ["微信号", "QQ", "Email"],
-      accountIndex: 0,
-
-      isAgree: false,
-      formData: {},
-      rules: [{
-        name: 'radio', rules: { required: false, message: '单选列表是必选项' },
-      }, {
-        name: 'checkbox', rules: { required: true, message: '多选列表是必选项' },
-      }, {
-        name: 'name', rules: { required: true, message: '请输入姓名' },
-      }, {
-        name: 'qq', rules: { required: true, message: 'qq必填' },
-      }, {
-        name: 'mobile',
-        rules: [{ required: true, message: 'mobile必填' }, { mobile: true, message: 'mobile格式不对' }],
-      }, {
-        name: 'vcode', rules: { required: true, message: '验证码必填' },
-      }, {
-        name: 'idcard', rules: {
-          validator: function (rule, value, param, modeels) {
-            if (!value || value.length !== 18) {
-              return 'idcard格式不正确'
-            }
-          }
-        },
-      }]
+      quanwenjiansuo: "",
+      quanwenjiansuoIndex: 0,
+      anyouId: "",
+      anjianmingcheng: "",
+      anhao: "",
+      fayuanmingcheng: "",
+      fayuancengjiIndex: -1,
+      anjianleixingIndex: -1,
+      shenpanchengxuId: "",
+      wenshuleixingIndex: -1,
+      cprqStart: '',
+      cprqEnd: '',
+      anlidengjiIndex: -1,
+      gongkaileixingIndex: -1,
+      shenpanrenyuan: "",
+      dangshiren: "",
+      lvsuo: "",
+      lvshi: "",
+      falvyiju: "",
     },
     scrollStart: 0,
     footer: 0,
@@ -123,6 +94,7 @@ Page({
 
     wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify({ query: this.data.query, pageId, requestToken })}` })
   },
+  async reset() { this.setData({ ['query']: this.data.dataSample }) },
   bindQuanwenjiansuoChange(e) { this.setData({ ['query.quanwenjiansuoIndex']: e.currentTarget.dataset.index }) },
   async bindAnyouChange(e) {
     // console.log(e.detail);
