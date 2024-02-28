@@ -22,8 +22,8 @@ LimitFSIZE=infinity
 WorkingDirectory=__SERVER_DIR__
 
 # 服务运行的用户和组
-User=jarda
-Group=jarda
+User=root
+Group=root
 
 # 启动脚本
 ExecStart=__SERVER_DIR__/start.sh

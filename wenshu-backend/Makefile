@@ -38,7 +38,9 @@ prepackage: build
 	@# 替换nfpm配置文件准备打包
 	@$(call replace, "nfpm.yaml", "build/nfpm.yaml")
 	@# 拷贝配置文件
-	@mkdir -p build/config && cp config* build/config/
+	@mkdir -p build/config && cp config/* build/config/
+	@# 拷贝证书文件
+	@mkdir -p build/cert && cp cert/* build/cert/
 
 package: prepackage
 	@echo Packaging...
