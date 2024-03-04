@@ -19,7 +19,10 @@ Page({
     const r = await wsCountSearch({ requestToken })
     setDataSync(this, { statistic: { ...this.data.statistic, ...r.data.result } })
 
-    await currentUser({ pageId, requestToken, extra: {} }) // 保持Session？
+    const current = await currentUser({ pageId, requestToken, extra: {} }) // 保持Session？
+    if (current?.data?.result?.userId === "anonymousUser") {
+      console.error(`[error] 匿名用户`);
+    }
 
     const titles = ['全国判决书查询']
     const tabs = titles.map(item => ({ title: item }))

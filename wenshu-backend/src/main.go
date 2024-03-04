@@ -63,9 +63,10 @@ func init() {
 func main() {
 	wenshuHandler := http.NewServeMux()
 	// 设置代理请求的处理函数
-	wenshuHandler.HandleFunc("/tongyiLogin/authorize", WenshuProxy.ServeHTTP) // 登录的初始接口，用于获取SESSION
-	wenshuHandler.HandleFunc("/oauth/authorize", AccountProxy.ServeHTTP)      // 上一个接口响应的重定向地址，用于提权SESSION
-	wenshuHandler.HandleFunc("/api/login", AccountProxy.ServeHTTP)            // 登录接口，获取HOLDON KEY
+	wenshuHandler.HandleFunc("/tongyiLogin/authorize", WenshuProxy.ServeHTTP)                // 登录的初始接口，用于获取SESSION
+	wenshuHandler.HandleFunc("/oauth/authorize", AccountProxy.ServeHTTP)                     // 上一个接口响应的重定向地址，用于提权SESSION
+	wenshuHandler.HandleFunc("/api/login", AccountProxy.ServeHTTP)                           // 登录接口，获取HOLDON KEY
+	wenshuHandler.HandleFunc("/CallBackController/authorizeCallBack", WenshuProxy.ServeHTTP) // 提权后的重定向请求
 
 	wenshuHandler.HandleFunc("/website/wenshu/181029CR4M5A62CH/index.html", WenshuProxy.ServeHTTP) // 主页html接口，需要访问主页获取一些加密盐
 	wenshuHandler.HandleFunc("/website/parse/rest.q4w", WenshuProxy.ServeHTTP)                     // 获取页面数据接口
