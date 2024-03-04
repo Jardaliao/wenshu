@@ -1,0 +1,11 @@
+<navigation-bar title="文书全文" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view class="page">
+    <view class="header"></view>
+    <scroll-view type="list" scroll-y class="page-scroll-view" 
+    style='height: {{(scrollHeight ? scrollHeight : 600) + "px"}}'>
+        <view class="weui-article">
+            <!-- <mp-html content="{{result.qwContent}}"></mp-html> -->
+            <rich-text nodes="{{result.qwContent}}"></rich-text>
+        </view>
+    </scroll-view>
+</view> 

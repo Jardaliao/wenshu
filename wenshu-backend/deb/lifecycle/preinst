@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# 开始安装deb包时执行的脚本
+
+set -e
+
+# 如果没有服务运行的用户，则创建
+if ! id jarda > /dev/null 2>&1 ; then
+    adduser --system --no-create-home --group --disabled-password --shell /bin/false jarda
+fi
+
+# 如果有服务的程序文件目录，先删除清空，以确保安装后只包含deb包的文件
+if [ -d __SERVER_DIR__ ]; then
+    rm -rf __SERVER_DIR__
+fi
+
+# 如果没有日志目录就创建
+if [ ! -d __SERVER_LOG_DIR__ ]; then
+    mkdir -p __SERVER_LOG_DIR__
+    chown -R jarda:jarda __SERVER_LOG_DIR__
+fi
+
+# 如果没有配置文件的目录就创建
+if [ ! -d __CONFIG_DIR__ ]; then
+    mkdir -p __CONFIG_DIR__
+fi
+chown -R jarda:jarda __CONFIG_DIR__
+

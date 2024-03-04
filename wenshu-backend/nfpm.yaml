@@ -1,0 +1,29 @@
+name: __PACKAGE__
+arch: "all"
+version: __VERSION__
+section: "misc"
+priority: "optional"
+maintainer: "Jarda <liaoxiaojie.cn>"
+description: __SERVER_DESC__
+contents:
+- src: deb/jarda-wenshu.service
+  dst: /usr/lib/systemd/system/jarda-wenshu.service
+  file_info:
+    mode: 0644
+- src: deb/start.sh
+  dst: __SERVER_DIR__/start.sh
+  file_info:
+    mode: 0755
+- src: wenshu.bin
+  dst: __SERVER_DIR__/wenshu.bin
+  file_info:
+    mode: 0755
+- src: config/
+  dst: __SERVER_DIR__/config
+- src: cert/
+  dst: __SERVER_DIR__/cert
+overrides:
+  deb:
+    scripts:
+      preinstall: deb/lifecycle/preinst
+      postinstall: deb/lifecycle/postinst
