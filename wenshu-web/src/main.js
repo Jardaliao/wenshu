@@ -3,13 +3,13 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import WeuiVue from 'weui-design-vue'
 
-import weui from 'weui.js'
-import 'weui'
+import 'weui-design-vue/lib/weui-design-vue.css'
 
 const app = createApp(App)
 
-app.config.globalProperties.$weui = weui
+app.use(WeuiVue)
 
 app.use(router)
 

@@ -1,26 +1,10 @@
 <template>
-    <main>
-        <NavigationBar title="高级搜索" back="on"></NavigationBar>
-        <div class="weui-search-bar" id="searchBar">
-            <form class="weui-search-bar__form">
-                <div class="weui-search-bar__box">
-                    <i class="weui-icon-search"></i>
-                    <input type="search" class="weui-search-bar__input" placeholder="搜索" required="">
-                    <a href="javascript:" class="weui-icon-clear"></a>
-                </div>
-                <label class="weui-search-bar__label">
-                    <i class="weui-icon-search"></i>
-                    <span>搜索</span>
-                </label>
-            </form>
-            <a href="javascript:" class="weui-search-bar__cancel-btn">取消</a>
-        </div>
-    </main>
+    <NavigationBar title="搜索" back="on"></NavigationBar>
+    <weui-search-bar></weui-search-bar>
 </template>
 
 <script setup>
-    import NavigationBar from '../components/NavigationBar.vue'
-    
+    import NavigationBar from '@/components/NavigationBar.vue'
 </script>
 
 <style scoped lang="less">
