@@ -1,10 +1,5 @@
-<script setup>
-import IndexView from './views/IndexView.vue'
-
-</script>
-
 <template>
-    <IndexView></IndexView>
+    <router-view></router-view>
 </template>
 
 <style>

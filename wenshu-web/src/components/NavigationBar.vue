@@ -1,4 +1,7 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 defineProps({
     title: {
@@ -11,12 +14,20 @@ defineProps({
     }
 })
 
+const goBack = () => {
+    router.go(-1)
+};
+
+defineExpose({
+    goBack
+});
+
 </script>
 
 <template>
     <div class="navigation-bar">
         <div class="return">
-            <img v-if="back == 'on'" src="../assets/arrow.svg" alt="">
+            <img v-if="back == 'on'" v-on:click="goBack" src="../assets/arrow.svg" alt="">
             <span v-else></span>
         </div>
         <div class="title">{{ title }}</div>
