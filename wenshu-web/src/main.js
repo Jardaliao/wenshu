@@ -1,16 +1,16 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
+import { Search, NavBar, CellGroup, Cell } from 'vant'
+
 import App from './App.vue'
 import router from './router'
-import WeuiVue from 'weui-design-vue'
 
-import 'weui-design-vue/lib/weui-design-vue.css'
+import 'vant/lib/index.css'
 
 const app = createApp(App)
 
-app.use(WeuiVue)
-
 app.use(router)
+
+const requiredVant = [Search, NavBar, CellGroup, Cell];
+for (let v of requiredVant) { app.use(v) }
 
 app.mount('#app')

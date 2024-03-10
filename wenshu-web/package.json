@@ -9,11 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "vant": "^4.8.5",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5",
-    "weui": "^2.6.11",
-    "weui-design-vue": "^2.0.6",
-    "weui.js": "^1.2.21"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",
