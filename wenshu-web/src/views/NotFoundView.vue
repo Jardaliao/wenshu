@@ -1,8 +1,4 @@
 <template>
-    <NavigationBar title="易文书" back="off"></NavigationBar>
+    <van-nav-bar title="易文书"></van-nav-bar>
     <span>404 Not Found</span>
 </template>
-
-<script setup>
-import NavigationBar from '@/components/NavigationBar.vue'
-</script>

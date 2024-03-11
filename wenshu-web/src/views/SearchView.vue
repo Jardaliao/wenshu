@@ -1,5 +1,5 @@
 <template>
-    <van-nav-bar title="搜索"></van-nav-bar>
+    <van-nav-bar title="搜索" left-arrow="true" left-text="返回" @click-left="goBack"></van-nav-bar>
     <van-search placeholder="输入案由、关键词、法院、当事人、律师" v-model="query.quanwenjiansuo"></van-search>
     <van-cell-group>
         <!-- 1 全文检索 -->
@@ -19,12 +19,56 @@
             </div>
         </van-cell>
     </van-cell-group>
+    <van-cell-group>
+        <!-- 2 案由 -->
+        <van-cell>
+            <div class="op-title">
+                <div>案由</div>
+                <div class="op-actions">
+                    <span>{{ qw[query.quanwenjiansuoIndex].name }}</span>
+                </div>
+            </div>
+            <div class="op-body">
+                <TreeSelect :isSelect="isSelect" :data="treeData" @node-click="handle" @change="loadData" />
+            </div>
+        </van-cell>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 3 案件名称 -->
+        <van-field v-model="query.anjianmingchen" name="案件名称" label="案件名称" placeholder="案件名称"></van-field>
+        <!-- 4 案号 -->
+        <van-field v-model="query.anhao" name="案号" label="案号" placeholder="案号"></van-field>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 5 法院名称 -->
+        <van-field v-model="query.fayuanmingchen" name="法院名称" label="法院名称" placeholder="法院名称"></van-field>
+        <!-- 6 法院层级 -->
+
+    </van-cell-group>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { dic } from "../utils/wenshu_dict"
+import TreeSelect from '@/components/TreeSelect.vue'
 
+const activeId = ref(1)
+const activeIndex = ref(0)
+const treeData = [
+    {
+        key: 2,
+        title: '小卖部总舵',
+        children: [
+            {
+                key: 90037,
+                title: '小卖部河边分部',
+            },
+        ],
+    },
+];
+
+
+const goBack = () => history.back()
 const qw = ref(dic.qw)
 const query = ref({
     quanwenjiansuo: "",
