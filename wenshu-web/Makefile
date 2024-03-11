@@ -19,7 +19,7 @@ build: clean
 
 deploy: build
 	@echo Deploying...
-	@ssh -o StrictHostKeyChecking=no $(Host) 'mkdir -p $(Dir)'
+	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo mkdir -p $(Dir)'
 	@scp -r -o StrictHostKeyChecking=no dist/* $(WorkDir)/html
 	@scp -r -o StrictHostKeyChecking=no cert/* $(WorkDir)/cert
 	@scp -r -o StrictHostKeyChecking=no wenshu-web-443.conf $(WorkDir)/
