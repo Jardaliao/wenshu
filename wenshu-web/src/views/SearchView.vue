@@ -25,11 +25,12 @@
             <div class="op-title">
                 <div>案由</div>
                 <div class="op-actions">
-                    <span>{{ qw[query.quanwenjiansuoIndex].name }}</span>
+                    <span>{{ query.anyouId ? ayValueMap[query.anyouId].text : "" }}</span>
                 </div>
             </div>
             <div class="op-body">
-                <TreeSelect :isSelect="isSelect" :data="treeData" @node-click="handle" @change="loadData" />
+                <TreeSelect :data="ayTree" :props-custom="{key: 'id', label: 'name', children: 'children'}"
+                    v-on:node-click="selectAnyou" />
             </div>
         </van-cell>
     </van-cell-group>
@@ -49,33 +50,29 @@
 
 <script setup>
 import { ref } from 'vue'
-import { dic } from "../utils/wenshu_dict"
+import { dic } from '../utils/wenshu_dict'
 import TreeSelect from '@/components/TreeSelect.vue'
 
-const activeId = ref(1)
-const activeIndex = ref(0)
-const treeData = [
-    {
-        key: 2,
-        title: '小卖部总舵',
-        children: [
-            {
-                key: 90037,
-                title: '小卖部河边分部',
-            },
-        ],
-    },
-];
-
+const query = ref({
+    quanwenjiansuo: "",
+    quanwenjiansuoIndex: 0,
+    anyouId: "",
+})
 
 const goBack = () => history.back()
 const qw = ref(dic.qw)
-const query = ref({
-    quanwenjiansuo: "",
-    quanwenjiansuoIndex: 0
-})
 const setActive = (field, index) => {
     query.value[field] = index
+}
+
+const ayTree = ref(dic.ayTree)
+const ayValueMap = dic.ayValueMap
+const selectAnyou = ({id, name, children}) => {
+    if (children && children.length) {
+
+    } else {
+        query.value.anyouId = id;
+    }
 }
 </script>
 
