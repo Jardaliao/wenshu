@@ -178,10 +178,10 @@
     <van-sticky position="bottom">
         <van-row class="footer">
             <van-col span="10" offset="1">
-                <van-button plain icon="replay" round block>重置</van-button>
+                <van-button plain icon="replay" round block @click="reset">重置</van-button>
             </van-col>
             <van-col span="10" offset="2" >
-                <van-button type="primary" icon="search" round block>搜索</van-button>
+                <van-button type="primary" icon="search" round block @click="search">搜索</van-button>
             </van-col>
         </van-row>
     </van-sticky>
@@ -190,12 +190,13 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict'
 import TreeSelect from '@/components/TreeSelect.vue'
+import { uuid, random } from '@/utils/wenshu_raw';
 
 const goBack = () => history.back()
-
-const query = ref({
+const dataSample = {
     quanwenjiansuo: "",
     quanwenjiansuoIndex: 0,
     anyouId: "",
@@ -215,8 +216,9 @@ const query = ref({
     lvsuo: "",
     lvshi: "",
     falvyiju: "",
-})
+}
 
+const query = ref(JSON.parse(JSON.stringify(dataSample)))
 const setActive = (field, index) => { query.value[field] = index }
 
 const qw = dic.qw // 1 全文检索
@@ -243,6 +245,21 @@ const cprqEndConfirm = ({ selectedValues }) => {
 }
 const aldj = dic.aldj // 11 案例等级
 const gklx = dic.gklx // 12 公开等级
+
+const pageId = ref("")
+const requestToken = ref("")
+const reset = () => { query.value = JSON.parse(JSON.stringify(dataSample)) }
+const router = useRouter()
+const search = async () => {
+    pageId.value = uuid() // 生成pageId，需要传给后面的列表页面用
+    requestToken.value = random() // 生成requestToken，需要传给后面的列表页面用
+    // await currentUser({
+    //   pageId, requestToken,
+    //   // extra: { s21: this.data.query.input }
+    // })
+    router.push(`/list`)
+    // wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify({ query: this.data.query, pageId, requestToken })}` })
+}
 
 </script>
 
