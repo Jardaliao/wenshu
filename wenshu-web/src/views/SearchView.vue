@@ -1,6 +1,6 @@
 <template>
     <van-sticky>
-        <van-nav-bar title="搜索" left-arrow="true" left-text="返回" @click-left="goBack"></van-nav-bar>
+        <van-nav-bar title="搜索" left-arrow left-text="返回" @click-left="goBack"></van-nav-bar>
         <van-search placeholder="输入案由、关键词、法院、当事人、律师" v-model="query.quanwenjiansuo"></van-search>
     </van-sticky>
     <van-cell-group>
@@ -74,7 +74,7 @@
             <div class="op-body">
                 <div v-for="item, index in ajlx"
                     :class="['op-body-item', index === query.anjianleixingIndex ? 'active' : '']"
-                    @click="setActive('anjianleixingIndex', index)">
+                    @click="setActive('anjianleixingIndex', index); query.shenpanchengxuId = '';">
                     {{ item.name }}
                 </div>
             </div>
@@ -94,6 +94,98 @@
             </div>
         </van-cell>
     </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 9 文书类型 -->
+        <van-cell>
+            <div class="op-title">
+                <div>文书类型</div>
+                <div class="op-actions">
+                    <span>{{ query.wenshuleixingIndex >= 0 ? wslx[query.wenshuleixingIndex].name : "" }}</span>
+                </div>
+            </div>
+            <div class="op-body">
+                <div v-for="item, index in wslx"
+                    :class="['op-body-item', index === query.wenshuleixingIndex ? 'active' : '']"
+                    @click="setActive('wenshuleixingIndex', index)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </van-cell>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <van-field v-model="query.cprqStart" name="裁判开始日期" label="裁判开始日期" placeholder="选择日期"
+            @click="cprqStartShow = true"></van-field>
+        <van-field v-model="query.cprqEnd" name="裁判结束日期" label="裁判结束日期" placeholder="选择日期"
+            @click="cprqEndShow = true"></van-field>
+        <van-popup :show="cprqStartShow" round position="bottom">
+            <van-date-picker title="裁判开始日期" :min-date="minDate" :max-date="maxDate" @confirm="cprqStartConfirm"
+                @cancel="cprqStartShow = false" />
+        </van-popup>
+        <van-popup :show="cprqEndShow" round position="bottom">
+            <van-date-picker title="裁判结束日期" :min-date="minDate" :max-date="maxDate" @confirm="cprqEndConfirm"
+                @cancel="cprqEndShow = false" />
+        </van-popup>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 11 案例等级 -->
+        <van-cell>
+            <div class="op-title">
+                <div>案例等级</div>
+                <div class="op-actions">
+                    <span>{{ query.anlidengjiIndex >= 0 ? aldj[query.anlidengjiIndex].name : "" }}</span>
+                </div>
+            </div>
+            <div class="op-body">
+                <div v-for="item, index in aldj"
+                    :class="['op-body-item', index === query.anlidengjiIndex ? 'active' : '']"
+                    @click="setActive('anlidengjiIndex', index)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </van-cell>
+        <!-- 12 公开类型 -->
+        <van-cell>
+            <div class="op-title">
+                <div>公开类型</div>
+                <div class="op-actions">
+                    <span>{{ query.gongkaileixingIndex >= 0 ? gklx[query.gongkaileixingIndex].name : "" }}</span>
+                </div>
+            </div>
+            <div class="op-body">
+                <div v-for="item, index in gklx"
+                    :class="['op-body-item', index === query.gongkaileixingIndex ? 'active' : '']"
+                    @click="setActive('gongkaileixingIndex', index)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </van-cell>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 13 审判人员 -->
+        <van-field v-model="query.shenpanrenyuan" name="审判人员" label="审判人员" placeholder="审判人员"></van-field>
+        <!-- 14 当事人 -->
+        <van-field v-model="query.dangshiren" name="当事人" label="当事人" placeholder="当事人"></van-field>
+        <!-- 15 律所 -->
+        <van-field v-model="query.lvsuo" name="律所" label="律所" placeholder="律所"></van-field>
+        <!-- 16 律师 -->
+        <van-field v-model="query.lvshi" name="律师" label="律师" placeholder="律师"></van-field>
+    </van-cell-group>
+    <van-cell-group>
+        <!-- 17 法律依据 -->
+        <van-field v-model="query.falvyiju" type="textarea" rows="3" autosize name="法律依据" label="法律依据"
+            placeholder="例如：请输入《中华人民共和国民事诉讼法》第一百七十条"></van-field>
+    </van-cell-group>
+    <van-sticky position="bottom">
+        <van-row class="footer">
+            <van-col span="10" offset="1">
+                <van-button plain icon="replay" round block>重置</van-button>
+            </van-col>
+            <van-col span="10" offset="2" >
+                <van-button type="primary" icon="search" round block>搜索</van-button>
+            </van-col>
+        </van-row>
+    </van-sticky>
+
 </template>
 
 <script setup>
@@ -114,8 +206,8 @@ const query = ref({
     anjianleixingIndex: -1,
     shenpanchengxuId: "",
     wenshuleixingIndex: -1,
-    cprqStart: '',
-    cprqEnd: '',
+    cprqStart: "",
+    cprqEnd: "",
     anlidengjiIndex: -1,
     gongkaileixingIndex: -1,
     shenpanrenyuan: "",
@@ -135,10 +227,22 @@ const fycj = dic.fycj // 6 法院层级
 const ajlx = dic.ajlx // 7 案件类型
 const spcx = dic.spcx // 8 审判程序
 const spcxTrees = dic.spcxTrees
-console.log(spcxTrees)
 const selectShenpanchengxu = ({ id, name, children }) => { query.value.shenpanchengxuId = id }
-
-
+const wslx = dic.wslx // 9 文书类型
+const minDate = new Date(1970, 0, 1) // 10 裁判日期
+const maxDate = new Date()
+const cprqStartShow = ref(false)
+const cprqEndShow = ref(false)
+const cprqStartConfirm = ({ selectedValues }) => {
+    query.value.cprqStart = selectedValues.join("-")
+    cprqStartShow.value = false
+}
+const cprqEndConfirm = ({ selectedValues }) => {
+    query.value.cprqEnd = selectedValues.join("-")
+    cprqEndShow.value = false
+}
+const aldj = dic.aldj // 11 案例等级
+const gklx = dic.gklx // 12 公开等级
 
 </script>
 
@@ -185,4 +289,11 @@ const selectShenpanchengxu = ({ id, name, children }) => { query.value.shenpanch
     color: white;
     border: 1px solid var(--main-bg-color);
 }
+
+.footer {
+    padding: 0.5rem 0;
+    border-top: 1px solid #eee;
+    background-color: white;
+}
+  
 </style>

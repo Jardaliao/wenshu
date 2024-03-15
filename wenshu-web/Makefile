@@ -19,13 +19,13 @@ build: clean
 
 deploy: build
 	@echo Deploying...
-	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo mkdir -p $(Dir)'
+	@ssh -o StrictHostKeyChecking=no $(Host) 'mkdir -p $(Dir)'
 	@scp -r -o StrictHostKeyChecking=no dist/* $(WorkDir)/html
 	@scp -r -o StrictHostKeyChecking=no cert/* $(WorkDir)/cert
 	@scp -r -o StrictHostKeyChecking=no wenshu-web-443.conf $(WorkDir)/
 
 install: deploy
 	@echo Installing...
-	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo mkdir -p $(ServerDir)'
+	@ssh -o StrictHostKeyChecking=no $(Host) 'mkdir -p $(ServerDir)'
 	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo mv $(Dir)/wenshu-web-443.conf /etc/nginx/sites-available/'
 	@ssh -o StrictHostKeyChecking=no $(Host) 'sudo cp -r $(Dir)/* $(ServerDir)/ && sudo rm -r $(Dir)'

@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Search, NavBar, CellGroup, Cell, Field, TreeSelect, Dialog, Sticky } from 'vant'
+import { Row,Col,Button, Search, NavBar, CellGroup, Cell, Field, TreeSelect, Dialog, Sticky, PickerGroup, DatePicker,Popup } from 'vant'
 
 import App from './App.vue'
 import router from './router'
@@ -10,7 +10,7 @@ const app = createApp(App)
 
 app.use(router)
 
-const requiredVant = [Sticky, Search, NavBar, Field, CellGroup, Cell, TreeSelect, Dialog];
+const requiredVant = [Row,Col,Button,Sticky, Search, NavBar, Field, CellGroup, Cell, TreeSelect, Dialog, PickerGroup, DatePicker, Popup];
 for (let v of requiredVant) { app.use(v) }
 
 app.mount('#app')
