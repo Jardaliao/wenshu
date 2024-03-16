@@ -1,0 +1,1051 @@
+const id2name = {
+    "gd-AccountSystem.common.CommonAccountCenter": "统一账户中心",
+    "gd-AccountSystem.common.email": "邮箱",
+    "gd-AccountSystem.common.name": "姓名",
+    "gd-AccountSystem.common.username": "账号名",
+    "gd-AccountSystem.common.idCardNumber": "证件号码",
+    "gd-AccountSystem.common.phoneNumber": "手机号码",
+    "gd-AccountSystem.common.ToLogin": "去登录",
+    "gd-AccountSystem.common.login-status.notLogin": "用户没有登录状态",
+    "gd-AccountSystem.common.password": "密码",
+    "gd-AccountSystem.common.passwordEn": "密码",
+    "gd-AccountSystem.common.passwordModify": "修改密码",
+    "gd-AccountSystem.common.passwordConfirm": "确认密码",
+    "gd-AccountSystem.common.submit": "提交",
+    "gd-AccountSystem.common.submitting": "正在提交...",
+    "gd-AccountSystem.common.ImmediatelySubmitted": "立即提交",
+    "gd-AccountSystem.common.Modify": "修改",
+    "gd-AccountSystem.common.TheNextStep": "下一步",
+    "gd-AccountSystem.common.VerificationCode": "验证码",
+    "gd-AccountSystem.common.VerificationCodeExpired": "您输入的验证码已过期",
+    "gd-AccountSystem.common.VerificationCodeEn": "验证码",
+    "gd-AccountSystem.common.smsCode": "短信验证码",
+    "gd-AccountSystem.common.opSuccess": "操作成功",
+    "gd-AccountSystem.common.input": "输入",
+    "gd-AccountSystem.common.backToLogin": "返回登录",
+    "gd-AccountSystem.common.return": "返回",
+    "gd-AccountSystem.common.clickToSwitch": "点击切换为",
+    "gd-AccountSystem.common.requestError": "请求错误",
+    "gd-AccountSystem.common.requestErrorOrNetworkTimeout": "请求出错或者网络超时",
+    "gd-AccountSystem.component.captchaInput.GetVerificationCode": "获取验证码",
+    "gd-AccountSystem.component.smsInput.ISeconds": "秒",
+    "gd-AccountSystem.component.smsInput.sending": "发送中...",
+    "gd-AccountSystem.component.password.rule.number": "10个基本数字0-9",
+    "gd-AccountSystem.component.password.rule.UpperCase": "英文大写字母A-Z",
+    "gd-AccountSystem.component.password.rule.LowerCase": "英文小写字母a-z",
+    "gd-AccountSystem.component.password.rule.SpecialCharacter": "特殊字符",
+    "gd-AccountSystem.component.password.rule.notice": "需包含以下规则中的三类<br/>且长度不小于8位",
+    "gd-AccountSystem.component.password.remark.middle": "中",
+    "gd-AccountSystem.component.password.remark.strong": "强",
+    "gd-AccountSystem.component.password.remark.weak": "弱",
+    "gd-AccountSystem.component.password.ForIncludingDigitalLetterSpecial": "需包括数字、字母、特殊字符！",
+    "gd-AccountSystem.component.password.PasswordCanTForEmpty": "密码不能为空！",
+    "gd-AccountSystem.component.password.PasswordLengthPleaseKeepIn": "密码长度请保持在8-16位！",
+    "gd-AccountSystem.component.password.TwoTimesPasswordCanT": "两次密码不能重复！",
+    "gd-AccountSystem.component.password.retrievePassword": "找回密码",
+    "gd-AccountSystem.component.search.placeholder": "请输入关键字搜索",
+    "gd-AccountSystem.component.modal.confirm": "确定",
+    "gd-AccountSystem.component.modal.cancel": "取消",
+    "gd-AccountSystem.page.login.CongratulationsYouPasswordFindSuccess": "恭喜您，密码找回成功",
+    "gd-AccountSystem.page.login.autoRegister": "未注册的手机号验证后自动创建账户",
+    "gd-AccountSystem.page.login.type.password": "账号密码登录",
+    "gd-AccountSystem.page.login.type.smsCode": "短信验证码登录",
+    "gd-AccountSystem.page.login.login": "登录",
+    "gd-AccountSystem.page.login.qrcodeLogin": "登录",
+    "gd-AccountSystem.page.login.login-process": "登录...",
+    "gd-AccountSystem.page.login.register": "注册",
+    "gd-AccountSystem.page.login.forgotPwd": "忘记密码",
+    "gd-AccountSystem.page.login.noAccount": "没有账户",
+    "gd-AccountSystem.page.login.loginMethod": "登录方式",
+    "gd-AccountSystem.page.certification.certType": "认证方式",
+    "gd-AccountSystem.page.certification.certType.RelatedVCertification": "涉诉认证",
+    "gd-AccountSystem.page.certification.certType.Wechat": "微信",
+    "gd-AccountSystem.page.certification.certType.AlipayApplet": "支付宝扫码",
+    "gd-AccountSystem.page.certification.certType.face": "人脸识别",
+    "gd-AccountSystem.page.certification.certType.bank": "银行打款",
+    "gd-AccountSystem.page.certification.certType.txwfy": "在线服务",
+    "gd-AccountSystem.page.certification.certType.Alipay": "支付宝",
+    "gd-AccountSystem.page.certification.certType.third": "第三方认证",
+    "gd-AccountSystem.page.certification.Identity": "身份类型",
+    "gd-AccountSystem.page.certification.cert": "马上认证",
+    "gd-AccountSystem.page.certification.processing": "正在认证...",
+    "gd-AccountSystem.page.certification.Identity.LegalPerson": "法人",
+    "gd-AccountSystem.page.certification.Identity.Personal": "个人",
+    "gd-AccountSystem.page.certification.genQrcodeFail": "生成二维码失败",
+    "gd-AccountSystem.page.certification.reCert": "返回重新认证",
+    "gd-AccountSystem.page.certification.MoreThanMaximumPollingNumber": "超过最大轮询次数",
+    "gd-AccountSystem.page.certification.ISecondsAfterAutomaticClose": "秒后自动关闭",
+    "gd-AccountSystem.page.certification.AlipayRealNameAuthenticationFailure": "支付宝实名认证失败！",
+    "gd-AccountSystem.page.certification.AtPresentYouSelectOf": "目前您选择的身份还没有验证方式！",
+    "gd-AccountSystem.page.certification.BackEndError": "后端出错",
+    "gd-AccountSystem.page.certification.CongratulationsYouAlipayRealName": "恭喜您！支付宝实名认证成功！",
+    "gd-AccountSystem.page.certification.CongratulationsYouRealNameAuthentication": "恭喜您！实名认证成功。",
+    "gd-AccountSystem.page.certification.RealNameAuthenticationFailure": "实名认证失败！",
+    "gd-AccountSystem.page.certification.alipay.InTheInformationSynchronizationIs": "本次信息同步是指",
+    "gd-AccountSystem.page.certification.alipay.OnlyProvideBasicIdentityInformation": "1、仅提供基础身份信息：姓名/企业或其他组织名称、证件号码。",
+    "gd-AccountSystem.page.certification.alipay.DonTProvideIdentityInformation": "2、不提供身份信息以外的资金、信用、消费和经营信息。",
+    "gd-AccountSystem.page.certification.alipay.DonTToThirdParty": "3、不向第三方机构、政府和个人提供信息。依据法律规定，严格保护公民隐私。",
+    "gd-AccountSystem.page.certification.alipay.IAgreedToAlipayIdentity": "我同意把支付宝身份认证信息提供给统一账号中心",
+    "gd-AccountSystem.page.certification.alipay.InAlipayIdentityRealName": "在支付宝完成身份实名认证，回到本页面登录。",
+    "gd-AccountSystem.page.certification.alipay.InIfYouNoAlipay": "如果您没有支付宝账号，请先",
+    "gd-AccountSystem.page.certification.alipay.RegisteredAlipay": "注册支付宝",
+    "gd-AccountSystem.page.certification.alipayApplet.name": "姓名",
+    "gd-AccountSystem.page.certification.alipayApplet.idCardNo": "证件号码",
+    "gd-AccountSystem.page.certification.bank.companyName": "企业名称",
+    "gd-AccountSystem.page.certification.bank.orgCode": "统一社会信用代码",
+    "gd-AccountSystem.page.certification.bank.legalRepName": "法定代表人",
+    "gd-AccountSystem.page.certification.bank.bankName": "开户总行",
+    "gd-AccountSystem.page.certification.bank.bankAddress": "开户行所在地",
+    "gd-AccountSystem.page.certification.bank.subbranch": "开户名称",
+    "gd-AccountSystem.page.certification.bank.cardNo": "银行账号",
+    "gd-AccountSystem.page.certification.bank.amount": "随机打款金额",
+    "gd-AccountSystem.page.certification.case.notice": "如果您是法院案件当事人，可以使用此类实名认证方式请输入您在法院立案时留下的 姓名 和证件号码，系统将会给您在立案时留的手机号发送验证码，验证通过后立即可完成实名认证",
+    "gd-AccountSystem.page.certification.case.name": "姓名",
+    "gd-AccountSystem.page.certification.case.idcardNumber": "证件号码",
+    "gd-AccountSystem.page.certification.face.notice": "我同意把人脸识别认证信息提供给统一账号中心",
+    "gd-AccountSystem.page.certification.face.remind": "请您尽量保证环境光线充足，摘掉帽子、眼镜，以便快速完成认证",
+    "gd-AccountSystem.page.certification.wechat.notice": "我同意把微信身份认证信息提供给统一账号中心",
+    "gd-AccountSystem.page.certification.third.notice": "点击马上认证，将跳转到第三方认证页面进行实人认证。",
+    "gd-AccountSystem.page.certification.noCertType": "当前角色没有配置认证方式",
+    "gd-AccountSystem.page.regsiter.PasswordLengthForToA": "密码长度为8至16位密码，不能包含账户名",
+    "gd-AccountSystem.page.regsiter.SecondsAfterAutomaticClose": "5秒后自动关闭",
+    "gd-AccountSystem.page.regsiter.SmsVerificationCodeHasBeen": "短信验证码已发送至您的注册手机或邮箱",
+    "gd-AccountSystem.page.regsiter.SmsVerificationCodeHasBeenPhone": "短信验证码已发送至您的注册手机",
+    "gd-AccountSystem.page.regsiter.VerificationCodeWillSentTo": "验证码将会发送到你的注册手机或邮箱",
+    "gd-AccountSystem.page.regsiter.VerificationCodeWillSentToPhone": "请设置您的密码",
+    "gd-AccountSystem.page.regsiter.register": "注册账号",
+    "gd-AccountSystem.page.regsiter.hasAccount": "已有账号，直接",
+    "gd-AccountSystem.page.register.registerSuccess": "注册成功",
+    "gd-AccountSystem.page.register.otherRegisterType": "其他注册方式",
+    "gd-AccountSystem.page.register.otherType": "其他方式",
+    "gd-AccountSystem.page.register.alipayScan": "支付宝扫码",
+    "gd-AccountSystem.page.register.alipayScanSubtitle": "长按图片下载至相册，支付宝扫一扫完成注册",
+    "gd-AccountSystem.page.register.txwfyScan": "微信扫码",
+    "gd-AccountSystem.page.register.txwfyScanSubtitle": "长按图片下载至相册，微信扫一扫完成注册",
+    "gd-AccountSystem.page.register.accountBound": "已绑定账号",
+    "gd-AccountSystem.page.register.pleaseSetAccountPassword": "请设定账号密码",
+    "gd-AccountSystem.page.reset-pwd.resetpwd": "修改密码",
+    "gd-AccountSystem.page.reset-pwd.subTitle": "设置新密码",
+    "gd-AccountSystem.page.reset-pwd.ConfirmPassword": "确认密码",
+    "gd-AccountSystem.page.reset-pwd.ModifyPassword": "修改密码",
+    "gd-AccountSystem.page.reset-pwd.NewPassword": "新密码",
+    "gd-AccountSystem.page.reset-pwd.OldPassword": "旧密码",
+    "gd-AccountSystem.page.reset-pwd.modifySuccess": "修改成功",
+    "gd-AccountSystem.page.reset-pwd.modifyPwdSuccess": "修改密码成功",
+    "gd-AccountSystem.page.reset-pwd-prompt.modifyPwd": "请修改密码",
+    "gd-AccountSystem.page.reset-pwd-prompt.textReminder": "用户您好，由于本系统账号接入人民法院互联网统一账户管理平台，请您点击修改密码，重新设置密码。",
+    "gd-AccountSystem.page.forgot-pwd.step-one-title": "重置密码",
+    "gd-AccountSystem.page.forgot-pwd.step-two-title": "重置密码",
+    "gd-AccountSystem.page.forgot-pwd.step-three-title": "重置密码",
+    "gd-AccountSystem.page.forgot-pwd.forgotSuccess": "重置密码成功",
+    "gd-AccountSystem.page.forgot-pwd.step-one-tips": "验证码将会发送到你的注册手机或邮箱",
+    "gd-AccountSystem.page.forgot-pwd.step-two-tips": "验证码将会发送到你的注册手机或邮箱",
+    "gd-AccountSystem.page.forgot-pwd.step-three-tips": "验证码将会发送到你的注册手机或邮箱",
+    "gd-AccountSystem.page.forgot-pwd.password": "重置密码",
+    "gd-AccountSystem.page.forgot-pwd.passwordConfirm": "重置密码",
+    "gd-AccountSystem.page.forgot-pwd.smsCode": "短信验证码",
+    "gd-AccountSystem.page.forgot-pwd.account": "账号",
+    "gd-AccountSystem.page.forgot-pwd.setNewPassword": "设定新密码",
+    "gd-AccountSystem.page.account-info.AccountInformation": "账户信息",
+    "gd-AccountSystem.page.account-info.ContactStyle": "联系方式",
+    "gd-AccountSystem.page.account-info.DearUser": "亲爱的用户：",
+    "gd-AccountSystem.page.account-info.HasBindingMobilePhone": "已绑定手机",
+    "gd-AccountSystem.page.account-info.HasCertification": "已认证",
+    "gd-AccountSystem.page.account-info.HasIsSet": "已设置",
+    "gd-AccountSystem.page.account-info.ModifyPassword": "修改密码",
+    "gd-AccountSystem.page.account-info.NotRealNameAuthentication": "未实名认证",
+    "gd-AccountSystem.page.account-info.RealNameAuthentication": "实名认证",
+    "gd-AccountSystem.page.account-info.reRealNameAuthentication": "重新认证",
+    "gd-AccountSystem.page.account-info.RealNameAuthenticationAndBinding": "亲爱的用户：实名认证和绑定手机，帐号更安全。注意：为保证帐号安全，需进行二次验证。",
+    "gd-AccountSystem.page.account-info.AccountName": "账户名称：",
+    "gd-AccountSystem.page.account-info.AddedAccountInformation": "补充账户信息",
+    "gd-AccountSystem.page.account-info.modifyPhoneNumberSuccess": "修改手机号成功",
+    "gd-AccountSystem.page.bind.VerificationCodePhoneBind": "绑定成功后将以当前手机号自动创建账号",
+    "gd-AccountSystem.page.modify-phone-number.title": "修改手机号",
+    "gd-AccountSystem.page.modify-phone-number.subTitle": "设置新手机号码",
+    "gd-AccountSystem.page.logout.title": "注销账号",
+    "gd-AccountSystem.page.logout.subTitle": "验证身份",
+    "gd-AccountSystem.page.logout.deactiveSuccess": "注销成功",
+    "gd-AccountSystem.validator.required": "请填写",
+    "gd-AccountSystem.validator.encryptCourt": "请选择法院",
+    "gd-AccountSystem.validator.confirm": "请确认",
+    "gd-AccountSystem.validator.invalid": "格式不正确",
+    "gd-AccountSystem.validator.noEmpty": "请输入",
+    "gd-AccountSystem.validator.passwordNoEqual": "密码不一致",
+    "gd-AccountSystem.validator.newPasswordRequired": "请填写新密码",
+    "gd-AccountSystem.validator.pwdDiffRequired": "不能与旧密码一致",
+    "gd-AccountSystem.validator.smsCodeValidateFail": "短信验证码验证失败",
+    "gd-AccountSystem.validator.processing": "正在验证",
+    "gd-AccountSystem.validator.captchaError": "验证码错误",
+    "gd-AccountSystem.validator.confirmPassword": "请确认密码",
+    "gd-AccountSystem.phoneCodeList.MainlandChina": "中国大陆",
+    "gd-AccountSystem.phoneCodeList.HongKong": "中国香港",
+    "gd-AccountSystem.phoneCodeList.MacauOfChina": "中国澳门",
+    "gd-AccountSystem.phoneCodeList.Taiwan": "中国台湾",
+    "gd-AccountSystem.phoneCodeList.Afghanistan": "阿富汗",
+    "gd-AccountSystem.phoneCodeList.Albania": "阿尔巴尼亚",
+    "gd-AccountSystem.phoneCodeList.Algeria": "阿尔及利亚",
+    "gd-AccountSystem.phoneCodeList.AmericanSamoa": "美属萨摩亚",
+    "gd-AccountSystem.phoneCodeList.Andorra": "安道尔",
+    "gd-AccountSystem.phoneCodeList.Angola": "安哥拉",
+    "gd-AccountSystem.phoneCodeList.Anguilla": "安圭拉",
+    "gd-AccountSystem.phoneCodeList.AnTiGuaHeBa": "安提瓜和巴布达",
+    "gd-AccountSystem.phoneCodeList.Argentina": "阿根廷",
+    "gd-AccountSystem.phoneCodeList.Armenia": "亚美尼亚",
+    "gd-AccountSystem.phoneCodeList.Aruba": "阿鲁巴",
+    "gd-AccountSystem.phoneCodeList.Australia": "澳大利亚",
+    "gd-AccountSystem.phoneCodeList.Austria": "奥地利",
+    "gd-AccountSystem.phoneCodeList.Azerbaijan": "阿塞拜疆",
+    "gd-AccountSystem.phoneCodeList.Bahamas": "巴哈马",
+    "gd-AccountSystem.phoneCodeList.Bahrain": "巴林",
+    "gd-AccountSystem.phoneCodeList.Bangladesh": "孟加拉国",
+    "gd-AccountSystem.phoneCodeList.Barbados": "巴巴多斯",
+    "gd-AccountSystem.phoneCodeList.Belarus": "白俄罗斯",
+    "gd-AccountSystem.phoneCodeList.Belgium": "比利时",
+    "gd-AccountSystem.phoneCodeList.Belize": "伯利兹",
+    "gd-AccountSystem.phoneCodeList.Benin": "贝宁",
+    "gd-AccountSystem.phoneCodeList.BermudaIslands": "百慕大群岛",
+    "gd-AccountSystem.phoneCodeList.Bhutan": "不丹",
+    "gd-AccountSystem.phoneCodeList.Bolivia": "玻利维亚",
+    "gd-AccountSystem.phoneCodeList.BosniaAndHerzegovina": "波斯尼亚和黑塞哥维那",
+    "gd-AccountSystem.phoneCodeList.Botswana": "博茨瓦纳",
+    "gd-AccountSystem.phoneCodeList.Brazilian": "巴西",
+    "gd-AccountSystem.phoneCodeList.Brunei": "文莱",
+    "gd-AccountSystem.phoneCodeList.Bulgaria": "保加利亚",
+    "gd-AccountSystem.phoneCodeList.BurkinaFaso": "布基纳法索",
+    "gd-AccountSystem.phoneCodeList.Burundi": "布隆迪",
+    "gd-AccountSystem.phoneCodeList.Cambodia": "柬埔寨",
+    "gd-AccountSystem.phoneCodeList.Cameroon": "喀麦隆",
+    "gd-AccountSystem.phoneCodeList.Canada": "加拿大",
+    "gd-AccountSystem.phoneCodeList.Cape": "开普",
+    "gd-AccountSystem.phoneCodeList.CaymanIslands": "开曼群岛",
+    "gd-AccountSystem.phoneCodeList.CentralAfricanRepublic": "中非共和国",
+    "gd-AccountSystem.phoneCodeList.Chad": "乍得",
+    "gd-AccountSystem.phoneCodeList.Chile": "智利",
+    "gd-AccountSystem.phoneCodeList.Colombia": "哥伦比亚",
+    "gd-AccountSystem.phoneCodeList.Comoros": "科摩罗",
+    "gd-AccountSystem.phoneCodeList.CookIslands": "库克群岛",
+    "gd-AccountSystem.phoneCodeList.CostaRica": "哥斯达黎加",
+    "gd-AccountSystem.phoneCodeList.Croatia": "克罗地亚",
+    "gd-AccountSystem.phoneCodeList.Cuba": "古巴",
+    "gd-AccountSystem.phoneCodeList.Curacao": "库拉索",
+    "gd-AccountSystem.phoneCodeList.Cyprus": "塞浦路斯",
+    "gd-AccountSystem.phoneCodeList.CzechRepublic": "捷克",
+    "gd-AccountSystem.phoneCodeList.GangGuoMinZhuGong": "刚果民主共和国",
+    "gd-AccountSystem.phoneCodeList.Denmark": "丹麦",
+    "gd-AccountSystem.phoneCodeList.Djibouti": "吉布提",
+    "gd-AccountSystem.phoneCodeList.DominicanRepublic": "多米尼加",
+    "gd-AccountSystem.phoneCodeList.DemniJiaGongHeGuo": "多米尼加共和国",
+    "gd-AccountSystem.phoneCodeList.Ecuador": "厄瓜多尔",
+    "gd-AccountSystem.phoneCodeList.Egypt": "埃及",
+    "gd-AccountSystem.phoneCodeList.ElSalvador": "萨尔瓦多",
+    "gd-AccountSystem.phoneCodeList.EquatorialGuinea": "赤道几内亚",
+    "gd-AccountSystem.phoneCodeList.Eritrea": "厄立特里亚",
+    "gd-AccountSystem.phoneCodeList.Estonia": "爱沙尼亚",
+    "gd-AccountSystem.phoneCodeList.Ethiopia": "埃塞俄比亚",
+    "gd-AccountSystem.phoneCodeList.FaroeIslands": "法罗群岛",
+    "gd-AccountSystem.phoneCodeList.Fiji": "斐济",
+    "gd-AccountSystem.phoneCodeList.Finland": "芬兰",
+    "gd-AccountSystem.phoneCodeList.France": "法国",
+    "gd-AccountSystem.phoneCodeList.FrenchGuiana": "法属圭亚那",
+    "gd-AccountSystem.phoneCodeList.FaShuBoLiNi": "法属波利尼西亚",
+    "gd-AccountSystem.phoneCodeList.Gabon": "加蓬",
+    "gd-AccountSystem.phoneCodeList.Gambia": "冈比亚",
+    "gd-AccountSystem.phoneCodeList.Georgia": "格鲁吉亚",
+    "gd-AccountSystem.phoneCodeList.Germany": "德国",
+    "gd-AccountSystem.phoneCodeList.Ghana": "加纳",
+    "gd-AccountSystem.phoneCodeList.Gibraltar": "直布罗陀",
+    "gd-AccountSystem.phoneCodeList.Greece": "希腊",
+    "gd-AccountSystem.phoneCodeList.Greenland": "格陵兰岛",
+    "gd-AccountSystem.phoneCodeList.Grenada": "格林纳达",
+    "gd-AccountSystem.phoneCodeList.Guadeloupe": "瓜德罗普岛",
+    "gd-AccountSystem.phoneCodeList.Guam": "关岛",
+    "gd-AccountSystem.phoneCodeList.Guadimara": "瓜地马拉",
+    "gd-AccountSystem.phoneCodeList.Guinea": "几内亚",
+    "gd-AccountSystem.phoneCodeList.JiNeiYaBiShao": "几内亚比绍共和国",
+    "gd-AccountSystem.phoneCodeList.Guyana": "圭亚那",
+    "gd-AccountSystem.phoneCodeList.Haiti": "海地",
+    "gd-AccountSystem.phoneCodeList.Honduras": "洪都拉斯",
+    "gd-AccountSystem.phoneCodeList.Hungary": "匈牙利",
+    "gd-AccountSystem.phoneCodeList.Iceland": "冰岛",
+    "gd-AccountSystem.phoneCodeList.Indian": "印度",
+    "gd-AccountSystem.phoneCodeList.Indonesia": "印度尼西亚",
+    "gd-AccountSystem.phoneCodeList.Iran": "伊朗",
+    "gd-AccountSystem.phoneCodeList.Iraq": "伊拉克",
+    "gd-AccountSystem.phoneCodeList.Ireland": "爱尔兰",
+    "gd-AccountSystem.phoneCodeList.Israel": "以色列",
+    "gd-AccountSystem.phoneCodeList.Italy": "意大利",
+    "gd-AccountSystem.phoneCodeList.IvoryCoast": "象牙海岸",
+    "gd-AccountSystem.phoneCodeList.Jamaica": "牙买加",
+    "gd-AccountSystem.phoneCodeList.Japan": "日本",
+    "gd-AccountSystem.phoneCodeList.Jordan": "约旦",
+    "gd-AccountSystem.phoneCodeList.Kazakhstan": "哈萨克斯坦",
+    "gd-AccountSystem.phoneCodeList.Kenya": "肯尼亚",
+    "gd-AccountSystem.phoneCodeList.Kiribati": "基里巴斯",
+    "gd-AccountSystem.phoneCodeList.Kuwait": "科威特",
+    "gd-AccountSystem.phoneCodeList.Kyrgyzstan": "吉尔吉斯斯坦",
+    "gd-AccountSystem.phoneCodeList.Laos": "老挝",
+    "gd-AccountSystem.phoneCodeList.Latvia": "拉脱维亚",
+    "gd-AccountSystem.phoneCodeList.Lebanon": "黎巴嫩",
+    "gd-AccountSystem.phoneCodeList.Lesotho": "莱索托",
+    "gd-AccountSystem.phoneCodeList.Liberia": "利比里亚",
+    "gd-AccountSystem.phoneCodeList.Libya": "利比亚",
+    "gd-AccountSystem.phoneCodeList.Liechtenstein": "列支敦士登",
+    "gd-AccountSystem.phoneCodeList.Lithuania": "立陶宛",
+    "gd-AccountSystem.phoneCodeList.Luxembourg": "卢森堡",
+    "gd-AccountSystem.phoneCodeList.Macedonia": "马其顿",
+    "gd-AccountSystem.phoneCodeList.Madagascar": "马达加斯加",
+    "gd-AccountSystem.phoneCodeList.Malawi": "马拉维",
+    "gd-AccountSystem.phoneCodeList.Malaysia": "马来西亚",
+    "gd-AccountSystem.phoneCodeList.Maldives": "马尔代夫",
+    "gd-AccountSystem.phoneCodeList.Mali": "马里",
+    "gd-AccountSystem.phoneCodeList.Malta": "马耳他",
+    "gd-AccountSystem.phoneCodeList.Martinick": "马提尼克",
+    "gd-AccountSystem.phoneCodeList.Mauritania": "毛里塔尼亚",
+    "gd-AccountSystem.phoneCodeList.Mauritius": "毛里求斯",
+    "gd-AccountSystem.phoneCodeList.Mayotte": "马约特",
+    "gd-AccountSystem.phoneCodeList.Mexico": "墨西哥",
+    "gd-AccountSystem.phoneCodeList.Moldova": "摩尔多瓦",
+    "gd-AccountSystem.phoneCodeList.Monaco": "摩纳哥",
+    "gd-AccountSystem.phoneCodeList.Mongolia": "蒙古",
+    "gd-AccountSystem.phoneCodeList.Montenegro": "黑山",
+    "gd-AccountSystem.phoneCodeList.MontserratIsland": "蒙特塞拉特岛",
+    "gd-AccountSystem.phoneCodeList.Morocco": "摩洛哥",
+    "gd-AccountSystem.phoneCodeList.Mozambique": "莫桑比克",
+    "gd-AccountSystem.phoneCodeList.Myanmar": "缅甸",
+    "gd-AccountSystem.phoneCodeList.Namibia": "纳米比亚",
+    "gd-AccountSystem.phoneCodeList.Nepal": "尼泊尔",
+    "gd-AccountSystem.phoneCodeList.Netherlands": "荷兰",
+    "gd-AccountSystem.phoneCodeList.NewCaledonia": "新喀里多尼亚",
+    "gd-AccountSystem.phoneCodeList.NewZealand": "新西兰",
+    "gd-AccountSystem.phoneCodeList.Nicaragua": "尼加拉瓜",
+    "gd-AccountSystem.phoneCodeList.Niger": "尼日尔",
+    "gd-AccountSystem.phoneCodeList.Nigeria": "尼日利亚",
+    "gd-AccountSystem.phoneCodeList.Norway": "挪威",
+    "gd-AccountSystem.phoneCodeList.Oman": "阿曼",
+    "gd-AccountSystem.phoneCodeList.Pakistan": "巴基斯坦",
+    "gd-AccountSystem.phoneCodeList.Palau": "帕劳",
+    "gd-AccountSystem.phoneCodeList.Palestinian": "巴勒斯坦",
+    "gd-AccountSystem.phoneCodeList.Panama": "巴拿马",
+    "gd-AccountSystem.phoneCodeList.BaBuYaXinJi": "巴布亚新几内亚",
+    "gd-AccountSystem.phoneCodeList.Paraguay": "巴拉圭",
+    "gd-AccountSystem.phoneCodeList.Peru": "秘鲁",
+    "gd-AccountSystem.phoneCodeList.Philippines": "菲律宾",
+    "gd-AccountSystem.phoneCodeList.Poland": "波兰",
+    "gd-AccountSystem.phoneCodeList.Portugal": "葡萄牙",
+    "gd-AccountSystem.phoneCodeList.PuertoRico": "波多黎各",
+    "gd-AccountSystem.phoneCodeList.Qatar": "卡塔尔",
+    "gd-AccountSystem.phoneCodeList.RepublicOfCongo": "刚果共和国",
+    "gd-AccountSystem.phoneCodeList.AtReunion": "留尼汪",
+    "gd-AccountSystem.phoneCodeList.Romania": "罗马尼亚",
+    "gd-AccountSystem.phoneCodeList.Russian": "俄罗斯",
+    "gd-AccountSystem.phoneCodeList.Rwanda": "卢旺达",
+    "gd-AccountSystem.phoneCodeList.SaintKittsAndNevis": "圣基茨和尼维斯",
+    "gd-AccountSystem.phoneCodeList.SaintLucia": "圣露西亚",
+    "gd-AccountSystem.phoneCodeList.StPielAndMichiganIsland": "圣彼埃尔和密克隆岛",
+    "gd-AccountSystem.phoneCodeList.ShengWenSenTeHe": "圣文森特和格林纳丁斯",
+    "gd-AccountSystem.phoneCodeList.Samoa": "萨摩亚",
+    "gd-AccountSystem.phoneCodeList.SanMarino": "圣马力诺",
+    "gd-AccountSystem.phoneCodeList.SaoTomeAndPrincipe": "圣多美和普林西比",
+    "gd-AccountSystem.phoneCodeList.SaudiArabia": "沙特阿拉伯",
+    "gd-AccountSystem.phoneCodeList.Senegal": "塞内加尔",
+    "gd-AccountSystem.phoneCodeList.Serbia": "塞尔维亚",
+    "gd-AccountSystem.phoneCodeList.Seychelles": "塞舌尔",
+    "gd-AccountSystem.phoneCodeList.SierraLeone": "塞拉利昂",
+    "gd-AccountSystem.phoneCodeList.Singapore": "新加坡",
+    "gd-AccountSystem.phoneCodeList.StMartinIslandNetherlandsPart": "圣马丁岛（荷兰部分）",
+    "gd-AccountSystem.phoneCodeList.Slovakia": "斯洛伐克",
+    "gd-AccountSystem.phoneCodeList.Slovenia": "斯洛文尼亚",
+    "gd-AccountSystem.phoneCodeList.SolomonIslands": "所罗门群岛",
+    "gd-AccountSystem.phoneCodeList.Somalia": "索马里",
+    "gd-AccountSystem.phoneCodeList.SouthAfrica": "南非",
+    "gd-AccountSystem.phoneCodeList.SouthKorea": "韩国",
+    "gd-AccountSystem.phoneCodeList.Spain": "西班牙",
+    "gd-AccountSystem.phoneCodeList.SriLanka": "斯里兰卡",
+    "gd-AccountSystem.phoneCodeList.Sudan": "苏丹",
+    "gd-AccountSystem.phoneCodeList.Suriname": "苏里南",
+    "gd-AccountSystem.phoneCodeList.Swaziland": "斯威士兰",
+    "gd-AccountSystem.phoneCodeList.Sweden": "瑞典",
+    "gd-AccountSystem.phoneCodeList.Switzerland": "瑞士",
+    "gd-AccountSystem.phoneCodeList.Syria": "叙利亚",
+    "gd-AccountSystem.phoneCodeList.Tajikistan": "塔吉克斯坦",
+    "gd-AccountSystem.phoneCodeList.Tanzania": "坦桑尼亚",
+    "gd-AccountSystem.phoneCodeList.Thailand": "泰国",
+    "gd-AccountSystem.phoneCodeList.EastTimor": "东帝汶",
+    "gd-AccountSystem.phoneCodeList.Togo": "多哥",
+    "gd-AccountSystem.phoneCodeList.Tonga": "汤加",
+    "gd-AccountSystem.phoneCodeList.TeSuniDaHeDuo": "特立尼达和多巴哥",
+    "gd-AccountSystem.phoneCodeList.Tunisia": "突尼斯",
+    "gd-AccountSystem.phoneCodeList.Turkey": "土耳其",
+    "gd-AccountSystem.phoneCodeList.Turkmenistan": "土库曼斯坦",
+    "gd-AccountSystem.phoneCodeList.TekkSiHeKaiKe": "特克斯和凯科斯群岛",
+    "gd-AccountSystem.phoneCodeList.Uganda": "乌干达",
+    "gd-AccountSystem.phoneCodeList.Ukraine": "乌克兰",
+    "gd-AccountSystem.phoneCodeList.ALaBoLianHe": "阿拉伯联合酋长国",
+    "gd-AccountSystem.phoneCodeList.British": "英国",
+    "gd-AccountSystem.phoneCodeList.UnitedStates": "美国",
+    "gd-AccountSystem.phoneCodeList.Uruguay": "乌拉圭",
+    "gd-AccountSystem.phoneCodeList.Uzbekistan": "乌兹别克斯坦",
+    "gd-AccountSystem.phoneCodeList.Vanuatu": "瓦努阿图",
+    "gd-AccountSystem.phoneCodeList.Venezuela": "委内瑞拉",
+    "gd-AccountSystem.phoneCodeList.Vietnam": "越南",
+    "gd-AccountSystem.phoneCodeList.BritishVirginIslands": "英属处女群岛",
+    "gd-AccountSystem.phoneCodeList.MeiShuWeiErJing": "美属维尔京群岛",
+    "gd-AccountSystem.phoneCodeList.Yemen": "也门",
+    "gd-AccountSystem.phoneCodeList.Zambia": "赞比亚",
+    "gd-AccountSystem.phoneCodeList.Zimbabwe": "津巴布韦"
+}
+
+export const phonecode2country = [{
+    value: "+86",
+    label: id2name["gd-AccountSystem.phoneCodeList.MainlandChina"]
+}, {
+    value: "+852",
+    label: id2name["gd-AccountSystem.phoneCodeList.HongKong"]
+}, {
+    value: "+853",
+    label: id2name["gd-AccountSystem.phoneCodeList.MacauOfChina"]
+}, {
+    value: "+886",
+    label: id2name["gd-AccountSystem.phoneCodeList.Taiwan"]
+}, {
+    value: "+93",
+    label: id2name["gd-AccountSystem.phoneCodeList.Afghanistan"]
+}, {
+    value: "+355",
+    label: id2name["gd-AccountSystem.phoneCodeList.Albania"]
+}, {
+    value: "+213",
+    label: id2name["gd-AccountSystem.phoneCodeList.Algeria"]
+}, {
+    value: "+1684",
+    label: id2name["gd-AccountSystem.phoneCodeList.AmericanSamoa"]
+}, {
+    value: "+376",
+    label: id2name["gd-AccountSystem.phoneCodeList.Andorra"]
+}, {
+    value: "+244",
+    label: id2name["gd-AccountSystem.phoneCodeList.Angola"]
+}, {
+    value: "+1264",
+    label: id2name["gd-AccountSystem.phoneCodeList.Anguilla"]
+}, {
+    value: "+1268",
+    label: id2name["gd-AccountSystem.phoneCodeList.AnTiGuaHeBa"]
+}, {
+    value: "+54",
+    label: id2name["gd-AccountSystem.phoneCodeList.Argentina"]
+}, {
+    value: "+374",
+    label: id2name["gd-AccountSystem.phoneCodeList.Armenia"]
+}, {
+    value: "+297",
+    label: id2name["gd-AccountSystem.phoneCodeList.Aruba"]
+}, {
+    value: "+61",
+    label: id2name["gd-AccountSystem.phoneCodeList.Australia"]
+}, {
+    value: "+43",
+    label: id2name["gd-AccountSystem.phoneCodeList.Austria"]
+}, {
+    value: "+994",
+    label: id2name["gd-AccountSystem.phoneCodeList.Azerbaijan"]
+}, {
+    value: "+1242",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bahamas"]
+}, {
+    value: "+973",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bahrain"]
+}, {
+    value: "+880",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bangladesh"]
+}, {
+    value: "+1246",
+    label: id2name["gd-AccountSystem.phoneCodeList.Barbados"]
+}, {
+    value: "+375",
+    label: id2name["gd-AccountSystem.phoneCodeList.Belarus"]
+}, {
+    value: "+32",
+    label: id2name["gd-AccountSystem.phoneCodeList.Belgium"]
+}, {
+    value: "+501",
+    label: id2name["gd-AccountSystem.phoneCodeList.Belize"]
+}, {
+    value: "+229",
+    label: id2name["gd-AccountSystem.phoneCodeList.Benin"]
+}, {
+    value: "+1441",
+    label: id2name["gd-AccountSystem.phoneCodeList.BermudaIslands"]
+}, {
+    value: "+975",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bhutan"]
+}, {
+    value: "+591",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bolivia"]
+}, {
+    value: "+387",
+    label: id2name["gd-AccountSystem.phoneCodeList.BosniaAndHerzegovina"]
+}, {
+    value: "+267",
+    label: id2name["gd-AccountSystem.phoneCodeList.Botswana"]
+}, {
+    value: "+55",
+    label: id2name["gd-AccountSystem.phoneCodeList.Brazilian"]
+}, {
+    value: "+673",
+    label: id2name["gd-AccountSystem.phoneCodeList.Brunei"]
+}, {
+    value: "+359",
+    label: id2name["gd-AccountSystem.phoneCodeList.Bulgaria"]
+}, {
+    value: "+226",
+    label: id2name["gd-AccountSystem.phoneCodeList.BurkinaFaso"]
+}, {
+    value: "+257",
+    label: id2name["gd-AccountSystem.phoneCodeList.Burundi"]
+}, {
+    value: "+855",
+    label: id2name["gd-AccountSystem.phoneCodeList.Cambodia"]
+}, {
+    value: "+237",
+    label: id2name["gd-AccountSystem.phoneCodeList.Cameroon"]
+}, {
+    value: "+1",
+    label: id2name["gd-AccountSystem.phoneCodeList.Canada"]
+}, {
+    value: "+238",
+    label: id2name["gd-AccountSystem.phoneCodeList.Cape"]
+}, {
+    value: "+1345",
+    label: id2name["gd-AccountSystem.phoneCodeList.CaymanIslands"]
+}, {
+    value: "+236",
+    label: id2name["gd-AccountSystem.phoneCodeList.CentralAfricanRepublic"]
+}, {
+    value: "+235",
+    label: id2name["gd-AccountSystem.phoneCodeList.Chad"]
+}, {
+    value: "+56",
+    label: id2name["gd-AccountSystem.phoneCodeList.Chile"]
+}, {
+    value: "+57",
+    label: id2name["gd-AccountSystem.phoneCodeList.Colombia"]
+}, {
+    value: "+269",
+    label: id2name["gd-AccountSystem.phoneCodeList.Comoros"]
+}, {
+    value: "+682",
+    label: id2name["gd-AccountSystem.phoneCodeList.CookIslands"]
+}, {
+    value: "+506",
+    label: id2name["gd-AccountSystem.phoneCodeList.CostaRica"]
+}, {
+    value: "+385",
+    label: id2name["gd-AccountSystem.phoneCodeList.Croatia"]
+}, {
+    value: "+53",
+    label: id2name["gd-AccountSystem.phoneCodeList.Cuba"]
+}, {
+    value: "+599",
+    label: id2name["gd-AccountSystem.phoneCodeList.Curacao"]
+}, {
+    value: "+357",
+    label: id2name["gd-AccountSystem.phoneCodeList.Cyprus"]
+}, {
+    value: "+420",
+    label: id2name["gd-AccountSystem.phoneCodeList.CzechRepublic"]
+}, {
+    value: "+243",
+    label: id2name["gd-AccountSystem.phoneCodeList.GangGuoMinZhuGong"]
+}, {
+    value: "+45",
+    label: id2name["gd-AccountSystem.phoneCodeList.Denmark"]
+}, {
+    value: "+253",
+    label: id2name["gd-AccountSystem.phoneCodeList.Djibouti"]
+}, {
+    value: "+1767",
+    label: id2name["gd-AccountSystem.phoneCodeList.DominicanRepublic"]
+}, {
+    value: "+1809",
+    label: id2name["gd-AccountSystem.phoneCodeList.DemniJiaGongHeGuo"]
+}, {
+    value: "+593",
+    label: id2name["gd-AccountSystem.phoneCodeList.Ecuador"]
+}, {
+    value: "+20",
+    label: id2name["gd-AccountSystem.phoneCodeList.Egypt"]
+}, {
+    value: "+503",
+    label: id2name["gd-AccountSystem.phoneCodeList.ElSalvador"]
+}, {
+    value: "+240",
+    label: id2name["gd-AccountSystem.phoneCodeList.EquatorialGuinea"]
+}, {
+    value: "+291",
+    label: id2name["gd-AccountSystem.phoneCodeList.Eritrea"]
+}, {
+    value: "+372",
+    label: id2name["gd-AccountSystem.phoneCodeList.Estonia"]
+}, {
+    value: "+251",
+    label: id2name["gd-AccountSystem.phoneCodeList.Ethiopia"]
+}, {
+    value: "+298",
+    label: id2name["gd-AccountSystem.phoneCodeList.FaroeIslands"]
+}, {
+    value: "+679",
+    label: id2name["gd-AccountSystem.phoneCodeList.Fiji"]
+}, {
+    value: "+358",
+    label: id2name["gd-AccountSystem.phoneCodeList.Finland"]
+}, {
+    value: "+33",
+    label: id2name["gd-AccountSystem.phoneCodeList.France"]
+}, {
+    value: "+594",
+    label: id2name["gd-AccountSystem.phoneCodeList.FrenchGuiana"]
+}, {
+    value: "+689",
+    label: id2name["gd-AccountSystem.phoneCodeList.FaShuBoLiNi"]
+}, {
+    value: "+241",
+    label: id2name["gd-AccountSystem.phoneCodeList.Gabon"]
+}, {
+    value: "+220",
+    label: id2name["gd-AccountSystem.phoneCodeList.Gambia"]
+}, {
+    value: "+995",
+    label: id2name["gd-AccountSystem.phoneCodeList.Georgia"]
+}, {
+    value: "+49",
+    label: id2name["gd-AccountSystem.phoneCodeList.Germany"]
+}, {
+    value: "+233",
+    label: id2name["gd-AccountSystem.phoneCodeList.Ghana"]
+}, {
+    value: "+350",
+    label: id2name["gd-AccountSystem.phoneCodeList.Gibraltar"]
+}, {
+    value: "+30",
+    label: id2name["gd-AccountSystem.phoneCodeList.Greece"]
+}, {
+    value: "+299",
+    label: id2name["gd-AccountSystem.phoneCodeList.Greenland"]
+}, {
+    value: "+1473",
+    label: id2name["gd-AccountSystem.phoneCodeList.Grenada"]
+}, {
+    value: "+590",
+    label: id2name["gd-AccountSystem.phoneCodeList.Guadeloupe"]
+}, {
+    value: "+1671",
+    label: id2name["gd-AccountSystem.phoneCodeList.Guam"]
+}, {
+    value: "+502",
+    label: id2name["gd-AccountSystem.phoneCodeList.Guadimara"]
+}, {
+    value: "+224",
+    label: id2name["gd-AccountSystem.phoneCodeList.Guinea"]
+}, {
+    value: "+245",
+    label: id2name["gd-AccountSystem.phoneCodeList.JiNeiYaBiShao"]
+}, {
+    value: "+592",
+    label: id2name["gd-AccountSystem.phoneCodeList.Guyana"]
+}, {
+    value: "+509",
+    label: id2name["gd-AccountSystem.phoneCodeList.Haiti"]
+}, {
+    value: "+504",
+    label: id2name["gd-AccountSystem.phoneCodeList.Honduras"]
+}, {
+    value: "+36",
+    label: id2name["gd-AccountSystem.phoneCodeList.Hungary"]
+}, {
+    value: "+354",
+    label: id2name["gd-AccountSystem.phoneCodeList.Iceland"]
+}, {
+    value: "+91",
+    label: id2name["gd-AccountSystem.phoneCodeList.Indian"]
+}, {
+    value: "+62",
+    label: id2name["gd-AccountSystem.phoneCodeList.Indonesia"]
+}, {
+    value: "+98",
+    label: id2name["gd-AccountSystem.phoneCodeList.Iran"]
+}, {
+    value: "+964",
+    label: id2name["gd-AccountSystem.phoneCodeList.Iraq"]
+}, {
+    value: "+353",
+    label: id2name["gd-AccountSystem.phoneCodeList.Ireland"]
+}, {
+    value: "+972",
+    label: id2name["gd-AccountSystem.phoneCodeList.Israel"]
+}, {
+    value: "+39",
+    label: id2name["gd-AccountSystem.phoneCodeList.Italy"]
+}, {
+    value: "+225",
+    label: id2name["gd-AccountSystem.phoneCodeList.IvoryCoast"]
+}, {
+    value: "+1876",
+    label: id2name["gd-AccountSystem.phoneCodeList.Jamaica"]
+}, {
+    value: "+81",
+    label: id2name["gd-AccountSystem.phoneCodeList.Japan"]
+}, {
+    value: "+962",
+    label: id2name["gd-AccountSystem.phoneCodeList.Jordan"]
+}, {
+    value: "+7",
+    label: id2name["gd-AccountSystem.phoneCodeList.Kazakhstan"]
+}, {
+    value: "+254",
+    label: id2name["gd-AccountSystem.phoneCodeList.Kenya"]
+}, {
+    value: "+686",
+    label: id2name["gd-AccountSystem.phoneCodeList.Kiribati"]
+}, {
+    value: "+965",
+    label: id2name["gd-AccountSystem.phoneCodeList.Kuwait"]
+}, {
+    value: "+996",
+    label: id2name["gd-AccountSystem.phoneCodeList.Kyrgyzstan"]
+}, {
+    value: "+856",
+    label: id2name["gd-AccountSystem.phoneCodeList.Laos"]
+}, {
+    value: "+371",
+    label: id2name["gd-AccountSystem.phoneCodeList.Latvia"]
+}, {
+    value: "+961",
+    label: id2name["gd-AccountSystem.phoneCodeList.Lebanon"]
+}, {
+    value: "+266",
+    label: id2name["gd-AccountSystem.phoneCodeList.Lesotho"]
+}, {
+    value: "+231",
+    label: id2name["gd-AccountSystem.phoneCodeList.Liberia"]
+}, {
+    value: "+218",
+    label: id2name["gd-AccountSystem.phoneCodeList.Libya"]
+}, {
+    value: "+423",
+    label: id2name["gd-AccountSystem.phoneCodeList.Liechtenstein"]
+}, {
+    value: "+370",
+    label: id2name["gd-AccountSystem.phoneCodeList.Lithuania"]
+}, {
+    value: "+352",
+    label: id2name["gd-AccountSystem.phoneCodeList.Luxembourg"]
+}, {
+    value: "+389",
+    label: id2name["gd-AccountSystem.phoneCodeList.Macedonia"]
+}, {
+    value: "+261",
+    label: id2name["gd-AccountSystem.phoneCodeList.Madagascar"]
+}, {
+    value: "+265",
+    label: id2name["gd-AccountSystem.phoneCodeList.Malawi"]
+}, {
+    value: "+60",
+    label: id2name["gd-AccountSystem.phoneCodeList.Malaysia"]
+}, {
+    value: "+960",
+    label: id2name["gd-AccountSystem.phoneCodeList.Maldives"]
+}, {
+    value: "+223",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mali"]
+}, {
+    value: "+356",
+    label: id2name["gd-AccountSystem.phoneCodeList.Malta"]
+}, {
+    value: "+596",
+    label: id2name["gd-AccountSystem.phoneCodeList.Martinick"]
+}, {
+    value: "+222",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mauritania"]
+}, {
+    value: "+230",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mauritius"]
+}, {
+    value: "+269",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mayotte"]
+}, {
+    value: "+52",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mexico"]
+}, {
+    value: "+373",
+    label: id2name["gd-AccountSystem.phoneCodeList.Moldova"]
+}, {
+    value: "+377",
+    label: id2name["gd-AccountSystem.phoneCodeList.Monaco"]
+}, {
+    value: "+976",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mongolia"]
+}, {
+    value: "+382",
+    label: id2name["gd-AccountSystem.phoneCodeList.Montenegro"]
+}, {
+    value: "+1664",
+    label: id2name["gd-AccountSystem.phoneCodeList.MontserratIsland"]
+}, {
+    value: "+212",
+    label: id2name["gd-AccountSystem.phoneCodeList.Morocco"]
+}, {
+    value: "+258",
+    label: id2name["gd-AccountSystem.phoneCodeList.Mozambique"]
+}, {
+    value: "+95",
+    label: id2name["gd-AccountSystem.phoneCodeList.Myanmar"]
+}, {
+    value: "+264",
+    label: id2name["gd-AccountSystem.phoneCodeList.Namibia"]
+}, {
+    value: "+977",
+    label: id2name["gd-AccountSystem.phoneCodeList.Nepal"]
+}, {
+    value: "+31",
+    label: id2name["gd-AccountSystem.phoneCodeList.Netherlands"]
+}, {
+    value: "+687",
+    label: id2name["gd-AccountSystem.phoneCodeList.NewCaledonia"]
+}, {
+    value: "+64",
+    label: id2name["gd-AccountSystem.phoneCodeList.NewZealand"]
+}, {
+    value: "+505",
+    label: id2name["gd-AccountSystem.phoneCodeList.Nicaragua"]
+}, {
+    value: "+227",
+    label: id2name["gd-AccountSystem.phoneCodeList.Niger"]
+}, {
+    value: "+234",
+    label: id2name["gd-AccountSystem.phoneCodeList.Nigeria"]
+}, {
+    value: "+47",
+    label: id2name["gd-AccountSystem.phoneCodeList.Norway"]
+}, {
+    value: "+968",
+    label: id2name["gd-AccountSystem.phoneCodeList.Oman"]
+}, {
+    value: "+92",
+    label: id2name["gd-AccountSystem.phoneCodeList.Pakistan"]
+}, {
+    value: "+680",
+    label: id2name["gd-AccountSystem.phoneCodeList.Palau"]
+}, {
+    value: "+970",
+    label: id2name["gd-AccountSystem.phoneCodeList.Palestinian"]
+}, {
+    value: "+507",
+    label: id2name["gd-AccountSystem.phoneCodeList.Panama"]
+}, {
+    value: "+675",
+    label: id2name["gd-AccountSystem.phoneCodeList.BaBuYaXinJi"]
+}, {
+    value: "+595",
+    label: id2name["gd-AccountSystem.phoneCodeList.Paraguay"]
+}, {
+    value: "+51",
+    label: id2name["gd-AccountSystem.phoneCodeList.Peru"]
+}, {
+    value: "+63",
+    label: id2name["gd-AccountSystem.phoneCodeList.Philippines"]
+}, {
+    value: "+48",
+    label: id2name["gd-AccountSystem.phoneCodeList.Poland"]
+}, {
+    value: "+351",
+    label: id2name["gd-AccountSystem.phoneCodeList.Portugal"]
+}, {
+    value: "+1787",
+    label: id2name["gd-AccountSystem.phoneCodeList.PuertoRico"]
+}, {
+    value: "+974",
+    label: id2name["gd-AccountSystem.phoneCodeList.Qatar"]
+}, {
+    value: "+242",
+    label: id2name["gd-AccountSystem.phoneCodeList.RepublicOfCongo"]
+}, {
+    value: "+262",
+    label: id2name["gd-AccountSystem.phoneCodeList.AtReunion"]
+}, {
+    value: "+40",
+    label: id2name["gd-AccountSystem.phoneCodeList.Romania"]
+}, {
+    value: "+7",
+    label: id2name["gd-AccountSystem.phoneCodeList.Russian"]
+}, {
+    value: "+250",
+    label: id2name["gd-AccountSystem.phoneCodeList.Rwanda"]
+}, {
+    value: "+1869",
+    label: id2name["gd-AccountSystem.phoneCodeList.SaintKittsAndNevis"]
+}, {
+    value: "+1758",
+    label: id2name["gd-AccountSystem.phoneCodeList.SaintLucia"]
+}, {
+    value: "+508",
+    label: id2name["gd-AccountSystem.phoneCodeList.StPielAndMichiganIsland"]
+}, {
+    value: "+1784",
+    label: id2name["gd-AccountSystem.phoneCodeList.ShengWenSenTeHe"]
+}, {
+    value: "+685",
+    label: id2name["gd-AccountSystem.phoneCodeList.Samoa"]
+}, {
+    value: "+378",
+    label: id2name["gd-AccountSystem.phoneCodeList.SanMarino"]
+}, {
+    value: "+239",
+    label: id2name["gd-AccountSystem.phoneCodeList.SaoTomeAndPrincipe"]
+}, {
+    value: "+966",
+    label: id2name["gd-AccountSystem.phoneCodeList.SaudiArabia"]
+}, {
+    value: "+221",
+    label: id2name["gd-AccountSystem.phoneCodeList.Senegal"]
+}, {
+    value: "+381",
+    label: id2name["gd-AccountSystem.phoneCodeList.Serbia"]
+}, {
+    value: "+248",
+    label: id2name["gd-AccountSystem.phoneCodeList.Seychelles"]
+}, {
+    value: "+232",
+    label: id2name["gd-AccountSystem.phoneCodeList.SierraLeone"]
+}, {
+    value: "+65",
+    label: id2name["gd-AccountSystem.phoneCodeList.Singapore"]
+}, {
+    value: "+1721",
+    label: id2name["gd-AccountSystem.phoneCodeList.StMartinIslandNetherlandsPart"]
+}, {
+    value: "+421",
+    label: id2name["gd-AccountSystem.phoneCodeList.Slovakia"]
+}, {
+    value: "+386",
+    label: id2name["gd-AccountSystem.phoneCodeList.Slovenia"]
+}, {
+    value: "+677",
+    label: id2name["gd-AccountSystem.phoneCodeList.SolomonIslands"]
+}, {
+    value: "+252",
+    label: id2name["gd-AccountSystem.phoneCodeList.Somalia"]
+}, {
+    value: "+27",
+    label: id2name["gd-AccountSystem.phoneCodeList.SouthAfrica"]
+}, {
+    value: "+82",
+    label: id2name["gd-AccountSystem.phoneCodeList.SouthKorea"]
+}, {
+    value: "+34",
+    label: id2name["gd-AccountSystem.phoneCodeList.Spain"]
+}, {
+    value: "+94",
+    label: id2name["gd-AccountSystem.phoneCodeList.SriLanka"]
+}, {
+    value: "+249",
+    label: id2name["gd-AccountSystem.phoneCodeList.Sudan"]
+}, {
+    value: "+597",
+    label: id2name["gd-AccountSystem.phoneCodeList.Suriname"]
+}, {
+    value: "+268",
+    label: id2name["gd-AccountSystem.phoneCodeList.Swaziland"]
+}, {
+    value: "+46",
+    label: id2name["gd-AccountSystem.phoneCodeList.Sweden"]
+}, {
+    value: "+41",
+    label: id2name["gd-AccountSystem.phoneCodeList.Switzerland"]
+}, {
+    value: "+963",
+    label: id2name["gd-AccountSystem.phoneCodeList.Syria"]
+}, {
+    value: "+992",
+    label: id2name["gd-AccountSystem.phoneCodeList.Tajikistan"]
+}, {
+    value: "+255",
+    label: id2name["gd-AccountSystem.phoneCodeList.Tanzania"]
+}, {
+    value: "+66",
+    label: id2name["gd-AccountSystem.phoneCodeList.Thailand"]
+}, {
+    value: "+670",
+    label: id2name["gd-AccountSystem.phoneCodeList.EastTimor"]
+}, {
+    value: "+228",
+    label: id2name["gd-AccountSystem.phoneCodeList.Togo"]
+}, {
+    value: "+676",
+    label: id2name["gd-AccountSystem.phoneCodeList.Tonga"]
+}, {
+    value: "+1868",
+    label: id2name["gd-AccountSystem.phoneCodeList.TeSuniDaHeDuo"]
+}, {
+    value: "+216",
+    label: id2name["gd-AccountSystem.phoneCodeList.Tunisia"]
+}, {
+    value: "+90",
+    label: id2name["gd-AccountSystem.phoneCodeList.Turkey"]
+}, {
+    value: "+993",
+    label: id2name["gd-AccountSystem.phoneCodeList.Turkmenistan"]
+}, {
+    value: "+1649",
+    label: id2name["gd-AccountSystem.phoneCodeList.TekkSiHeKaiKe"]
+}, {
+    value: "+256",
+    label: id2name["gd-AccountSystem.phoneCodeList.Uganda"]
+}, {
+    value: "+380",
+    label: id2name["gd-AccountSystem.phoneCodeList.Ukraine"]
+}, {
+    value: "+971",
+    label: id2name["gd-AccountSystem.phoneCodeList.ALaBoLianHe"]
+}, {
+    value: "+44",
+    label: id2name["gd-AccountSystem.phoneCodeList.British"]
+}, {
+    value: "+1",
+    label: id2name["gd-AccountSystem.phoneCodeList.UnitedStates"]
+}, {
+    value: "+598",
+    label: id2name["gd-AccountSystem.phoneCodeList.Uruguay"]
+}, {
+    value: "+998",
+    label: id2name["gd-AccountSystem.phoneCodeList.Uzbekistan"]
+}, {
+    value: "+678",
+    label: id2name["gd-AccountSystem.phoneCodeList.Vanuatu"]
+}, {
+    value: "+58",
+    label: id2name["gd-AccountSystem.phoneCodeList.Venezuela"]
+}, {
+    value: "+84",
+    label: id2name["gd-AccountSystem.phoneCodeList.Vietnam"]
+}, {
+    value: "+1340",
+    label: id2name["gd-AccountSystem.phoneCodeList.BritishVirginIslands"]
+}, {
+    value: "+1284",
+    label: id2name["gd-AccountSystem.phoneCodeList.MeiShuWeiErJing"]
+}, {
+    value: "+967",
+    label: id2name["gd-AccountSystem.phoneCodeList.Yemen"]
+}, {
+    value: "+260",
+    label: id2name["gd-AccountSystem.phoneCodeList.Zambia"]
+}, {
+    value: "+263",
+    label: id2name["gd-AccountSystem.phoneCodeList.Zimbabwe"]
+}];
+
+for (let e of phonecode2country) {
+    e.text = `${e.label}    ${e.value}`
+}

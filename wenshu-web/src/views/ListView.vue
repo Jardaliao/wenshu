@@ -1,8 +1,12 @@
 <template>
-    <van-nav-bar title="搜索结果" left-arrow left-text="返回" @click-left="goBack" ></van-nav-bar>
+    <van-nav-bar title="搜索结果" left-arrow left-text="返回" @click-left="goBack"></van-nav-bar>
     <span>ListView</span>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 const goBack = () => history.back()
+
 </script>

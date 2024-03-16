@@ -194,6 +194,7 @@ import { useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict'
 import TreeSelect from '@/components/TreeSelect.vue'
 import { uuid, random } from '@/utils/wenshu_raw';
+import { checkLogin } from '@/utils/bussiness';
 
 const goBack = () => history.back()
 const dataSample = {
@@ -251,12 +252,18 @@ const requestToken = ref("")
 const reset = () => { query.value = JSON.parse(JSON.stringify(dataSample)) }
 const router = useRouter()
 const search = async () => {
+    if (!await checkLogin()) {
+        router.push("/login")
+        return
+    }
+
     pageId.value = uuid() // 生成pageId，需要传给后面的列表页面用
     requestToken.value = random() // 生成requestToken，需要传给后面的列表页面用
     // await currentUser({
     //   pageId, requestToken,
     //   // extra: { s21: this.data.query.input }
     // })
+    
     router.push(`/list`)
     // wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify({ query: this.data.query, pageId, requestToken })}` })
 }

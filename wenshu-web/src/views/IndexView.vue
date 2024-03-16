@@ -6,6 +6,10 @@
 </template>
 
 <script setup>
+import { random, uuid } from '@/utils/wenshu_raw';
+
+const pageId = uuid(), requestToken = random()
+
 
 </script>
 
