@@ -39,7 +39,8 @@
 <script setup>
 import { ref } from 'vue';
 import { phonecode2country } from '@/utils/country_phone_code';
-import { decryptPwdAes, encryptPwd, encryptPwdAes, login } from '@/utils/bussiness';
+import { currentUser, decryptPwdAes, encryptPwd, encryptPwdAes, login } from '@/utils/bussiness';
+import { random, uuid } from '@/utils/wenshu_raw';
 
 const countrySelectShow = ref(false)
 const cachedCountryCode = localStorage.getItem("countryCode")
@@ -54,29 +55,44 @@ const usernameValidator = (val) => /\d+/.test(val)
 const cachedPwd = localStorage.getItem("password")
 const password = ref(cachedPwd ? decryptPwdAes(cachedPwd, username.value) : "")
 const remember = ref(true)
-const goBack = () => history.goBack()
+const goBack = () => { history.back() }
 
 const submitDisable = ref(false)
 const loadingText = ref('')
+const pageId = uuid()
+const requestToken = random()
 const onSubmit = async ({ username, password }) => {
+    if (phoneCode.value !== "+86") {
+        username = `${phoneCode.value.slice(1)}-${username}`
+    }
     console.log(username, password)
     submitDisable.value = true
     loadingText.value = "登录中..."
     try {
         const encryptedPwd = encryptPwd(password)
-        const {code, success} = await login({username, password: encryptedPwd})
-        if (code === 1 ) {
-            loadingText.value = "登录成功，即将跳转..."
-            if (remember.value) {
-                // 存储账号密码
-                localStorage.setItem("countryCode", phoneCode.value)
-                localStorage.setItem("username", username)
-                localStorage.setItem("password", encryptPwdAes(password, username))
-            }
-            // setTimeout(() => { history.goBack() }, 2000)
-        } else {
-
+        let lr = await login({ username, password: encryptedPwd })
+        if (lr.code !== 0) {
+            console.log(`[login fail] code;${lr.code}, success:${lr.success}, msg:${lr.msg}`)
+            submitDisable.value = false
+            return
         }
+        // 登录完成，检查一下 currentUser
+        let { code, success, msg } = await currentUser({ pageId, requestToken, extra: {} })
+        if (code !== 1 || !success) {
+            console.log(`[currentUser fail] code;${code}, success:${success}, msg:${msg}`)
+            submitDisable.value = false
+            return
+        }
+        loadingText.value = "登录成功，即将跳转..."
+        if (remember.value) {
+            // 存储账号密码
+            localStorage.setItem("countryCode", phoneCode.value)
+            localStorage.setItem("username", username)
+            localStorage.setItem("password", encryptPwdAes(password, username))
+        }
+
+        setTimeout(() => { history.back() }, 2000)
+
     } catch (err) {
         console.error(err)
         submitDisable.value = false

@@ -1,15 +1,45 @@
 import { JSEncrypt } from "./custom_jsencrypt"
 import md5 from "crypto-js/md5"
-import CryptoJS from "crypto-js"
+import axios from "axios"
+import { request } from "./request"
 
 /**
- * 检查用户是否已经登录
- * @returns Promise<bool>
+ * 猜测这个接口是用于激活wzws_sessionid和SESSION这两个cookie的
+ * 调这个接口在后端激活后，才可以用他们做接下来的查询工作
+ * 只有这个接口鉴别为正常用户 而非匿名用户才可激活
+ *  
+ * 怎么鉴别为正常用户？
  */
-export function checkLogin() {
-    return new Promise((resolve) => {
-        // TODO
-        resolve(false)
+export function currentUser({ pageId, requestToken, extra }) {
+    return new Promise(async (resolve) => {
+        try {
+            const r = await axios.request({
+                //   url: "https://wenshu.liaoxiaojie.cn:9020/website/parse/rest.q4w",
+                url: "/website/parse/rest.q4w",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                data: {
+                    pageId,
+                    cfg: "com.lawyee.wbsttools.web.parse.dto.AppUserDTO@currentUser",
+                    "__RequestVerificationToken": requestToken,
+                    wh: 778,
+                    ww: 1507,
+                    cs: 0,
+                    ...extra
+                }
+            })
+            if (r.status !== 200) {
+                resolve({ code: r.status, success: false, msg: r.statusText })
+            }
+            if (r?.data?.result?.userId === "anonymousUser") {
+                resolve({ code: r.data.code, success: false, msg: "匿名用户" })
+            }
+            resolve({ code: r.data.code, success: r.data.success, msg: r.data.description })
+        } catch (err) {
+            resolve({ code: 999, success: false, msg: err.toString() })
+        }
     })
 }
 
@@ -18,9 +48,65 @@ export function checkLogin() {
  * @returns Promise<Object>
  */
 export function login({ username, password }) {
-    return new Promise((resolve) => {
-        // TODO
-        resolve({ code: 1, success: true })
+    return new Promise(async (resolve) => {
+        try {
+            // 1 获取提权 URL 
+            const r = await axios.request({
+                method: "POST",
+                // url: "https://wenshu.court.gov.cn/tongyiLogin/authorize",
+                // url: "https://wenshu.liaoxiaojie.cn:9020/tongyiLogin/authorize",
+                url: "/tongyiLogin/authorize",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                }
+            })
+            if (r.status !== 200) {
+                resolve({ code: r.status, success: false, msg: r.statusText })
+            }
+            const redirectUrl = r.data;
+            console.log(`提权 URL ${redirectUrl}`)
+            // 2 正常登录接口 获取 HOLDON KEY
+            const r2 = await axios.request({
+                method: "POST",
+                // url: "https://account.court.gov.cn/api/login",
+                // url: "https://account.wenshu.liaoxiaojie.cn:9021/api/login",
+                url: "/api/login",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                data: {
+                    username, password,
+                    appDomain: "wenshu.court.gov.cn"
+                }
+            })
+            if (r2.status !== 200) {
+                resolve({ code: r2.status, success: false, msg: r2.statusText })
+            }
+            if (!r2.data.success) {
+                resolve({ code: r2.data.code, success: false, msg: r2.data.message })
+            }
+            // 3 
+            const u1 = redirectUrl.replace("https://account.court.gov.cn", "")
+            console.log(`u1: ${u1}`)
+            const r3 = await axios.get(u1, {}) // 文书网会返回重定向，后端将重定向转为 200 了
+            console.log(r3)
+            if (r3.status !== 200) {
+                resolve({ code: r3.status, success: false, msg: r3.statusText })
+            }
+            const l1 = r3.headers.location // 
+            const l2 = l1.replace("https://wenshu.court.gov.cn", "")
+                .replace("https://account.court.gov.cn", "")
+            console.log(`[custom redirect] l1: ${l1}, l2: ${l2}`)
+            const r4 = await axios.get(l2, {})
+            console.log(r4)
+            if (r4.status !== 200) {
+                resolve({ code: r4.status, success: false, msg: r4.statusText })
+            }
+            resolve({ code: 0, success: true, msg: "登录成功" })
+        } catch (err) {
+            console.error(err)
+            resolve({ code: 999, success: false, msg: err.msg })
+        }
     })
 }
 

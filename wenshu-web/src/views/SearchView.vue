@@ -180,7 +180,7 @@
             <van-col span="10" offset="1">
                 <van-button plain icon="replay" round block @click="reset">重置</van-button>
             </van-col>
-            <van-col span="10" offset="2" >
+            <van-col span="10" offset="2">
                 <van-button type="primary" icon="search" round block @click="search">搜索</van-button>
             </van-col>
         </van-row>
@@ -194,7 +194,7 @@ import { useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict'
 import TreeSelect from '@/components/TreeSelect.vue'
 import { uuid, random } from '@/utils/wenshu_raw';
-import { checkLogin } from '@/utils/bussiness';
+import { currentUser } from '@/utils/bussiness';
 
 const goBack = () => history.back()
 const dataSample = {
@@ -247,25 +247,19 @@ const cprqEndConfirm = ({ selectedValues }) => {
 const aldj = dic.aldj // 11 案例等级
 const gklx = dic.gklx // 12 公开等级
 
-const pageId = ref("")
-const requestToken = ref("")
 const reset = () => { query.value = JSON.parse(JSON.stringify(dataSample)) }
 const router = useRouter()
+const pageId = uuid() // 生成pageId，需要传给后面的列表页面用
+const requestToken = random() // 生成requestToken，需要传给后面的列表页面用
+
 const search = async () => {
-    if (!await checkLogin()) {
+    const { code, success } = await currentUser({ pageId, requestToken })
+    if (code !== 1 || !success) {
         router.push("/login")
         return
     }
 
-    pageId.value = uuid() // 生成pageId，需要传给后面的列表页面用
-    requestToken.value = random() // 生成requestToken，需要传给后面的列表页面用
-    // await currentUser({
-    //   pageId, requestToken,
-    //   // extra: { s21: this.data.query.input }
-    // })
-    
-    router.push(`/list`)
-    // wx.navigateTo({ url: `/pages/list/list?data=${JSON.stringify({ query: this.data.query, pageId, requestToken })}` })
+    router.push({ path: `/list`, query: { ...query.value, pageId, requestToken } })
 }
 
 </script>
@@ -319,5 +313,4 @@ const search = async () => {
     border-top: 1px solid #eee;
     background-color: white;
 }
-  
 </style>
