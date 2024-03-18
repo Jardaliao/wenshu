@@ -258,8 +258,8 @@ const search = async () => {
         router.push("/login")
         return
     }
-
-    router.push({ path: `/list`, query: { ...query.value, pageId, requestToken } })
+    const q = { ...query.value, pageId, requestToken }
+    router.push({ path: `/list`, query: {params: btoa(encodeURIComponent(JSON.stringify(q)))} })
 }
 
 </script>

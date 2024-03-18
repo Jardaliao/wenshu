@@ -10,10 +10,30 @@ export default defineConfig({
     ],
     server: {
         proxy: {
-            '^/': {
+            '^/tongyiLogin/authorize': {
                 target: 'https://wenshu.liaoxiaojie.cn',
                 changeOrigin: true
             },
+            '^/api/login': {
+                target: 'https://wenshu.liaoxiaojie.cn',
+                changeOrigin: true
+            },
+            '^/oauth/authorize': {
+                target: 'https://wenshu.liaoxiaojie.cn',
+                changeOrigin: true
+            },
+            '^/CallBackController/authorizeCallBack': {
+                target: 'https://wenshu.liaoxiaojie.cn',
+                changeOrigin: true
+            },
+            '^/app': {
+                target: 'https://wenshu.liaoxiaojie.cn',
+                changeOrigin: true
+            },
+            '^/website/parse/rest.q4w': {
+                target: 'https://wenshu.liaoxiaojie.cn',
+                changeOrigin: true
+            }
         },
     },
     resolve: {

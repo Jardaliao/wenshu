@@ -2,10 +2,10 @@ import { JSEncrypt } from "./custom_jsencrypt"
 import md5 from "crypto-js/md5"
 import axios from "axios"
 import { request } from "./request"
+import { cipher, DES3 } from "./wenshu_raw"
 
 /**
- * 猜测这个接口是用于激活wzws_sessionid和SESSION这两个cookie的
- * 调这个接口在后端激活后，才可以用他们做接下来的查询工作
+ *
  * 只有这个接口鉴别为正常用户 而非匿名用户才可激活
  *  
  * 怎么鉴别为正常用户？
@@ -143,3 +143,54 @@ export function decryptPwdAes(encryptedPwd, username) {
     const ep = encryptedPwd.replace(md5(username), "")
     return atob(ep)
 }
+
+/**
+ * 查询文档接口 搜索接口
+ * @param {*} param0 
+ * @param {Object} 需要附加到请求里的参数
+ * @returns 
+ */
+export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition, requestToken }, extra = {}) {
+    return new Promise(async (resolve) => {
+        try {
+            const r = await axios.request({
+                url: "/website/parse/rest.q4w",
+                method: "POST",
+                headers: {
+                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                },
+                data: {
+                    cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc",
+                    pageId,
+                    sortFields,
+                    ciphertext: cipher(),
+                    pageNum: pageNum || 1,
+                    pageSize: pageSize || 10,
+                    queryCondition,
+                    "__RequestVerificationToken": requestToken || random(24),
+                    wh: 778,
+                    ww: 1507,
+                    cs: 0,
+                    ...extra
+                }
+            })
+            console.log(r)
+            if (r.status !== 200) {
+                resolve({ code: r.status, success: false, msg: r.statusText })
+            }
+            if (!r.data.success) {
+                resolve({ code: r.data.code, success: false, msg: r.data.message })
+            }
+            if (r.data.secretKey) { // 返回了secretKey，说明返回的内容是需要解密的
+                let decryptedResult = DES3.decrypt(r.data.result, r.data.secretKey)
+                try { decryptedResult = JSON.parse(decryptedResult) } catch (e) { } // 尝试解析为JSON对象
+                r.data.result = decryptedResult
+            }
+            resolve({ code: 0, success: true, msg: r.data.message, data: r.data })
+        } catch (err) {
+            resolve({ code: 999, success: false, msg: err.toString() })
+        }
+    })
+
+}
+

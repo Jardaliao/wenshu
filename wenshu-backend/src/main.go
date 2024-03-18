@@ -8,6 +8,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -149,6 +150,12 @@ func makePreRequest(u *url.URL) func(*http.Request) {
 		r.URL.Scheme = u.Scheme
 		r.URL.Host = u.Host
 		r.Host = u.Host // 更改请求主机头以匹配目标服务器的主机
+
+		// 网页不支持设置 Origin 源，在代理里设置
+		if strings.Contains(string(reqStr), "/website/parse/rest.q4w") {
+			ServerLog.Infof(context.TODO(), "设置 origin")
+			r.Header.Set("Origin", "https://wenshu.court.gov.cn")
+		}
 		// 对端接口会检查User-Agent，这里固定用浏览器抓取到的Agent 固定UA
 		r.Header.Del("user-agent")
 		r.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
