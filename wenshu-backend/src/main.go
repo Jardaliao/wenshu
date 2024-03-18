@@ -115,22 +115,28 @@ func main() {
 
 	go func() {
 		ApLog.Infof(context.TODO(), "文书代理服务器(account)已启动，监听端口9021...")
-		if err := http.ListenAndServeTLS(
-			":9021",
-			"cert/account.wenshu.liaoxiaojie.cn.pem",
-			"cert/account.wenshu.liaoxiaojie.cn.key",
-			accountHandler); err != nil {
+		// if err := http.ListenAndServeTLS(
+		// 	":9021",
+		// 	"cert/account.wenshu.liaoxiaojie.cn.pem",
+		// 	"cert/account.wenshu.liaoxiaojie.cn.key",
+		// 	accountHandler); err != nil {
+		// 	log.Fatal(err)
+		// }
+		if err := http.ListenAndServe(":9021", accountHandler); err != nil {
 			log.Fatal(err)
 		}
 	}()
 
 	// 启动服务器，监听端口 9020
 	ApLog.Infof(context.TODO(), "文书代理服务器(wenshu)已启动，监听端口9020...")
-	if err := http.ListenAndServeTLS(
-		":9020",
-		"cert/wenshu.liaoxiaojie.cn.pem",
-		"cert/wenshu.liaoxiaojie.cn.key",
-		wenshuHandler); err != nil {
+	// if err := http.ListenAndServeTLS(
+	// 	":9020",
+	// 	"cert/wenshu.liaoxiaojie.cn.pem",
+	// 	"cert/wenshu.liaoxiaojie.cn.key",
+	// 	wenshuHandler); err != nil {
+	// 	log.Fatal(err)
+	// }
+	if err := http.ListenAndServe(":9020", wenshuHandler); err != nil {
 		log.Fatal(err)
 	}
 }

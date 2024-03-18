@@ -10,30 +10,10 @@ export default defineConfig({
     ],
     server: {
         proxy: {
-            '^/tongyiLogin/authorize': {
-                target: 'https://wenshu.liaoxiaojie.cn:9020',
+            '^/': {
+                target: 'https://wenshu.liaoxiaojie.cn',
                 changeOrigin: true
             },
-            '^/api/login': {
-                target: 'https://account.wenshu.liaoxiaojie.cn:9021',
-                changeOrigin: true
-            },
-            '^/oauth/authorize': {
-                target: 'https://account.wenshu.liaoxiaojie.cn:9021',
-                changeOrigin: true
-            },
-            '^/CallBackController/authorizeCallBack': {
-                target: 'https://wenshu.liaoxiaojie.cn:9020',
-                changeOrigin: true
-            },
-            '^/app': {
-                target: 'https://account.wenshu.liaoxiaojie.cn:9021',
-                changeOrigin: true
-            },
-            '^/website/parse/rest.q4w': {
-                target: 'https://wenshu.liaoxiaojie.cn:9020',
-                changeOrigin: true
-            }
         },
     },
     resolve: {
