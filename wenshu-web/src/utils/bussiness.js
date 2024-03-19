@@ -157,7 +157,7 @@ export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition
                 url: "/website/parse/rest.q4w",
                 method: "POST",
                 headers: {
-                    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                 },
                 data: {
                     cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@queryDoc",
@@ -177,6 +177,11 @@ export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition
             console.log(r)
             if (r.status !== 200) {
                 resolve({ code: r.status, success: false, msg: r.statusText })
+            }
+            // IMPORTANT 响应了 200 可能是后端改的，实际可能是重定向，这时候需要手动处理
+            if (r.statusText === "redirect") {
+                const result = await queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition, requestToken }, {})
+                resolve(result)
             }
             if (!r.data.success) {
                 resolve({ code: r.data.code, success: false, msg: r.data.message })

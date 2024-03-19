@@ -39,9 +39,10 @@ const nextPage = async () => {
         sortFields: sortField.value,
         queryCondition: JSON.stringify(query2Request(query)),
     }, {})
+    console.log(rr)
     if (rr.code === 1 && rr.success) {
         list.value.push(result2List(rr.data.result))
-        console.log(list)
+        // console.log(list)
         pageNum.value = pageNum.value + 1 // 翻一页
     }
 }

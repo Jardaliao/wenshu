@@ -157,8 +157,8 @@ func makePreRequest(u *url.URL) func(*http.Request) {
 			r.Header.Set("Origin", "https://wenshu.court.gov.cn")
 		}
 		// 对端接口会检查User-Agent，这里固定用浏览器抓取到的Agent 固定UA
-		r.Header.Del("user-agent")
-		r.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+		// r.Header.Del("user-agent")
+		// r.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 	}
 }
 
@@ -170,7 +170,7 @@ func postRequest(resp *http.Response) error {
 		resp.StatusCode == 303 ||
 		resp.StatusCode == 307 {
 		resp.StatusCode = 200
-		resp.Status = "wenshu redirect"
+		resp.Status = "redirect"
 	}
 	return nil
 }
