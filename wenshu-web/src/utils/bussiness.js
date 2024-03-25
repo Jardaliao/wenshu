@@ -174,7 +174,7 @@ export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition
                     ...extra
                 }
             })
-            console.log(r)
+            // console.log(r)
             if (r.status !== 200) {
                 resolve({ code: r.status, success: false, msg: r.statusText })
             }

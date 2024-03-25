@@ -12,8 +12,8 @@ const router = createRouter({
     routes: [
         { path: '/', component: IndexView },
         { path: '/index', component: IndexView },
-        { path: '/search', component: SearchView },
-        { path: '/list', component: ListView },
+        { path: '/search', component: SearchView, meta: { keepAlive: true } },
+        { path: '/list', component: ListView, meta: { keepAlive: true } },
         { path: '/doc', component: DocView },
         { path: '/login', component: LoginView },
         { path: '/:pathMatch(.*)', component: NotFound }
