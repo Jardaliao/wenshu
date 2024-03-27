@@ -188,6 +188,10 @@
 
 </template>
 
+<script>
+export default { name: 'search' }
+</script>
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
@@ -195,7 +199,9 @@ import { dic } from '../utils/wenshu_dict'
 import TreeSelect from '@/components/TreeSelect.vue'
 import { uuid, random } from '@/utils/wenshu_raw';
 import { currentUser } from '@/utils/bussiness';
+import { useStore } from 'vuex';
 
+const store = useStore()
 const goBack = () => history.back()
 const dataSample = {
     quanwenjiansuo: "",
@@ -259,6 +265,7 @@ const search = async () => {
         return
     }
     const q = { ...query.value, pageId, requestToken }
+    store.commit("inactiveKeepAlive", "list") // 取消 keep-alive 刷新 list 页面
     router.push({ path: `/list`, query: {params: btoa(encodeURIComponent(JSON.stringify(q)))} })
 }
 

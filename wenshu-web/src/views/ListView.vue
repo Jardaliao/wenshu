@@ -29,12 +29,19 @@
 
 </template>
 
+<script>
+export default { name: 'list' }
+</script>
+
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict';
 import { queryDoc } from '@/utils/bussiness';
+import { useStore } from 'vuex';
 
+const store = useStore()
+store.commit("activeKeepAlive", "list") // 开启 keep-alive
 const route = useRoute()
 const router = useRouter()
 const goBack = () => history.back()
@@ -221,7 +228,7 @@ const loading = ref(false), error = ref(false), finished = ref(false)
 const loadMore = async () => {
     console.log("loadmore")
     setTimeout(() => { loading.value = false }, 3000)
-    // await nextPage()
+    await nextPage()
 }
 
 

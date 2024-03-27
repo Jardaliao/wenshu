@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import store from './store'
 import {
     Form, Row, Col, Button, Search, NavBar,
     CellGroup, Cell, Field, TreeSelect, Dialog,
@@ -17,6 +18,8 @@ import axios from 'axios'
 const app = createApp(App)
 
 axios.defaults.withCredentials = true
+
+app.use(store)
 
 app.use(router)
 

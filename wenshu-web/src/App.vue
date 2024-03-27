@@ -1,11 +1,16 @@
 <template>
     <router-view v-slot="{ Component }">
-        <keep-alive>
-            <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+        <keep-alive :include="store.state.keepAliveInclude">
+            <component :is="Component" :key="$route.name" />
         </keep-alive>
-        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
     </router-view>
 </template>
+
+<script setup>
+import { useStore } from 'vuex'
+const store = useStore()
+console.log(store.state.keepAliveInclude)
+</script>
 
 <style>
 * {
