@@ -2,7 +2,7 @@
     <van-sticky>
         <van-nav-bar title="搜索结果" left-arrow left-text="返回" @click-left="goBack"></van-nav-bar>
         <van-dropdown-menu>
-            <van-dropdown-item v-model="sortField" :options="sortOps" />
+            <van-dropdown-item v-model="sortField" :options="sortOps" @change="sortChange" />
         </van-dropdown-menu>
     </van-sticky>
     <van-cell-group insert>
@@ -34,7 +34,7 @@ export default { name: 'list' }
 </script>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict';
 import { queryDoc } from '@/utils/bussiness';
@@ -56,6 +56,10 @@ const sortOps = [
     { text: '审判程序 ⬇', value: "s52:desc" },
     { text: '审判程序 ⬆', value: "s52:asc" },
 ];
+const sortChange = (value) => {
+    sortField.value = value
+    list.value = []
+}
 const query = JSON.parse(decodeURIComponent(atob(route.query.params))) // 此时的 query 不再是 ref 对象了，是普通的 js 对象
 const { pageId, requestToken } = query
 const pageNum = ref(1), pageSize = 10
@@ -63,7 +67,6 @@ const goDetail = ({ rowkey }) => {
     router.push({ path: `/doc`, query: { rowkey } })
 }
 const list = ref([])
-// onMounted(() => { nextPage() })
 const nextPage = async () => {
     const rr = await queryDoc({
         pageId,
