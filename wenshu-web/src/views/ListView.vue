@@ -12,7 +12,7 @@
                 <template #title>
                     <div @click="goDetail(item)">
                         <van-tag type="primary">{{ dic.spcx[item['10'] ? item['10'] : item['9']] }}</van-tag>
-                        &nbsp<span>{{ item["1"] }}</span>
+                        &nbsp<span v-html='item["1"]'></span>
                     </div>
                 </template>
                 <template #label>
