@@ -37,32 +37,6 @@
         </van-cell>
     </van-cell-group>
     <van-cell-group title=" ">
-        <!-- 3 案件名称 -->
-        <van-field v-model="query.anjianmingchen" name="案件名称" label="案件名称" placeholder="案件名称"></van-field>
-        <!-- 4 案号 -->
-        <van-field v-model="query.anhao" name="案号" label="案号" placeholder="案号"></van-field>
-    </van-cell-group>
-    <van-cell-group title=" ">
-        <!-- 5 法院名称 -->
-        <van-field v-model="query.fayuanmingchen" name="法院名称" label="法院名称" placeholder="法院名称"></van-field>
-        <!-- 6 法院层级 -->
-        <van-cell>
-            <div class="op-title">
-                <div>法院层级</div>
-                <div class="op-actions">
-                    <span>{{ query.fayuancengjiIndex >= 0 ? fycj[query.fayuancengjiIndex].name : "" }}</span>
-                </div>
-            </div>
-            <div class="op-body">
-                <div v-for="item, index in fycj"
-                    :class="['op-body-item', index === query.fayuancengjiIndex ? 'active' : '']"
-                    @click="setActive('fayuancengjiIndex', index)">
-                    {{ item.name }}
-                </div>
-            </div>
-        </van-cell>
-    </van-cell-group>
-    <van-cell-group title=" ">
         <!-- 7 案件类型 -->
         <van-cell>
             <div class="op-title">
@@ -91,6 +65,32 @@
                 <TreeSelect :data="query.anjianleixingIndex >= 0 ? spcxTrees[ajlx[query.anjianleixingIndex].code] : []"
                     :props-custom="{ key: 'id', label: 'name', children: 'children' }"
                     v-on:node-click="selectShenpanchengxu" />
+            </div>
+        </van-cell>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 3 案件名称 -->
+        <van-field v-model="query.anjianmingchen" name="案件名称" label="案件名称" placeholder="案件名称"></van-field>
+        <!-- 4 案号 -->
+        <van-field v-model="query.anhao" name="案号" label="案号" placeholder="案号"></van-field>
+    </van-cell-group>
+    <van-cell-group title=" ">
+        <!-- 5 法院名称 -->
+        <van-field v-model="query.fayuanmingchen" name="法院名称" label="法院名称" placeholder="法院名称"></van-field>
+        <!-- 6 法院层级 -->
+        <van-cell>
+            <div class="op-title">
+                <div>法院层级</div>
+                <div class="op-actions">
+                    <span>{{ query.fayuancengjiIndex >= 0 ? fycj[query.fayuancengjiIndex].name : "" }}</span>
+                </div>
+            </div>
+            <div class="op-body">
+                <div v-for="item, index in fycj"
+                    :class="['op-body-item', index === query.fayuancengjiIndex ? 'active' : '']"
+                    @click="setActive('fayuancengjiIndex', index)">
+                    {{ item.name }}
+                </div>
             </div>
         </van-cell>
     </van-cell-group>
@@ -200,9 +200,24 @@ import TreeSelect from '@/components/TreeSelect.vue'
 import { uuid, random } from '@/utils/wenshu_raw';
 import { currentUser } from '@/utils/bussiness';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
 const store = useStore()
 const goBack = () => history.back()
+const route = useRoute()
+
+let { params } = route.query
+let q, p // query & pageId
+if (params) {
+    const paramsObj = JSON.parse(decodeURIComponent(params))
+    q = paramsObj.query
+    p = paramsObj.pageId
+}
+console.log(`query: ${JSON.stringify(q)}, pageId: ${p}`)
+if (!q) q = {}
+
+store.commit("activeKeepAlive", "search") // 开启 keep-alive
+
 const dataSample = {
     quanwenjiansuo: "",
     quanwenjiansuoIndex: 0,
@@ -223,7 +238,9 @@ const dataSample = {
     lvsuo: "",
     lvshi: "",
     falvyiju: "",
+    ...q
 }
+
 
 const query = ref(JSON.parse(JSON.stringify(dataSample)))
 const setActive = (field, index) => { query.value[field] = index }
@@ -255,7 +272,7 @@ const gklx = dic.gklx // 12 公开等级
 
 const reset = () => { query.value = JSON.parse(JSON.stringify(dataSample)) }
 const router = useRouter()
-const pageId = uuid() // 生成pageId，需要传给后面的列表页面用
+const pageId = p ? p : uuid() // 生成pageId，需要传给后面的列表页面用
 const requestToken = random() // 生成requestToken，需要传给后面的列表页面用
 
 const search = async () => {

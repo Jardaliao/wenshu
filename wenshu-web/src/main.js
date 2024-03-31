@@ -6,7 +6,9 @@ import {
     Sticky, PickerGroup, Picker, DatePicker, Popup,
     RadioGroup, Radio, CheckboxGroup, Checkbox,
     Icon, ConfigProvider, Overlay, Loading, DropdownMenu,
-    DropdownItem, List, TextEllipsis, Tag, Toast, FloatingPanel
+    DropdownItem, List, TextEllipsis, Tag, Toast, FloatingPanel,
+    Swipe, SwipeItem, Grid, GridItem, Tabs, Tab,
+    Empty
 } from 'vant'
 
 import App from './App.vue'
@@ -27,7 +29,8 @@ const requiredVant = [RadioGroup, Radio, Form, Row, Col, Button,
     Sticky, Search, NavBar, Field, CellGroup, Cell, TreeSelect,
     Dialog, PickerGroup, DatePicker, Popup, CheckboxGroup, Checkbox,
     Picker, Icon, ConfigProvider, Overlay, Loading, DropdownMenu,
-    DropdownItem, List, TextEllipsis, Tag, Toast, FloatingPanel];
+    DropdownItem, List, TextEllipsis, Tag, Toast, FloatingPanel,
+    Swipe, SwipeItem, Grid, GridItem, Tabs, Tab, Empty];
 for (let v of requiredVant) { app.use(v) }
 
 app.mount('#app')
