@@ -5,10 +5,10 @@
     <router-link :to="{ path: 'search' }">
         <van-search placeholder="输入案由、关键词、法院、当事人、律师"></van-search>
     </router-link>
-    <van-swipe class="my-swipe" :autoplay="15000">
+    <!-- <van-swipe class="my-swipe" :autoplay="15000">
         <van-swipe-item>1</van-swipe-item>
         <van-swipe-item>2</van-swipe-item>
-    </van-swipe>
+    </van-swipe> -->
     <van-grid :gutter="10" :column-num="3" style="padding-top: 10px">
         <van-grid-item class="van-haptics-feedback" text="刑事案件" @click="goSearch"
             data-pageId="783ecaf500139504381352a7e936eae7" data-ajlx="02">
@@ -88,13 +88,13 @@
             <template #title>
                 🥇金牌律师
             </template>
-            <van-empty></van-empty>
+            <van-empty description="空空如也～"></van-empty>
         </van-tab>
         <van-tab title="金牌律所">
             <template #title>
                 🥇金牌律所
             </template>
-            <van-empty></van-empty>
+            <van-empty description="空空如也～"></van-empty>
         </van-tab>
     </van-tabs>
 </template>
