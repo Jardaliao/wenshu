@@ -9,7 +9,7 @@
 <script setup>
 import { useStore } from 'vuex'
 const store = useStore()
-console.log(store.state.keepAliveInclude)
+// console.log(store.state.keepAliveInclude)
 </script>
 
 <style>

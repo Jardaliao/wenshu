@@ -2,7 +2,7 @@ import { JSEncrypt } from "./custom_jsencrypt"
 import md5 from "crypto-js/md5"
 import axios from "axios"
 import { request } from "./request"
-import { cipher, DES3 } from "./wenshu_raw"
+import { cipher, DES3, random } from "./wenshu_raw"
 
 /**
  *
@@ -180,8 +180,8 @@ export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition
             }
             // IMPORTANT 响应了 200 可能是后端改的，实际可能是重定向，这时候需要手动处理
             if (r.statusText === "redirect") {
-                const result = await queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition, requestToken }, {})
-                resolve(result)
+                // const result = await queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition, requestToken }, {})
+                resolve({ code: 998, success: false, msg: "redirect response" })
             }
             if (!r.data.success) {
                 resolve({ code: r.data.code, success: false, msg: r.data.message })
@@ -199,3 +199,47 @@ export function queryDoc({ pageId, sortFields, pageNum, pageSize, queryCondition
 
 }
 
+/**
+ * 获取文档信息接口
+ * @param {*} param0 
+ * @param {Object} 需要附加到请求里的参数
+ * @returns 
+ */
+export function docDetail({ docId, requestToken }, extra = {}) {
+    return new Promise(async (resolve) => {
+        const r = await axios.request({
+            url: "/website/parse/rest.q4w",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            data: {
+                cfg: "com.lawyee.judge.dc.parse.dto.SearchDataDsoDTO@docInfoSearch",
+                docId,
+                ciphertext: cipher(),
+                "__RequestVerificationToken": requestToken || random(24),
+                wh: 778,
+                ww: 1507,
+                cs: 0,
+                ...extra
+            }
+        })
+        console.log(r)
+        if (r.status !== 200) {
+            resolve({ code: r.status, success: false, msg: r.statusText })
+        }
+        // IMPORTANT 响应了 200 可能是后端改的，实际可能是重定向，这时候需要手动处理
+        if (r.statusText === "redirect") {
+            resolve({ code: 998, success: false, msg: "redirect response" })
+        }
+        if (!r.data.success) {
+            resolve({ code: r.data.code, success: false, msg: r.data.message })
+        }
+        if (r.data.secretKey) { // 返回了secretKey，说明返回的内容是需要解密的
+            let decryptedResult = DES3.decrypt(r.data.result, r.data.secretKey)
+            try { decryptedResult = JSON.parse(decryptedResult) } catch (e) { } // 尝试解析为JSON对象
+            r.data.result = decryptedResult
+        }
+        resolve({ code: 0, success: true, msg: r.data.message, data: r.data })
+    })
+}

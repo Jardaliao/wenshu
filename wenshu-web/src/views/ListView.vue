@@ -39,6 +39,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { dic } from '../utils/wenshu_dict';
 import { queryDoc } from '@/utils/bussiness';
 import { useStore } from 'vuex';
+import { showToast } from 'vant';
 
 const store = useStore()
 store.commit("activeKeepAlive", "list") // 开启 keep-alive
@@ -86,6 +87,9 @@ const nextPage = async () => {
         } else {
             pageNum.value = pageNum.value + 1 // 翻一页
         }
+    } else { // 失败了就 finish，不再重试，防止风险
+        finished.value = true
+        showToast(`查询异常(${rr.code})`)
     }
 }
 
