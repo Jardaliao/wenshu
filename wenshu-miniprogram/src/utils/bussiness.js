@@ -174,7 +174,7 @@ export async function checkLogin() {
   console.log(`提权 url：${redirectUrl}`);
   // 3 调用第一步响应的重定向URL提权 会响应新的session_id
   const rUrl = redirectUrl.replace("https://wenshu.court.gov.cn", "https://wenshu.liaoxiaojie.cn:9020")
-    .replace("https://account.court.gov.cn", "https://wenshu.liaoxiaojie.cn:9020")
+    .replace("https://account.court.gov.cn", "https://account.wenshu.liaoxiaojie.cn:9021")
   console.log(`更新后提权 url：${redirectUrl}`);
 
   const r2 = await request({
