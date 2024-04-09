@@ -1,0 +1,8 @@
+services:
+  wenshu-backend:
+    build: ./wenshu-backend
+  wenshu-web:
+    build: ./wenshu-web
+    ports:
+      - "443:443"
+      - "80:80"

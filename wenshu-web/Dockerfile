@@ -13,7 +13,7 @@ RUN npm install && \
 FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/lib/jarda/wenshu-web/html
 COPY cert /usr/lib/jarda/wenshu-web/cert
-COPY wenshu-web-443.conf /etc/nginx/conf.d/
+COPY wenshu-web-443-docker.conf /etc/nginx/conf.d/default.conf
 
 # 端口
 EXPOSE 80 443
