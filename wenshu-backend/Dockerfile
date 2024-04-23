@@ -14,6 +14,7 @@ RUN cd src && \
 
 
 FROM scratch
+# 从 stage 1 拷贝可执行文件
 COPY --from=build /app/wenshu.bin /app/wenshu.bin
 COPY config /app/config
 
@@ -21,6 +22,3 @@ ENV wenshu_profile=docker
 
 # 端口
 EXPOSE 9020 9021
-
-# 运行
-CMD ["/app/wenshu.bin"]

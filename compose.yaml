@@ -1,8 +1,13 @@
 services:
   backend:
     build: ./wenshu-backend
+    command: ["/app/wenshu.bin"]
+    volumes:
+      - "/app/logs" # 应用日志
   web:
+    depends_on: 
+      - backend
     build: ./wenshu-web
     ports:
-      - "443:443"
-      - "80:80"
+      - "4433:443"
+      - "8080:80"
