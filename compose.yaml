@@ -2,12 +2,25 @@ services:
   backend:
     build: ./wenshu-backend
     command: ["/app/wenshu.bin"]
+    develop:
+      watch:
+        - path: ./wenshu-backend
+          action: rebuild
+    ports:
+      - "9020:9020"
+      - "9021:9021"
     volumes:
-      - "/app/logs" # 应用日志
+      - "./logs/backend/:/app/logs" # 应用日志
+      
   web:
+    build: ./wenshu-web
     depends_on: 
       - backend
-    build: ./wenshu-web
+    develop:
+      watch:
+        - path: ./wenshu-web
+          action: rebuild
     ports:
-      - "4433:443"
       - "8080:80"
+    volumes:
+      - "./logs/web/:/var/log/nginx" # nginx 日志
