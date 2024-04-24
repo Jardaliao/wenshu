@@ -41,6 +41,7 @@ import { ref } from 'vue';
 import { phonecode2country } from '@/utils/country_phone_code';
 import { currentUser, decryptPwdAes, encryptPwd, encryptPwdAes, login } from '@/utils/bussiness';
 import { random, uuid } from '@/utils/wenshu_raw';
+import { showToast } from 'vant';
 
 const countrySelectShow = ref(false)
 const cachedCountryCode = localStorage.getItem("countryCode")
@@ -74,12 +75,14 @@ const onSubmit = async ({ username, password }) => {
         if (lr.code !== 0) {
             console.log(`[login fail] code;${lr.code}, success:${lr.success}, msg:${lr.msg}`)
             submitDisable.value = false
+            showToast(`登录失败：${lr.msg}`)
             return
         }
         // 登录完成，检查一下 currentUser
         let { code, success, msg } = await currentUser({ pageId, requestToken, extra: {} })
         if (code !== 1 || !success) {
             console.log(`[currentUser fail] code;${code}, success:${success}, msg:${msg}`)
+            showToast(`登录验证失败：${msg}`)
             submitDisable.value = false
             return
         }
