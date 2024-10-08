@@ -1,6 +1,17 @@
-# 怎么运行？
+<p align="center">
+    <img src="assets/1.jpg" width="200" />
+    <img src="assets/2.jpg" width="200" />
+    <img src="assets/3.jpg" width="200" />
+    <img src="assets/4.jpg" width="200" />
+    <img src="assets/5.jpg" width="200" />
+    <img src="assets/6.jpg" width="200" />
+</p>
+
+# 怎么运行
+！！！用用不着的文书网账号测试，部署调试很容易喜提封号
 1. 安装 docker desktop
 2. 在项目根目录运行 `docker-compose up -d`（默认使用 8080 端口）
+
 # 项目结构
 ```text
 ├── Readme.md
